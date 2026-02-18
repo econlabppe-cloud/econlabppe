@@ -1,0 +1,55 @@
+# =============================================================
+# EconLab PPE – .gitignore
+# =============================================================
+
+# --- סביבות Python ---
+.venv/
+env/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- נתונים (אל תעלה ל-Git!) ---
+*.csv
+*.xlsx
+*.xls
+*.parquet
+*.feather
+*.hdf
+*.h5
+*.pickle
+*.pkl
+data/raw/
+
+# --- סביבות וסודות ---
+.env
+.env.*
+*.env
+secrets.yaml
+
+# --- מערכת הפעלה ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- IDE ---
+.idea/
+.vscode/
+*.suo
+*.user
+*.swp
+*~
+
+# --- תיעוד מיוצר ---
+docs/_build/
+site/
