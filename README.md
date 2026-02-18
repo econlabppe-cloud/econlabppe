@@ -64,7 +64,7 @@
 1.  **התקנות חובה:** וודאו שיש לכם [VS Code](https://code.visualstudio.com/), [Python](https://www.python.org/), ו-[Git](https://git-scm.com/) מותקנים.
 2.  **שכפול המאגר:**
     ```bash
-    git clone [https://github.com/YOUR-ORG/YOUR-REPO.git](https://github.com/YOUR-ORG/YOUR-REPO.git)
+    git clone https://github.com/econlabppe-cloud/econlabppe.git
     ```
 3.  **יצירת סביבת עבודה:**
     פתחו תיקייה חדשה תחת `Members/` עם השם שלכם.
