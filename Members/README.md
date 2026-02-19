@@ -16,7 +16,6 @@
 |---|---|---|
 | יהודה סעדיה | `Members/yehuda_saadya/` | מייסד |
 | מטר וייסבלום | `Members/Matar/` | התלמיד הראשון |
-
 | *(הצטרף!)* | `Members/YourName/` | - |
 
 ---
