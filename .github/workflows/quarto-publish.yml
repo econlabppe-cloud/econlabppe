@@ -73,7 +73,7 @@ jobs:
       - name: "Setup Quarto"
         uses: quarto-dev/quarto-actions/setup@v2
         with:
-          version: "1.5.56"         # pin to a stable release
+          version: "latest"
 
       # ── 5. Render ────────────────────────────────────────────
       - name: "Render Quarto book"
