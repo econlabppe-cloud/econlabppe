@@ -1,0 +1,211 @@
+---
+title: "🏆 היכל התהילה"
+subtitle: "הפרויקטים הטובים ביותר של סטודנטים EconLabPPE"
+toc: false
+page-layout: full
+---
+
+```{=html}
+<div class="hero-section" style="padding:3rem 2rem;margin:-1rem -1rem 2rem;">
+  <div class="hero-badge">🏆 Hall of Fame</div>
+  <h1 class="hero-title" style="font-size:2.5rem;">היכל התהילה</h1>
+  <p class="hero-subtitle">
+    עבודות מצטיינות של סטודנטים ב-EconLabPPE — הכלכלה בפעולה.
+  </p>
+</div>
+```
+
+::: {.callout-note}
+## כיצד להיכנס להיכל התהילה?
+השלימו אחד משלושת פרויקטי הגמר (שוק הדיור, מעקב אינפלציה, שוק העבודה) ברמה גבוהה, ושלחו Pull Request עם הקוד + דוח.
+הפרויקטים המצטיינים יוצגו כאן עם שם המגיש ותיאור הממצאים.
+:::
+
+---
+
+## 🗂️ פרויקטי הגמר
+
+```{=html}
+<div class="hof-grid">
+
+  <!-- Housing Market -->
+  <div class="hof-card">
+    <div class="hof-card-header" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);">
+      <div class="hof-card-icon" style="background:#bfdbfe;font-size:2rem;">🏠</div>
+      <div>
+        <h3 class="hof-card-title">שוק הדיור הישראלי</h3>
+        <p class="hof-card-subtitle">Housing Market Analysis</p>
+      </div>
+    </div>
+    <div class="hof-card-body">
+      <p class="hof-card-desc">
+        ניתוח מגמות מחירי הדיור בישראל לאורך זמן, בחינת הקשר לריביות, לשכר ולביקוש.
+        כולל מודל רגרסיה, ויזואליזציה אינטראקטיבית וחיזוי.
+      </p>
+      <div class="hof-skills">
+        <span class="hof-skill-tag">Python</span>
+        <span class="hof-skill-tag">Pandas</span>
+        <span class="hof-skill-tag">Plotly</span>
+        <span class="hof-skill-tag">OLS</span>
+        <span class="hof-skill-tag">API בנק ישראל</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inflation Tracker -->
+  <div class="hof-card">
+    <div class="hof-card-header" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);">
+      <div class="hof-card-icon" style="background:#fed7aa;font-size:2rem;">📊</div>
+      <div>
+        <h3 class="hof-card-title">מעקב אינפלציה</h3>
+        <p class="hof-card-subtitle">Inflation Tracker</p>
+      </div>
+    </div>
+    <div class="hof-card-body">
+      <p class="hof-card-desc">
+        מעקב אחר אינפלציה בישראל ובעולם, השוואה בין מדינות, ניתוח מרכיבי CPI
+        ובניית מודל ARIMA לחיזוי קצר-טווח.
+      </p>
+      <div class="hof-skills">
+        <span class="hof-skill-tag">R</span>
+        <span class="hof-skill-tag">tidyverse</span>
+        <span class="hof-skill-tag">ARIMA</span>
+        <span class="hof-skill-tag">FRED API</span>
+        <span class="hof-skill-tag">ggplot2</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Labor Market -->
+  <div class="hof-card">
+    <div class="hof-card-header" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);">
+      <div class="hof-card-icon" style="background:#bbf7d0;font-size:2rem;">👷</div>
+      <div>
+        <h3 class="hof-card-title">שוק העבודה</h3>
+        <p class="hof-card-subtitle">Labor Market Analysis</p>
+      </div>
+    </div>
+    <div class="hof-card-body">
+      <p class="hof-card-desc">
+        ניתוח תעסוקה, אבטלה ושכר בישראל: מגמות לפי מגדר, גיל ואזור גיאוגרפי.
+        כולל השוואה בין-לאומית ומודל Panel Data.
+      </p>
+      <div class="hof-skills">
+        <span class="hof-skill-tag">SQL</span>
+        <span class="hof-skill-tag">Python</span>
+        <span class="hof-skill-tag">Panel Data</span>
+        <span class="hof-skill-tag">OECD API</span>
+        <span class="hof-skill-tag">Power BI</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+```
+
+---
+
+## 🌟 פרויקטים מצטיינים של סטודנטים
+
+```{=html}
+<div class="hof-placeholder-banner">
+  <div style="font-size:3rem;margin-bottom:1rem;">🚀</div>
+  <h3>אתם יכולים להיות כאן!</h3>
+  <p>
+    פרויקטים מצטיינים יוצגו כאן בתום הקורס.<br>
+    בצעו את פרויקט הגמר, שלחו <strong>Pull Request</strong> ל-
+    <code>Projects/</code> — והמנחים יבחרו את הטובים ביותר.
+  </p>
+  <a href="https://github.com/econlabppe/econlabppe/pulls"
+     target="_blank"
+     class="btn-primary"
+     style="display:inline-flex;margin-top:1rem;text-decoration:none;background:linear-gradient(135deg,#f59e0b,#d97706);color:white;">
+    📤 שלח פרויקט
+  </a>
+</div>
+```
+
+### כרטיס דוגמה — כיצד ייראה הפרויקט שלכם:
+
+```{=html}
+<div class="hof-grid" style="max-width:400px;">
+  <div class="hof-card" style="opacity:0.6;border:2px dashed #e2e8f0;">
+    <div class="hof-card-header" style="background:#f8fafc;">
+      <div class="hof-card-icon" style="background:#e2e8f0;">👤</div>
+      <div>
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <h3 class="hof-card-title" style="margin:0;">שם הסטודנט</h3>
+          <span class="hof-winner-badge">🏆 מצטיין</span>
+        </div>
+        <p class="hof-card-subtitle">כותרת הפרויקט</p>
+      </div>
+    </div>
+    <div class="hof-card-body">
+      <p class="hof-card-desc">
+        תיאור קצר של הממצאים המרכזיים, המתודולוגיה ותרומת הפרויקט.
+        ניתן לכלול קישור ל-GitHub Pages של הפרויקט.
+      </p>
+      <div class="hof-skills">
+        <span class="hof-skill-tag">Python</span>
+        <span class="hof-skill-tag">R</span>
+        <span class="hof-skill-tag">OLS</span>
+      </div>
+      <div style="margin-top:1rem;">
+        <a href="#" style="color:var(--primary);font-size:0.85rem;font-weight:600;">
+          🔗 צפה בפרויקט ←
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+---
+
+## 📋 קריטריוני שיפוט
+
+```{=html}
+<div class="modules-grid" style="margin-top:1rem;">
+
+  <div class="module-card" style="border-right-color:#6366f1;">
+    <div class="module-icon">🎯</div>
+    <div class="module-info">
+      <h3>עומק ניתוחי</h3>
+      <p>שימוש נכון בכלים כמותיים, פרשנות נכונה של תוצאות ומסקנות מבוססות נתונים.</p>
+    </div>
+  </div>
+
+  <div class="module-card" style="border-right-color:#10b981;">
+    <div class="module-icon">💻</div>
+    <div class="module-info">
+      <h3>איכות קוד</h3>
+      <p>קוד נקי, מתועד ומאורגן. שימוש ב-Best Practices של Python/R.</p>
+    </div>
+  </div>
+
+  <div class="module-card" style="border-right-color:#f59e0b;">
+    <div class="module-icon">🎨</div>
+    <div class="module-info">
+      <h3>ויזואליזציה</h3>
+      <p>גרפים ברורים, מוסברים ואינטראקטיביים שמספרים סיפור.</p>
+    </div>
+  </div>
+
+  <div class="module-card" style="border-right-color:#ef4444;">
+    <div class="module-icon">📝</div>
+    <div class="module-info">
+      <h3>דוח כתוב</h3>
+      <p>RMarkdown / Quarto עם הסבר מתודולוגי ברור, ממצאים ומסקנות.</p>
+    </div>
+  </div>
+
+</div>
+```
+
+---
+
+::: {.callout-tip}
+## טיפ לפרויקט מצטיין
+השתמשו ב-Quarto לכתיבת הדוח — כך תוכלו לשלב קוד, גרפים וטקסט בצורה מקצועית,
+ואף לפרסם את הפרויקט כאתר GitHub Pages מלוטש.
+:::

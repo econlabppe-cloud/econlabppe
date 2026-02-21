@@ -1,0 +1,110 @@
+name: "Publish Quarto Book → GitHub Pages"
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "Members/**"
+      - "Data/**"
+      - ".github/ISSUE_TEMPLATE/**"
+      - "*.py"
+  workflow_dispatch:          # allow manual trigger from Actions tab
+
+permissions:
+  contents: write             # needed to push to gh-pages
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false   # don't cancel mid-deploy; queue instead
+
+jobs:
+  build-and-deploy:
+    name: "Render & Deploy"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # ── 1. Checkout ──────────────────────────────────────────
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0       # full history for git-based features
+
+      # ── 2. Setup R (needed for R code in Quarto) ─────────────
+      - name: "Setup R"
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.3"
+          use-public-rspm: true
+
+      - name: "Install R packages"
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            tidyverse
+            ggplot2
+            dplyr
+            tidyr
+            readr
+            lubridate
+            broom
+            knitr
+            rmarkdown
+        continue-on-error: true    # don't fail build if optional R pkgs missing
+
+      # ── 3. Setup Python ──────────────────────────────────────
+      - name: "Setup Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: "Install Python packages"
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy matplotlib plotly requests openpyxl \
+                      statsmodels scikit-learn fredapi
+        continue-on-error: true    # don't fail build if optional pkgs missing
+
+      # ── 4. Setup Quarto ──────────────────────────────────────
+      - name: "Setup Quarto"
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: "1.5.56"         # pin to a stable release
+
+      # ── 5. Render ────────────────────────────────────────────
+      - name: "Render Quarto book"
+        run: quarto render
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 6. Add CNAME if custom domain is configured ──────────
+      - name: "Add CNAME (optional)"
+        run: |
+          if [ -f CNAME ]; then
+            cp CNAME _book/CNAME
+          fi
+
+      # ── 7. Deploy to gh-pages ────────────────────────────────
+      - name: "Publish to GitHub Pages"
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+          path: _book
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 8. Summary ───────────────────────────────────────────
+      - name: "Print deployment summary"
+        if: success()
+        run: |
+          echo "## ✅ Deployment Successful" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📚 The EconLabPPE Quarto book has been published to **GitHub Pages**." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 Site URL: https://\${{ github.repository_owner }}.github.io/econlabppe" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🕐 Published at: $(date -u '+%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
