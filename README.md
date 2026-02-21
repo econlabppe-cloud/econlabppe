@@ -31,7 +31,7 @@
 **עקרון מרכזי:** כל כלי מקבל **2-3 שבועות** – מרמה מאפס מוחלט ועד רמה מקצועית.
 לא מדלגים, לא מזרזים. כל שבוע: הסבר מלא → משימה מעשית → העלאה לתיקייה האישית ב-`Members/`
 
-**~24 שבועות** לסיים את כל המסלול ולצאת עם Portfolio מקצועי.
+**22 שבועות** לסיים את כל המסלול ולצאת עם Portfolio מקצועי.
 
 > ראה את [מסלול הלמידה המלא](Curriculum.md) ואת [תיקיית המשימות](Assignments/).
 
@@ -42,7 +42,7 @@
 ```
 econlabppe/
 ├── README.md               ← אתה כאן
-├── Curriculum.md           ← מסלול למידה מלא (24 שבועות)
+├── Curriculum.md           ← מסלול למידה מלא (22 שבועות)
 │
 ├── Assignments/            ← המשימות השבועיות (2-3 שבועות לכל כלי)
 │   ├── Week_01_Setup/            ← מודול 1: הכנת סביבה
@@ -57,18 +57,16 @@ econlabppe/
 │   ├── Week_10_Pandas_Advanced/  ← Pandas מתקדם + Time Series
 │   ├── Week_11_APIs_Israel/      ← מודול 5: APIs ישראליים
 │   ├── Week_12_APIs_International/ ← APIs בין-לאומיים
-│   ├── Week_13_R_Basics/         ← מודול 6: R יסודות
-│   ├── Week_14_R_Econometrics/   ← R אקונומטריקה
-│   ├── Week_15_R_Time_Series/    ← R Time Series
-│   ├── Week_16_Matplotlib/       ← מודול 7: ויזואליזציה
-│   ├── Week_17_Plotly/           ← Plotly אינטראקטיבי
-│   ├── Week_18_ggplot2_RMarkdown/ ← ggplot2 + R Markdown
-│   ├── Week_19_PowerBI_Basics/   ← מודול 8: Power BI
-│   ├── Week_20_PowerBI_Advanced/ ← Power BI מתקדם
-│   ├── Week_21_Tableau/          ← Tableau Public
-│   ├── Week_22_DSGE_Intro/       ← מודול 9: DSGE מבוא
-│   ├── Week_23_DSGE_Estimation/  ← DSGE אמידה
-│   └── Week_24_DSGE_Capstone/    ← פרויקט מסכם
+│   ├── Week_13_R_Basics/              ← מודול 6: R מאפס
+│   ├── Week_14_R_Tidyverse/           ← Tidyverse + ggplot2
+│   ├── Week_15_Econometrics_Regression/ ← מודול 7: OLS רגרסיה
+│   ├── Week_16_Econometrics_Advanced/ ← DiD, ARIMA, Panel Data
+│   ├── Week_17_Visualization_Python/  ← מודול 8: Plotly + Dash
+│   ├── Week_18_Visualization_R/       ← ggplot2 מתקדם + R Markdown
+│   ├── Week_19_BI_PowerBI/            ← מודול 9: Power BI + DAX
+│   ├── Week_20_BI_Tableau/            ← Tableau + Story
+│   ├── Week_21_DSGE_Intro/            ← מודול 10: RBC + NK
+│   └── Week_22_DSGE_Advanced/         ← BVAR + פרויקט גמר
 │
 ├── Members/                ← תיקי העבודות האישיים של חברי המעבדה
 │   ├── _template/          ← התחל מכאן! העתק לתיקייה בשמך
