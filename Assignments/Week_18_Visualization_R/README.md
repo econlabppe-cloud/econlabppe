@@ -262,7 +262,7 @@ lang: he
 
 ## 2. נתונים
 
-```{r setup, include=FALSE}
+```r
 library(tidyverse)
 library(stargazer)
 library(knitr)
@@ -277,7 +277,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r load-data}
+```r
 # טעינת נתונים
 housing <- read_csv("housing_data.csv")
 macro   <- read_csv("macro_data.csv")
@@ -291,7 +291,7 @@ housing %>%
 
 ## 3. תיאור נתונים
 
-```{r descriptive-stats}
+```r
 macro %>%
   select(-year) %>%
   summary() %>%
@@ -299,7 +299,7 @@ macro %>%
   kable_styling()
 ```
 
-```{r gdp-plot, fig.cap="איור 1: צמיחת תמ\"ג ישראל 2018–2024"}
+```r
 ggplot(macro, aes(x = year, y = gdp_growth)) +
   geom_col(aes(fill = gdp_growth > 0), show.legend = FALSE) +
   scale_fill_manual(values = c("TRUE" = "#1565C0", "FALSE" = "#C62828")) +
@@ -309,13 +309,13 @@ ggplot(macro, aes(x = year, y = gdp_growth)) +
 
 ## 4. ניתוח אקונומטרי
 
-```{r regression}
+```r
 model1 <- lm(house_price_idx ~ interest, data = macro)
 model2 <- lm(house_price_idx ~ interest + gdp_growth, data = macro)
 model3 <- lm(house_price_idx ~ interest + gdp_growth + inflation, data = macro)
 ```
 
-```{r regression-table, results='asis'}
+```r
 stargazer(model1, model2, model3,
           type      = "html",
           title     = "טבלה 1: גורמי מחירי הדיור",
@@ -327,7 +327,7 @@ stargazer(model1, model2, model3,
 
 ## 5. ממצאים ומסקנות
 
-```{r inline-stats}
+```r
 did_coef <- coef(model1)["interest"]
 ```
 
