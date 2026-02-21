@@ -15,12 +15,12 @@
 
 | כלי | מה תעשו איתו |
 |---|---|
-| **Excel** | ניתוח ראשוני, Pivot Tables, פונקציות פיננסיות |
-| **SQL** | שאילתות על בסיסי נתונים, מיזוג מקורות |
-| **Python** | Pandas, ניתוח סדרות עתיות, גרפים, API |
-| **R** | אקונומטריקה, רגרסיות, DiD, Time Series |
+| **Excel** | ניתוח ראשוני, Pivot Tables, Power Query, NPV/IRR, Dashboard |
+| **SQL** | שאילתות, JOINs, Window Functions, Python+SQL |
+| **Python** | Pandas, Time Series, matplotlib, APIs |
+| **R** | אקונומטריקה, DiD, ARIMA, VAR, ggplot2 |
 | **Power BI / Tableau** | דשבורדים ויזואליים לקובעי מדיניות |
-| **DSGE** | הרצת מודלים מאקרו-כלכליים דינמיים |
+| **DSGE** | RBC, New Keynesian, Bayesian Estimation, IRFs |
 
 ---
 
@@ -28,7 +28,10 @@
 
 המסלול מבוסס על **משימות שבועיות + קבוצת WhatsApp** פעילה.
 
-כל שבוע: הסבר קצר → משימה מעשית → העלאה לתיקייה האישית ב-`Members/`
+**עקרון מרכזי:** כל כלי מקבל **2-3 שבועות** – מרמה מאפס מוחלט ועד רמה מקצועית.
+לא מדלגים, לא מזרזים. כל שבוע: הסבר מלא → משימה מעשית → העלאה לתיקייה האישית ב-`Members/`
+
+**~24 שבועות** לסיים את כל המסלול ולצאת עם Portfolio מקצועי.
 
 > ראה את [מסלול הלמידה המלא](Curriculum.md) ואת [תיקיית המשימות](Assignments/).
 
@@ -39,19 +42,33 @@
 ```
 econlabppe/
 ├── README.md               ← אתה כאן
-├── Curriculum.md           ← מסלול למידה מלא (שבוע אחר שבוע)
+├── Curriculum.md           ← מסלול למידה מלא (24 שבועות)
 │
-├── Assignments/            ← המשימות השבועיות
-│   ├── Week_01_Setup/      ← התקנת כלים + חיבור לגיטהאב (משימה ראשונה!)
-│   ├── Week_02_Excel/
-│   ├── Week_03_SQL_Intro/
-│   ├── Week_04_Python_Pandas/
-│   ├── Week_05_APIs/
-│   ├── Week_06_R_Basics/
-│   ├── Week_07_Econometrics_R/
-│   ├── Week_08_Visualization/
-│   ├── Week_09_BI_Tools/
-│   └── Week_10_DSGE/
+├── Assignments/            ← המשימות השבועיות (2-3 שבועות לכל כלי)
+│   ├── Week_01_Setup/            ← מודול 1: הכנת סביבה
+│   ├── Week_02_Excel_Basics/     ← מודול 2: Excel מאפס
+│   ├── Week_03_Excel_Intermediate/ ← Excel בינוני
+│   ├── Week_04_Excel_Advanced/   ← Excel מתקדם + Dashboard
+│   ├── Week_05_SQL_Basics/       ← מודול 3: SQL מאפס
+│   ├── Week_06_SQL_Intermediate/ ← SQL בינוני (JOINs, GROUP BY)
+│   ├── Week_07_SQL_Advanced/     ← SQL מתקדם + Python+SQL
+│   ├── Week_08_Python_Basics/    ← מודול 4: Python מאפס
+│   ├── Week_09_Pandas_Basics/    ← Pandas בסיסי
+│   ├── Week_10_Pandas_Advanced/  ← Pandas מתקדם + Time Series
+│   ├── Week_11_APIs_Israel/      ← מודול 5: APIs ישראליים
+│   ├── Week_12_APIs_International/ ← APIs בין-לאומיים
+│   ├── Week_13_R_Basics/         ← מודול 6: R יסודות
+│   ├── Week_14_R_Econometrics/   ← R אקונומטריקה
+│   ├── Week_15_R_Time_Series/    ← R Time Series
+│   ├── Week_16_Matplotlib/       ← מודול 7: ויזואליזציה
+│   ├── Week_17_Plotly/           ← Plotly אינטראקטיבי
+│   ├── Week_18_ggplot2_RMarkdown/ ← ggplot2 + R Markdown
+│   ├── Week_19_PowerBI_Basics/   ← מודול 8: Power BI
+│   ├── Week_20_PowerBI_Advanced/ ← Power BI מתקדם
+│   ├── Week_21_Tableau/          ← Tableau Public
+│   ├── Week_22_DSGE_Intro/       ← מודול 9: DSGE מבוא
+│   ├── Week_23_DSGE_Estimation/  ← DSGE אמידה
+│   └── Week_24_DSGE_Capstone/    ← פרויקט מסכם
 │
 ├── Members/                ← תיקי העבודות האישיים של חברי המעבדה
 │   ├── _template/          ← התחל מכאן! העתק לתיקייה בשמך

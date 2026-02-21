@@ -1,138 +1,362 @@
-# משימה 1 – הכנת הסביבה
+# שבוע 1 – הכנת הסביבה: בניית מחשב של כלכלן נתונים
 
 > **המשימה הראשונה שלך ב-EconLab PPE**
-> אחרי שתסיים, יהיה לך מחשב מוכן לעבוד עם נתונים כמו מקצוענים.
+> בסוף השבוע הזה יהיה לך סביבת עבודה מקצועית שמוכנה לכל דבר שנעשה במסלול.
+> אל תדלג על שום שלב – הבסיס הזה יחסוך לך שעות של כאבי ראש בהמשך.
 
 ---
 
-## חלק א – התקנת כלים (חובה)
+## למה בכלל צריך את כל הכלים האלה?
+
+לפני שמתקינים, כדאי להבין **מה כל כלי עושה** ולמה כלכלן צריך אותו:
+
+| כלי | מה זה | למה כלכלן צריך |
+|---|---|---|
+| **Python** | שפת תכנות כללית | ניתוח נתונים, אוטומציה, API, מודלים |
+| **R** | שפת סטטיסטיקה | אקונומטריקה, מודלים, גרפים אקדמיים |
+| **Git** | מערכת ניהול גרסאות | לשמור קוד, לשתף, לא לאבד עבודה |
+| **GitHub** | פלטפורמת שיתוף קוד | Portfolio מקצועי, שיתוף פעולה |
+| **VS Code** | עורך קוד | כותבים ומריצים Python |
+| **RStudio** | סביבת R | כותבים ומריצים R |
+| **DBeaver** | ניהול SQL | מתחברים לבסיסי נתונים |
+| **Jupyter** | Notebooks אינטראקטיביים | ניתוח + הסבר + גרפים ביחד |
+
+---
+
+## חלק א – התקנת כלים
 
 ### 1. Python 3.11+
+
+Python היא שפת התכנות הנפוצה ביותר לניתוח נתונים בעולם.
+
+**Windows:**
 1. כנס ל-[python.org/downloads](https://www.python.org/downloads/)
-2. הורד את הגרסה העדכנית
-3. **חשוב ב-Windows:** סמן את ✅ "Add Python to PATH" לפני ההתקנה
-4. אמת התקנה: פתח Terminal / CMD וכתוב:
-   ```bash
-   python --version
-   ```
-   אמור להיראות: `Python 3.11.x`
+2. לחץ על "Download Python 3.11.x" (הגרסה הכתומה הגדולה)
+3. **חשוב מאוד:** לפני שלוחצים Install, סמן ✅ **"Add Python to PATH"**
+4. לחץ "Install Now"
+
+**Mac:**
+```bash
+# התקן Homebrew קודם אם אין לך:
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# התקן Python:
+brew install python@3.11
+```
+
+**בדיקה:** פתח Terminal / CMD וכתוב:
+```bash
+python --version
+# אמור לראות: Python 3.11.x
+
+python -c "print('Python עובד!')"
+# אמור לראות: Python עובד!
+```
+
+> **שגיאה נפוצה:** אם רואים `'python' is not recognized` ב-Windows – לא סימנת "Add to PATH". הסר את ההתקנה וחזור על התהליך.
+
+---
 
 ### 2. R + RStudio
-1. **R עצמו:** [cran.r-project.org](https://cran.r-project.org/)
-2. **RStudio (IDE):** [posit.co/download/rstudio-desktop](https://posit.co/download/rstudio-desktop/)
-3. פתח RStudio ובדוק שהכל עולה
+
+R נבנתה בשנות ה-90 ע"י סטטיסטיקאים, ועד היום היא הסטנדרט לאקונומטריקה.
+
+**שלב א – R עצמה (מנוע):**
+1. כנס ל-[cran.r-project.org](https://cran.r-project.org/)
+2. בחר לפי מערכת ההפעלה שלך (Windows / Mac / Linux)
+3. לחץ "install R for the first time"
+4. הורד והתקן
+
+**שלב ב – RStudio (ממשק):**
+1. כנס ל-[posit.co/download/rstudio-desktop](https://posit.co/download/rstudio-desktop/)
+2. הורד "RStudio Desktop – Free"
+3. התקן
+
+**בדיקה:** פתח RStudio ובחלונית Console (למטה) כתוב:
+```r
+print("R עובד!")
+# אמור לראות: [1] "R עובד!"
+
+2 + 2
+# אמור לראות: [1] 4
+```
+
+---
 
 ### 3. Git
-1. הורד מ-[git-scm.com](https://git-scm.com/)
-2. אמת התקנה:
-   ```bash
-   git --version
-   ```
 
-### 4. VS Code (IDE לפייתון)
+Git מאפשר לך לשמור כל גרסה של הקוד שלך ולשתף עם אחרים.
+
+**Windows:** הורד מ-[git-scm.com](https://git-scm.com/) → הפעל את ה-installer עם הגדרות ברירת מחדל.
+
+**Mac:** כבר מותקן! בדוק:
+```bash
+git --version
+```
+
+**הגדרה ראשונית** (חובה לכולם):
+```bash
+# הגדר את השם שלך (כפי שיופיע ב-commits)
+git config --global user.name "Firstname Lastname"
+
+# הגדר את האימייל שלך (אותו אימייל כמו ב-GitHub)
+git config --global user.email "your@email.com"
+
+# בדוק שנשמר:
+git config --list
+```
+
+---
+
+### 4. VS Code – עורך קוד לפייתון
+
+**התקנה:**
 1. הורד מ-[code.visualstudio.com](https://code.visualstudio.com/)
-2. התקן את ה-Extension: **Python** (מאת Microsoft)
-3. התקן את ה-Extension: **Jupyter**
+2. התקן
 
-### 5. DBeaver (לניהול SQL)
-1. הורד **Community Edition** מ-[dbeaver.io](https://dbeaver.io/)
-2. זה ה-IDE שלנו לכל עבודת SQL
+**Extensions חובה:**
+פתח VS Code → לחץ על אייקון ה-Extensions (Ctrl+Shift+X):
+
+- **Python** (מאת Microsoft) – הכרחי
+- **Jupyter** (מאת Microsoft) – לעבוד עם notebooks
+- **GitLens** – לראות היסטוריית שינויים
+
+**בדיקה:** לחץ Ctrl+Shift+P → כתוב "Select Interpreter" → בחר את ה-Python שהתקנת.
+
+---
+
+### 5. DBeaver – ניהול בסיסי נתונים
+
+**התקנה:**
+1. כנס ל-[dbeaver.io](https://dbeaver.io/)
+2. הורד **Community Edition** (חינמי)
+3. התקן
+
+DBeaver מאפשר לחבר ל-SQLite, PostgreSQL, MySQL, ועוד – ממשק אחד לכל כלי SQL.
 
 ---
 
 ## חלק ב – חיבור לגיטהאב
 
-### 1. צור חשבון GitHub
-- כנס ל-[github.com](https://github.com) ופתח חשבון אם אין לך
-- שם משתמש מקצועי (FirstnameLastname)
+### מה זה GitHub ולמה חשוב?
 
-### 2. Fork / Clone את המאגר
+GitHub הוא "ענן לקוד". במקום שקובץ Excel יושב על שולחן העבודה שלך:
+- הקוד שלך מאוחסן בענן ✅
+- אתה יכול לעבוד מכל מחשב ✅
+- גורם גיוס יכול לראות את הפרויקטים שלך ✅
+- לא מאבדים עבודה אם המחשב קורס ✅
+
+### שלב 1 – פתח חשבון GitHub
+- כנס ל-[github.com](https://github.com)
+- לחץ "Sign Up"
+- **שם משתמש:** השתמש בשם אמיתי מקצועי (FirstnameLastname)
+- **אימייל:** אמיתי שאתה משתמש בו
+
+### שלב 2 – Clone את המאגר שלנו
+
 ```bash
 # שכפל את המאגר למחשב שלך
 git clone https://github.com/YourOrg/econlabppe.git
+
+# כנס לתיקייה
 cd econlabppe
+
+# ראה מה יש שם
+ls
 ```
 
-### 3. הגדר את זהותך ב-Git
+**מה קרה?** יצרת עותק מקומי של כל הקוד מהענן. מעכשיו אתה יכול לעבוד, ואחר כך "לדחוף" את השינויים חזרה.
+
+### שלב 3 – הבנת מחזור ה-Git
+
 ```bash
-git config --global user.name "Your Name"
-git config --global user.email "your@email.com"
+# 1. ראה מה שינית
+git status
+
+# 2. הוסף קבצים ל"תיבת ההכנה"
+git add filename.py
+
+# 3. שמור snapshot עם הסבר
+git commit -m "הוספתי ניתוח ראשון"
+
+# 4. שלח לענן (GitHub)
+git push
 ```
 
-### 4. צור תיקייה אישית
+### שלב 4 – צור תיקייה אישית
+
 ```bash
-# העתק את ה-template לתיקייה שלך
+# העתק את ה-template לתיקייה בשמך
 cp -r Members/_template Members/FirstName_LastName
+
+# ראה מה קיבלת
+ls Members/FirstName_LastName/
 ```
 
 ---
 
 ## חלק ג – Python: הרץ את סקריפט ההיכרות
 
-### 1. צור סביבה וירטואלית
+### מה זה סביבה וירטואלית ולמה צריך?
+
+דמיין שלכל פרויקט יש "חדר" משלו עם החבילות שלו. אם פרויקט א' צריך pandas 1.5 ופרויקט ב' צריך pandas 2.0 – הם לא "מריבים". זה מה שסביבה וירטואלית עושה.
+
 ```bash
+# צור סביבה וירטואלית
 cd econlabppe
 python -m venv .venv
 
-# הפעל:
+# הפעל אותה:
 source .venv/bin/activate    # Mac / Linux
 .venv\Scripts\activate       # Windows
+
+# תראה שב-Terminal מופיע (.venv) לפני שורת הפקודה
+# (.venv) $
 ```
 
-### 2. התקן את החבילות הבסיסיות
+### התקנת חבילות
+
 ```bash
-pip install pandas numpy matplotlib requests jupyter
+# חבילות הבסיס שנשתמש בהן כל המסלול
+pip install pandas numpy matplotlib requests jupyter openpyxl
+
+# בדוק שהותקן:
+pip list
 ```
 
-### 3. ערוך את קובץ ה-intro שלך
-פתח את `Members/YourName/intro.py` ומלא את הפרטים שלך:
-- שמך
-- התואר שלך
-- למה הצטרפת ל-EconLab
-- מה תחום הכלכלה שמעניין אותך
+**מה כל חבילה עושה:**
+- `pandas` – עבודה עם טבלאות נתונים
+- `numpy` – חישובים מתמטיים
+- `matplotlib` – גרפים
+- `requests` – גישה ל-APIs
+- `jupyter` – Notebooks
+- `openpyxl` – קריאת/כתיבת Excel
 
-### 4. הרץ את הסקריפט
+### ערוך את קובץ ה-intro שלך
+
+פתח `Members/YourName/intro.py` ב-VS Code ומלא:
+
+```python
+# intro.py – ברוך הבא ל-EconLab!
+
+name = "שמך המלא"
+degree = "כלכלה ממשל, שנה ב"
+why_econlab = "רוצה ללמוד לעבוד עם נתונים כלכליים אמיתיים"
+interest = "שוק הדיור בישראל"
+
+print("=" * 40)
+print(f"שם: {name}")
+print(f"תואר: {degree}")
+print(f"למה EconLab: {why_econlab}")
+print(f"תחום עניין: {interest}")
+print("=" * 40)
+print("הסביבה עובדת! מוכן להתחיל.")
+```
+
+### הרץ את הסקריפט
+
 ```bash
 python Members/YourName/intro.py
 ```
-ודא שרואים את הפלט שלך.
+
+צפה שתראה את הפלט שלך מודפס.
 
 ---
 
-## חלק ד – הגשה
+## חלק ד – Jupyter Notebook ראשון
+
+Jupyter Notebooks הם כמו מסמכי Word שאפשר להריץ בתוכם קוד. נשתמש בהם כל המסלול.
+
+```bash
+# הפעל Jupyter
+jupyter notebook
+```
+
+נפתח דפדפן. לחץ **New → Python 3**.
+
+**נסה את זה בתא הראשון:**
+```python
+# תא 1 – חישוב פשוט
+gdp_2023 = 2100  # מיליארד ₪ (בערך)
+gdp_2022 = 1980  # מיליארד ₪
+growth_rate = (gdp_2023 - gdp_2022) / gdp_2022 * 100
+print(f"צמיחת תמ''ג 2023: {growth_rate:.1f}%")
+```
+
+לחץ Shift+Enter להריץ. תראה את הפלט מתחת לתא.
+
+**תא 2:**
+```python
+import matplotlib.pyplot as plt
+
+years = [2019, 2020, 2021, 2022, 2023]
+gdp_growth = [3.8, -1.9, 8.6, 6.5, 2.0]
+
+plt.figure(figsize=(10, 5))
+plt.plot(years, gdp_growth, marker='o', linewidth=2, color='royalblue')
+plt.axhline(y=0, color='red', linestyle='--', alpha=0.5)
+plt.title("צמיחת תמ''ג ישראל 2019-2023", fontsize=14)
+plt.xlabel("שנה")
+plt.ylabel("צמיחה (%)")
+plt.grid(True, alpha=0.3)
+plt.show()
+```
+
+תראה גרף! שמור את ה-Notebook כ-`Members/YourName/Week_01/first_notebook.ipynb`.
+
+---
+
+## חלק ה – הגשה
 
 ```bash
 # הוסף את הקבצים שלך
 git add Members/YourName/
 
-# Commit
-git commit -m "feat: Week 1 setup - YourName"
+# Commit עם הסבר ברור
+git commit -m "feat: Week 1 setup complete - YourName"
 
-# Push
+# Push לענן
 git push
 ```
 
+**לכנס ל-GitHub ולוודא שהתיקייה שלך מופיעה!**
+
 ---
 
-## בדיקה עצמית – כל הבאים צריכים לעבוד
+## בדיקה עצמית – כל הבאים חייבים לעבוד
 
 - [ ] `python --version` מחזיר 3.11+
 - [ ] `git --version` עובד
-- [ ] RStudio נפתח ורץ
-- [ ] VS Code עם Python extension
-- [ ] DBeaver מותקן
-- [ ] תיקייה אישית ב-`Members/YourName/` קיימת ב-GitHub
+- [ ] `git config --list` מציג את השם והאימייל שלך
+- [ ] RStudio נפתח, מריץ `2+2` ומחזיר 4
+- [ ] VS Code עם Python + Jupyter Extensions
+- [ ] DBeaver מותקן ונפתח
+- [ ] `(.venv)` מופיע ב-Terminal
 - [ ] `intro.py` רץ ומדפיס את הפרטים שלך
+- [ ] Jupyter Notebook ראשון עם גרף
+- [ ] הכל מועלה ל-GitHub
+
+---
+
+## מושגי יסוד לסיכום
+
+| מושג | הגדרה |
+|---|---|
+| **Repository** | תיקייה של קוד שמנוהלת ע"י Git |
+| **Commit** | snapshot של הקוד עם הסבר |
+| **Push** | שליחת הקוד מהמחשב לענן |
+| **Clone** | הורדת Repository מהענן למחשב |
+| **Virtual Environment** | סביבה מבודדת עם חבילות ספציפיות |
 
 ---
 
 ## עזרה
 
 נתקלת בבעיה? פרסם בקבוצת WhatsApp עם:
-1. מה אתה מנסה לעשות
+1. מה ניסית לעשות
 2. צילום מסך של השגיאה
 3. מה כבר ניסית
 
 ---
 
-**השבוע הבא:** Excel לניתוח כלכלי → [משימה 2](../Week_02_Excel/README.md)
+**השבוע הבא:** Excel מאפס – הכלי שכל כלכלן מתחיל בו → [שבוע 2](../Week_02_Excel_Basics/README.md)
