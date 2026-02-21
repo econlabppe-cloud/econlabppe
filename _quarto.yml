@@ -102,9 +102,7 @@ book:
 
 format:
   html:
-    theme:
-      light: [cosmo, custom.css]
-      dark: [cosmo, custom.css]
+    theme: cosmo
     css: custom.css
     include-after-body: custom.js
     toc: true
