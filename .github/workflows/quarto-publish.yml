@@ -87,13 +87,18 @@ jobs:
           fi
 
       # ── 7. Deploy to gh-pages ────────────────────────────────
+      # peaceiris/actions-gh-pages creates the branch automatically
+      # if it doesn't exist yet — no local init required.
       - name: "Publish to GitHub Pages"
-        uses: quarto-dev/quarto-actions/publish@v2
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          target: gh-pages
-          path: _book
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_book
+          publish_branch: gh-pages
+          force_orphan: true        # keep gh-pages history lean
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_message: "deploy: ${{ github.event.head_commit.message }}"
 
       # ── 8. Summary ───────────────────────────────────────────
       - name: "Print deployment summary"
