@@ -20,13 +20,14 @@
 שבועות 5-7   → SQL  (מאפס → בינוני → מתקדם + Python+SQL)
 שבועות 8-10  → Python + Pandas (מאפס → בסיסי → מתקדם)
 שבועות 11-12 → Python + APIs (בנק ישראל, הלמ"ס, OECD, World Bank)
-שבועות 13-15 → R (יסודות → אקונומטריקה → Time Series)
-שבועות 16-18 → ויזואליזציה מתקדמת (matplotlib → plotly → ggplot2)
-שבועות 19-21 → Power BI / Tableau (Dashboards לקובעי מדיניות)
-שבועות 22-24 → DSGE ומודלים מאקרו-כלכליים דינמיים
+שבועות 13-14 → R (יסודות → Tidyverse + ggplot2)
+שבועות 15-16 → אקונומטריקה (OLS, DiD, ARIMA, Panel Data)
+שבועות 17-18 → ויזואליזציה מתקדמת (Plotly+Dash → ggplot2+RMarkdown)
+שבועות 19-20 → Power BI + Tableau (Dashboards לקובעי מדיניות)
+שבועות 21-22 → DSGE ומודלים מאקרו-כלכליים (RBC, NK, BVAR + פרויקט גמר)
 ```
 
-**סה"כ: ~24 שבועות** לרמת כלכלן נתונים מקצועי.
+**סה"כ: 22 שבועות** לרמת כלכלן נתונים מקצועי.
 
 ---
 
@@ -234,55 +235,152 @@
 
 ---
 
-## מודול 6 – R: אקונומטריקה ומודלים סטטיסטיים
+## מודול 6 – R: יסודות + Tidyverse
 
-### שבוע 13 – R יסודות
+### שבוע 13 – R מאפס
+**כלים:** R, RStudio
+
+**מה לומדים:**
+- Vectors, data.frame, lists, factors
+- לולאות, פונקציות, apply()
+- Base R graphics: plot(), barplot(), hist()
+- ניקוי נתונים: na.omit(), trimws(), duplicated()
+- t-test, shapiro.test(), cor()
+
 📋 [משימה 13 – R Basics](Assignments/Week_13_R_Basics/README.md)
 
-### שבוע 14 – R: אקונומטריקה מעשית
-📋 [משימה 14 – R Econometrics](Assignments/Week_14_R_Econometrics/README.md)
+---
 
-### שבוע 15 – R: Time Series וחיזוי
-📋 [משימה 15 – R Time Series](Assignments/Week_15_R_Time_Series/README.md)
+### שבוע 14 – Tidyverse + ggplot2
+**כלים:** R, tidyverse (dplyr, tidyr, ggplot2, lubridate)
+
+**מה לומדים:**
+- `dplyr`: filter, select, mutate, group_by, summarise, join
+- `%>%` Pipe operator
+- `tidyr`: pivot_longer, pivot_wider, separate, fill
+- `lubridate`: תאריכים ורבעונים
+- `ggplot2`: גרפים מקצועיים + facets + שמירה לPNG
+
+📋 [משימה 14 – R Tidyverse](Assignments/Week_14_R_Tidyverse/README.md)
 
 ---
 
-## מודול 7 – ויזואליזציה מתקדמת
+## מודול 7 – אקונומטריקה יישומית
 
-### שבוע 16 – matplotlib + seaborn
-📋 [משימה 16 – matplotlib Advanced](Assignments/Week_16_Matplotlib/README.md)
+### שבוע 15 – רגרסיה לינארית OLS
+**כלים:** R, lmtest, sandwich, stargazer, broom
 
-### שבוע 17 – Plotly: גרפים אינטראקטיביים
-📋 [משימה 17 – Plotly Interactive](Assignments/Week_17_Plotly/README.md)
+**מה לומדים:**
+- `lm()`: רגרסיה פשוטה ומרובה
+- בדיקת הנחות: VIF, Breusch-Pagan, Durbin-Watson
+- שגיאות HC3 עמידות (Heteroscedasticity)
+- `stargazer()`: טבלאות לפרסום
+- Dummy variables + interaction terms
 
-### שבוע 18 – ggplot2 ו-R Markdown
-📋 [משימה 18 – ggplot2 & RMarkdown](Assignments/Week_18_ggplot2_RMarkdown/README.md)
-
----
-
-## מודול 8 – Power BI / Tableau
-
-### שבוע 19 – Power BI יסודות
-📋 [משימה 19 – Power BI Basics](Assignments/Week_19_PowerBI_Basics/README.md)
-
-### שבוע 20 – Power BI מתקדם
-📋 [משימה 20 – Power BI Advanced](Assignments/Week_20_PowerBI_Advanced/README.md)
-
-### שבוע 21 – Tableau Public
-📋 [משימה 21 – Tableau](Assignments/Week_21_Tableau/README.md)
+📋 [משימה 15 – Econometrics Regression](Assignments/Week_15_Econometrics_Regression/README.md)
 
 ---
 
-## מודול 9 – DSGE: מודלים מאקרו-כלכליים דינמיים
+### שבוע 16 – DiD, ARIMA ו-Panel Data
+**כלים:** R, fixest, forecast, plm, bvartools
 
-### שבוע 22 – מבוא ל-DSGE
-📋 [משימה 22 – DSGE Intro](Assignments/Week_22_DSGE_Intro/README.md)
+**מה לומדים:**
+- **DiD**: Two-Way FE + event study + parallel trends
+- **ARIMA**: auto.arima(), checkresiduals(), forecast()
+- **Panel Data**: feols() + cluster SE, Hausman test
+- **Synthetic Control**: tidysynth
 
-### שבוע 23 – DSGE: אמידה וסימולציה
-📋 [משימה 23 – DSGE Estimation](Assignments/Week_23_DSGE_Estimation/README.md)
+📋 [משימה 16 – Econometrics Advanced](Assignments/Week_16_Econometrics_Advanced/README.md)
 
-### שבוע 24 – DSGE: NK ופרויקט מסכם
-📋 [משימה 24 – DSGE Capstone](Assignments/Week_24_DSGE_Capstone/README.md)
+---
+
+## מודול 8 – ויזואליזציה מקצועית
+
+### שבוע 17 – Python Plotly + Dash
+**כלים:** Python, plotly, dash, dash-bootstrap-components
+
+**מה לומדים:**
+- `plotly.express`: line, bar, scatter, choropleth, animation
+- `plotly.graph_objects`: dual-axis, subplots, annotations
+- `Dash`: דשבורד אינטראקטיבי מלא עם callbacks
+
+📋 [משימה 17 – Visualization Python](Assignments/Week_17_Visualization_Python/README.md)
+
+---
+
+### שבוע 18 – ggplot2 מתקדם + R Markdown
+**כלים:** R, ggplot2, patchwork, ggtext, scales, rmarkdown, gtsummary
+
+**מה לומדים:**
+- Custom theme מקצועי (The Economist style)
+- `patchwork`: חיבור גרפים מרובים
+- `scales`: פורמט אחוזים, פסיקים, לוגריתמי
+- `R Markdown`: דוחות עם קוד + תוצאות + גרפים
+- `gtsummary`: טבלאות מחקר מקצועיות
+
+📋 [משימה 18 – Visualization R](Assignments/Week_18_Visualization_R/README.md)
+
+---
+
+## מודול 9 – BI Tools: דשבורדים לקובעי מדיניות
+
+### שבוע 19 – Power BI
+**כלים:** Power BI Desktop, Power Query, DAX
+
+**מה לומדים:**
+- Power Query: ETL, M Code, Date Table, Union
+- Data Model: Star Schema, Relationships
+- DAX: Measures, Calculated Columns, Time Intelligence (YoY, YTD, MA)
+- ויזואליזציות: KPI Cards, Line, Bar, Scatter, Matrix, Map
+- Slicers, Filters, Conditional Formatting
+- פרסום ל-Power BI Service
+
+📋 [משימה 19 – BI Power BI](Assignments/Week_19_BI_PowerBI/README.md)
+
+---
+
+### שבוע 20 – Tableau
+**כלים:** Tableau Public (חינמי)
+
+**מה לומדים:**
+- חיבור נתונים: CSV, Excel, Join, Union
+- Calculated Fields + Table Calculations
+- Filters, Parameters
+- Dashboard + Actions (Filter, Highlight)
+- Story: נרטיב ויזואלי כלכלי
+- פרסום ב-Tableau Public
+
+📋 [משימה 20 – BI Tableau](Assignments/Week_20_BI_Tableau/README.md)
+
+---
+
+## מודול 10 – DSGE: מודלים מאקרו-כלכליים דינמיים
+
+### שבוע 21 – מבוא ל-DSGE
+**כלים:** R, gEcon
+
+**מה לומדים:**
+- RBC Model: Households, Firms, Technology Shock
+- Steady State + Log-Linearization
+- New Keynesian: IS Curve, Phillips Curve, Taylor Rule
+- 3-Equation NK: סימולציה ידנית + IRF
+- כלי DSGE בפרקטיקה: Dynare, gEcon, pydsge
+
+📋 [משימה 21 – DSGE Intro](Assignments/Week_21_DSGE_Intro/README.md)
+
+---
+
+### שבוע 22 – DSGE מלא + פרויקט גמר
+**כלים:** R, BVAR, bvartools, vars, forecast
+
+**מה לומדים:**
+- אמידה בייזיאנית: Prior + Posterior, MCMC
+- BVAR: Vector Autoregression + Minnesota Prior
+- IRF + FEVD (Variance Decomposition)
+- תחזית מאקרו 8 רבעונים
+- פרויקט גמר: Pipeline מלא נתונים → ניתוח → DSGE → דוח
+
+📋 [משימה 22 – DSGE Advanced](Assignments/Week_22_DSGE_Advanced/README.md)
 
 ---
 
