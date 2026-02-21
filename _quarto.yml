@@ -1,0 +1,127 @@
+project:
+  type: book
+  output-dir: _book
+  render:
+    - "*.qmd"
+    - "*.md"
+    - "!Members/**"
+    - "!Data/**"
+    - "!_book/**"
+    - "!setup_repo.py"
+
+lang: he
+dir: rtl
+
+book:
+  title: "מעבדת אקונומטריקה"
+  subtitle: "EconLabPPE — קורס כלכלה כמותית אינטראקטיבי"
+  author: "צוות EconLabPPE"
+  date: "2025"
+  favicon: "favicon.ico"
+  reader-mode: true
+  search:
+    location: sidebar
+    type: overlay
+  repo-url: https://github.com/econlabppe/econlabppe
+  repo-actions: [edit, issue]
+  sharing: [twitter, linkedin]
+
+  navbar:
+    background: primary
+    right:
+      - icon: github
+        href: https://github.com/econlabppe/econlabppe
+        aria-label: GitHub
+      - text: "🏆 היכל התהילה"
+        href: hall_of_fame.qmd
+
+  sidebar:
+    style: docked
+    background: light
+
+  chapters:
+    - index.qmd
+
+    - part: "🛠️ מודול 1: הגדרה ו-Excel"
+      chapters:
+        - Assignments/Week_01_Setup/README.md
+        - Assignments/Week_02_Excel_Basics/README.md
+        - Assignments/Week_03_Excel_Intermediate/README.md
+        - Assignments/Week_04_Excel_Advanced/README.md
+
+    - part: "🗄️ מודול 2: SQL"
+      chapters:
+        - Assignments/Week_05_SQL_Basics/README.md
+        - Assignments/Week_06_SQL_Intermediate/README.md
+        - Assignments/Week_07_SQL_Advanced/README.md
+
+    - part: "🐍 מודול 3: Python"
+      chapters:
+        - Assignments/Week_08_Python_Basics/README.md
+        - Assignments/Week_09_Pandas_Basics/README.md
+        - Assignments/Week_10_Pandas_Advanced/README.md
+
+    - part: "🌐 מודול 4: APIs"
+      chapters:
+        - Assignments/Week_11_APIs_Israel/README.md
+        - Assignments/Week_12_APIs_International/README.md
+
+    - part: "📊 מודול 5: R"
+      chapters:
+        - Assignments/Week_13_R_Basics/README.md
+        - Assignments/Week_14_R_Tidyverse/README.md
+
+    - part: "📈 מודול 6: אקונומטריקה"
+      chapters:
+        - Assignments/Week_15_Econometrics_Regression/README.md
+        - Assignments/Week_16_Econometrics_Advanced/README.md
+
+    - part: "🎨 מודול 7: ויזואליזציה"
+      chapters:
+        - Assignments/Week_17_Visualization_Python/README.md
+        - Assignments/Week_18_Visualization_R/README.md
+
+    - part: "📉 מודול 8: כלי BI"
+      chapters:
+        - Assignments/Week_19_BI_PowerBI/README.md
+        - Assignments/Week_20_BI_Tableau/README.md
+
+    - part: "🏛️ מודול 9: DSGE"
+      chapters:
+        - Assignments/Week_21_DSGE_Intro/README.md
+        - Assignments/Week_22_DSGE_Advanced/README.md
+
+    - hall_of_fame.qmd
+
+  page-footer:
+    left: |
+      © 2025 EconLabPPE — מעבדת אקונומטריקה
+    right: |
+      בנוי עם ❤️ ו-[Quarto](https://quarto.org)
+    border: true
+
+format:
+  html:
+    theme:
+      light: [cosmo, custom.css]
+      dark: [cosmo, custom.css]
+    css: custom.css
+    include-after-body: custom.js
+    toc: true
+    toc-depth: 3
+    toc-title: "בדף זה"
+    number-sections: false
+    highlight-style: github
+    code-copy: true
+    code-fold: false
+    code-overflow: wrap
+    df-print: paged
+    smooth-scroll: true
+    citations-hover: true
+    footnotes-hover: true
+    link-external-icon: true
+    link-external-newwindow: true
+    grid:
+      sidebar-width: 280px
+      body-width: 800px
+      margin-width: 200px

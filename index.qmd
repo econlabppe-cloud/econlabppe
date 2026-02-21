@@ -1,0 +1,150 @@
+---
+title: "מעבדת אקונומטריקה — EconLabPPE"
+subtitle: "ברוכים הבאים לקורס הכלכלה הכמותית האינטראקטיבי"
+page-layout: full
+toc: false
+---
+
+```{=html}
+<div class="hero-section">
+  <div class="hero-content">
+    <div class="hero-badge">🎓 EconLabPPE</div>
+    <h1 class="hero-title">מעבדת אקונומטריקה</h1>
+    <p class="hero-subtitle">
+      22 שבועות · 9 מודולים · מ-Excel ועד DSGE
+    </p>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-number">22</div>
+        <div class="stat-label">שבועות</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">9</div>
+        <div class="stat-label">מודולים</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5</div>
+        <div class="stat-label">שפות תכנות</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">פרויקטים</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="Assignments/Week_01_Setup/README.html" class="btn-primary">🚀 התחל את השבוע הראשון</a>
+      <a href="hall_of_fame.html" class="btn-secondary">🏆 היכל התהילה</a>
+    </div>
+  </div>
+</div>
+
+<div id="econlab-global-progress-wrapper"></div>
+```
+
+## מה תלמדו בקורס? {.section-header}
+
+```{=html}
+<div class="modules-grid">
+
+  <div class="module-card module-excel">
+    <div class="module-icon">🛠️</div>
+    <div class="module-info">
+      <h3>מודול 1 — Excel</h3>
+      <p>שבועות 1–4: הגדרת סביבה, נוסחאות, Pivot Tables, ניתוח נתונים מתקדם</p>
+      <div class="module-weeks">שבוע 1–4</div>
+    </div>
+  </div>
+
+  <div class="module-card module-sql">
+    <div class="module-icon">🗄️</div>
+    <div class="module-info">
+      <h3>מודול 2 — SQL</h3>
+      <p>שבועות 5–7: שאילתות, JOINs, Window Functions, ניתוח נתונים כלכליים</p>
+      <div class="module-weeks">שבוע 5–7</div>
+    </div>
+  </div>
+
+  <div class="module-card module-python">
+    <div class="module-icon">🐍</div>
+    <div class="module-info">
+      <h3>מודול 3 — Python & Pandas</h3>
+      <p>שבועות 8–10: בסיסי Python, עיבוד נתונים עם Pandas, ניתוח סדרות עתיות</p>
+      <div class="module-weeks">שבוע 8–10</div>
+    </div>
+  </div>
+
+  <div class="module-card module-api">
+    <div class="module-icon">🌐</div>
+    <div class="module-info">
+      <h3>מודול 4 — APIs</h3>
+      <p>שבועות 11–12: API בנק ישראל, World Bank, FRED, OECD</p>
+      <div class="module-weeks">שבוע 11–12</div>
+    </div>
+  </div>
+
+  <div class="module-card module-r">
+    <div class="module-icon">📊</div>
+    <div class="module-info">
+      <h3>מודול 5 — R</h3>
+      <p>שבועות 13–14: R בסיסי, Tidyverse, dplyr, tidyr, ggplot2</p>
+      <div class="module-weeks">שבוע 13–14</div>
+    </div>
+  </div>
+
+  <div class="module-card module-econometrics">
+    <div class="module-icon">📈</div>
+    <div class="module-info">
+      <h3>מודול 6 — אקונומטריקה</h3>
+      <p>שבועות 15–16: OLS, DiD, ARIMA, Panel Data, IV Regression</p>
+      <div class="module-weeks">שבוע 15–16</div>
+    </div>
+  </div>
+
+  <div class="module-card module-viz">
+    <div class="module-icon">🎨</div>
+    <div class="module-info">
+      <h3>מודול 7 — ויזואליזציה</h3>
+      <p>שבועות 17–18: Plotly, Dash, ggplot2, RMarkdown, Dashboards</p>
+      <div class="module-weeks">שבוע 17–18</div>
+    </div>
+  </div>
+
+  <div class="module-card module-bi">
+    <div class="module-icon">📉</div>
+    <div class="module-info">
+      <h3>מודול 8 — כלי BI</h3>
+      <p>שבועות 19–20: Power BI, Tableau, DAX, לוחות מחוונים</p>
+      <div class="module-weeks">שבוע 19–20</div>
+    </div>
+  </div>
+
+  <div class="module-card module-dsge">
+    <div class="module-icon">🏛️</div>
+    <div class="module-info">
+      <h3>מודול 9 — DSGE</h3>
+      <p>שבועות 21–22: מודל RBC, New Keynesian, BVAR, פרויקט גמר</p>
+      <div class="module-weeks">שבוע 21–22</div>
+    </div>
+  </div>
+
+</div>
+```
+
+## איך משתמשים בפלטפורמה? {.section-header}
+
+::: {.callout-tip}
+## טיפ לתחילת הדרך
+קראו כל שבוע לפי הסדר, בצעו את המשימות, ולחצו על כפתור **"סיימתי את השבוע!"** בתחתית כל עמוד — זה יעדכן את מד ההתקדמות שלכם.
+:::
+
+::: {.callout-note}
+## ספריית המתכונים (Cookbook)
+בתיקיית `Cookbook/` תמצאו מדריכים מרוכזים לכל הכלים — API בנק ישראל, Pandas, SQL, R אקונומטריקה ועוד.
+:::
+
+::: {.callout-warning}
+## פרויקטים
+בשבוע 22 תגישו פרויקט גמר אחד משלושה נושאים: **שוק הדיור**, **מעקב אינפלציה**, או **שוק העבודה**. הפרויקטים הטובים יעלו ל-[היכל התהילה 🏆](hall_of_fame.html).
+:::
+
+{{< include README.md >}}
