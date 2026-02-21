@@ -72,8 +72,6 @@ jobs:
       # ── 4. Setup Quarto ──────────────────────────────────────
       - name: "Setup Quarto"
         uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          version: "latest"
 
       # ── 5. Render ────────────────────────────────────────────
       - name: "Render Quarto book"
