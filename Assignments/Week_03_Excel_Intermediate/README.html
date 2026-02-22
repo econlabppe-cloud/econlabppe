@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="he" xml:lang="he" dir="rtl"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>שבוע 3 – Excel בינוני: VLOOKUP, Pivot Tables, וגרפים לפרסום – מעבדת אקונומטריקה</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../Assignments/Week_04_Excel_Advanced/README.html" rel="next">
+<link href="../../Assignments/Week_02_Excel_Basics/README.html" rel="prev">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f8fae465bfcf93f59030998d38b15c9b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "אין תוצאות",
+    "search-matching-documents-text": "מסמכים תואמים",
+    "search-copy-link-title": "העתק קישור לחיפוש",
+    "search-hide-matches-text": "הסתר התאמות נוספות",
+    "search-more-match-text": "התאמה נוספת במסמך זה",
+    "search-more-matches-text": "התאמות נוספות במסמך זה",
+    "search-clear-button-title": "נקה",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "בטל",
+    "search-submit-button-title": "שלח",
+    "search-label": "חפש"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../custom.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">מעבדת אקונומטריקה</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="הצג/הסתר ניווט" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/econlabppe-cloud/econlabppe"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../leaderboard.html" aria-current="page"> 
+<span class="menu-text">📊 לוח תוצאות</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../hall_of_fame.html"> 
+<span class="menu-text">🏆 היכל התהילה</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/econlabppe-cloud/econlabppe" title="קוד מקור" class="quarto-navigation-tool px-1" aria-label="קוד מקור"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="הצג/הסתר מצב קריאה">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="הצג/הסתר את סרגל הניווט" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Assignments/Week_01_Setup/README.html">🛠️ מודול 1: הגדרה ו-Excel</a></li><li class="breadcrumb-item"><a href="../../Assignments/Week_03_Excel_Intermediate/README.html"><span class="chapter-title">שבוע 3 – Excel בינוני: VLOOKUP, Pivot Tables, וגרפים לפרסום</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="הצג/הסתר את סרגל הניווט" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="חפש" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <div id="quarto-search" class="quarto-navigation-tool px-1" title="חפש"></div>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">מעבדת אקונומטריקה — EconLabPPE</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">🛠️ מודול 1: הגדרה ו-Excel</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_01_Setup/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 1 – הכנת הסביבה: בניית מחשב של כלכלן נתונים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_02_Excel_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 2 – Excel מאפס: הכלי שכל כלכלן מתחיל בו</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_03_Excel_Intermediate/README.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">שבוע 3 – Excel בינוני: VLOOKUP, Pivot Tables, וגרפים לפרסום</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_04_Excel_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 4 – Excel מתקדם: Power Query, פונקציות פיננסיות, ודשבורד כלכלי</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">🗄️ מודול 2: SQL</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_05_SQL_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 5 – SQL מאפס: שפת הנתונים של העולם</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_06_SQL_Intermediate/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 6 – SQL בינוני: GROUP BY, JOINs, ושאילתות מורכבות</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_07_SQL_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 7 – SQL מתקדם: Window Functions, CTEs, ו-Python+SQL</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">🐍 מודול 3: Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_08_Python_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 8 – Python מאפס: שפת התכנות של כלכלנים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_09_Pandas_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 9 – Pandas בסיסי: Excel של Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_10_Pandas_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 10 – Pandas מתקדם: Time Series, Merge, ו-Pipeline מלא</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">🌐 מודול 4: APIs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_11_APIs_Israel/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 11 – APIs ישראליים: גישה לנתוני בנק ישראל והלמ”ס בזמן אמת</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_12_APIs_International/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 12 – APIs בין-לאומיים: השוואה גלובלית עם בנק עולמי, OECD ו-FRED</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">📊 מודול 5: R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_13_R_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 13 – R מאפס: שפת הסטטיסטיקה של כלכלנים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_14_R_Tidyverse/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 14 – Tidyverse: dplyr, tidyr ו-ggplot2</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">📈 מודול 6: אקונומטריקה</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_15_Econometrics_Regression/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 15 – אקונומטריקה: רגרסיה לינארית ב-R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_16_Econometrics_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 16 – אקונומטריקה מתקדמת: DiD, ARIMA ו-Panel Data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">🎨 מודול 7: ויזואליזציה</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_17_Visualization_Python/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 17 – ויזואליזציה אינטראקטיבית עם Plotly (Python)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_18_Visualization_R/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 18 – ggplot2 מתקדם ו-R Markdown: דוחות לפרסום</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">📉 מודול 8: כלי BI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_19_BI_PowerBI/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 19 – Power BI: דשבורדים כלכליים לביזנס</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_20_BI_Tableau/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 20 – Tableau: ויזואליזציה מקצועית ו-Storytelling</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">🏛️ מודול 9: DSGE</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_21_DSGE_Intro/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 21 – מבוא ל-DSGE: מודלים מאקרו-כלכליים דינמיים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_22_DSGE_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 22 – DSGE מלא: אמידה בייזיאנית, תחזיות ופרויקט סיום</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../leaderboard.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🏆 לוח תוצאות</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../hall_of_fame.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🏆 היכל התהילה</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">בדף זה</h2>
+   
+  <ul>
+  <li><a href="#סרטוני-הדרכה-לפרק-זה" id="toc-סרטוני-הדרכה-לפרק-זה" class="nav-link active" data-scroll-target="#סרטוני-הדרכה-לפרק-זה">🎥 סרטוני הדרכה לפרק זה</a></li>
+  <li><a href="#רמת-מתחילים" id="toc-רמת-מתחילים" class="nav-link" data-scroll-target="#רמת-מתחילים">🟢 רמת מתחילים</a></li>
+  <li><a href="#רמת-ביניים" id="toc-רמת-ביניים" class="nav-link" data-scroll-target="#רמת-ביניים">🟡 רמת ביניים</a></li>
+  <li><a href="#רמת-מתקדמים" id="toc-רמת-מתקדמים" class="nav-link" data-scroll-target="#רמת-מתקדמים">🔴 רמת מתקדמים</a></li>
+  <li><a href="#הנתונים-שנעבוד-איתם" id="toc-הנתונים-שנעבוד-איתם" class="nav-link" data-scroll-target="#הנתונים-שנעבוד-איתם">הנתונים שנעבוד איתם</a></li>
+  <li><a href="#חלק-א-vlookup-חיפוש-נתונים-בטבלה" id="toc-חלק-א-vlookup-חיפוש-נתונים-בטבלה" class="nav-link" data-scroll-target="#חלק-א-vlookup-חיפוש-נתונים-בטבלה">חלק א – VLOOKUP: חיפוש נתונים בטבלה</a>
+  <ul class="collapse">
+  <li><a href="#מה-זה-vlookup" id="toc-מה-זה-vlookup" class="nav-link" data-scroll-target="#מה-זה-vlookup">מה זה VLOOKUP?</a></li>
+  <li><a href="#דוגמה-מחירי-דיור-לפי-מחוז" id="toc-דוגמה-מחירי-דיור-לפי-מחוז" class="nav-link" data-scroll-target="#דוגמה-מחירי-דיור-לפי-מחוז">דוגמה: מחירי דיור לפי מחוז</a></li>
+  <li><a href="#vlookup-שגיאות-נפוצות" id="toc-vlookup-שגיאות-נפוצות" class="nav-link" data-scroll-target="#vlookup-שגיאות-נפוצות">VLOOKUP – שגיאות נפוצות</a></li>
+  </ul></li>
+  <li><a href="#חלק-ב-indexmatch-הגרסה-המתקדמת" id="toc-חלק-ב-indexmatch-הגרסה-המתקדמת" class="nav-link" data-scroll-target="#חלק-ב-indexmatch-הגרסה-המתקדמת">חלק ב – INDEX/MATCH: הגרסה המתקדמת</a></li>
+  <li><a href="#חלק-ג-sumif-averageif-countifs" id="toc-חלק-ג-sumif-averageif-countifs" class="nav-link" data-scroll-target="#חלק-ג-sumif-averageif-countifs">חלק ג – SUMIF, AVERAGEIF, COUNTIFS</a>
+  <ul class="collapse">
+  <li><a href="#sumif-סכום-לפי-תנאי" id="toc-sumif-סכום-לפי-תנאי" class="nav-link" data-scroll-target="#sumif-סכום-לפי-תנאי">SUMIF – סכום לפי תנאי</a></li>
+  <li><a href="#averageif-ממוצע-לפי-תנאי" id="toc-averageif-ממוצע-לפי-תנאי" class="nav-link" data-scroll-target="#averageif-ממוצע-לפי-תנאי">AVERAGEIF – ממוצע לפי תנאי</a></li>
+  <li><a href="#countifs-ספירה-עם-מספר-תנאים" id="toc-countifs-ספירה-עם-מספר-תנאים" class="nav-link" data-scroll-target="#countifs-ספירה-עם-מספר-תנאים">COUNTIFS – ספירה עם מספר תנאים</a></li>
+  </ul></li>
+  <li><a href="#חלק-ד-conditional-formatting-צבע-שמספר-סיפור" id="toc-חלק-ד-conditional-formatting-צבע-שמספר-סיפור" class="nav-link" data-scroll-target="#חלק-ד-conditional-formatting-צבע-שמספר-סיפור">חלק ד – Conditional Formatting: צבע שמספר סיפור</a>
+  <ul class="collapse">
+  <li><a href="#heat-map-על-עמודת-אבטלה" id="toc-heat-map-על-עמודת-אבטלה" class="nav-link" data-scroll-target="#heat-map-על-עמודת-אבטלה">1. Heat Map על עמודת אבטלה</a></li>
+  <li><a href="#data-bars" id="toc-data-bars" class="nav-link" data-scroll-target="#data-bars">2. Data Bars</a></li>
+  <li><a href="#כלל-מותאם-אישית" id="toc-כלל-מותאם-אישית" class="nav-link" data-scroll-target="#כלל-מותאם-אישית">3. כלל מותאם אישית</a></li>
+  </ul></li>
+  <li><a href="#חלק-ה-data-validation-מניעת-שגיאות-הזנה" id="toc-חלק-ה-data-validation-מניעת-שגיאות-הזנה" class="nav-link" data-scroll-target="#חלק-ה-data-validation-מניעת-שגיאות-הזנה">חלק ה – Data Validation: מניעת שגיאות הזנה</a>
+  <ul class="collapse">
+  <li><a href="#רשימה-נפתחת-dropdown" id="toc-רשימה-נפתחת-dropdown" class="nav-link" data-scroll-target="#רשימה-נפתחת-dropdown">1. רשימה נפתחת (Dropdown)</a></li>
+  <li><a href="#מגבלת-מספר" id="toc-מגבלת-מספר" class="nav-link" data-scroll-target="#מגבלת-מספר">2. מגבלת מספר</a></li>
+  <li><a href="#הודעת-שגיאה-מותאמת" id="toc-הודעת-שגיאה-מותאמת" class="nav-link" data-scroll-target="#הודעת-שגיאה-מותאמת">3. הודעת שגיאה מותאמת</a></li>
+  </ul></li>
+  <li><a href="#חלק-ו-pivot-tables-ניתוח-נתונים-בלחיצה" id="toc-חלק-ו-pivot-tables-ניתוח-נתונים-בלחיצה" class="nav-link" data-scroll-target="#חלק-ו-pivot-tables-ניתוח-נתונים-בלחיצה">חלק ו – Pivot Tables: ניתוח נתונים בלחיצה</a>
+  <ul class="collapse">
+  <li><a href="#מה-pivot-table-עושה" id="toc-מה-pivot-table-עושה" class="nav-link" data-scroll-target="#מה-pivot-table-עושה">מה Pivot Table עושה?</a></li>
+  <li><a href="#יצירת-pivot-table-ראשון" id="toc-יצירת-pivot-table-ראשון" class="nav-link" data-scroll-target="#יצירת-pivot-table-ראשון">יצירת Pivot Table ראשון</a></li>
+  <li><a href="#מבנה-ה-pivottable" id="toc-מבנה-ה-pivottable" class="nav-link" data-scroll-target="#מבנה-ה-pivottable">מבנה ה-PivotTable</a></li>
+  <li><a href="#pivot-1-תוצר-ממוצע-לפי-מחוז" id="toc-pivot-1-תוצר-ממוצע-לפי-מחוז" class="nav-link" data-scroll-target="#pivot-1-תוצר-ממוצע-לפי-מחוז">Pivot 1: תוצר ממוצע לפי מחוז</a></li>
+  <li><a href="#pivot-2-שכר-ממוצע-לפי-מחוז-ורבעון" id="toc-pivot-2-שכר-ממוצע-לפי-מחוז-ורבעון" class="nav-link" data-scroll-target="#pivot-2-שכר-ממוצע-לפי-מחוז-ורבעון">Pivot 2: שכר ממוצע לפי מחוז ורבעון</a></li>
+  <li><a href="#pivot-3-מדד-אי-שוויון-בין-מחוזות" id="toc-pivot-3-מדד-אי-שוויון-בין-מחוזות" class="nav-link" data-scroll-target="#pivot-3-מדד-אי-שוויון-בין-מחוזות">Pivot 3: מדד אי-שוויון בין מחוזות</a></li>
+  </ul></li>
+  <li><a href="#חלק-ז-slicers-ממשק-סינון-ויזואלי" id="toc-חלק-ז-slicers-ממשק-סינון-ויזואלי" class="nav-link" data-scroll-target="#חלק-ז-slicers-ממשק-סינון-ויזואלי">חלק ז – Slicers: ממשק סינון ויזואלי</a></li>
+  <li><a href="#חלק-ח-גרפים-מקצועיים" id="toc-חלק-ח-גרפים-מקצועיים" class="nav-link" data-scroll-target="#חלק-ח-גרפים-מקצועיים">חלק ח – גרפים מקצועיים</a>
+  <ul class="collapse">
+  <li><a href="#עקרון-גרף-טוב-מספר-סיפור-בלי-הסבר" id="toc-עקרון-גרף-טוב-מספר-סיפור-בלי-הסבר" class="nav-link" data-scroll-target="#עקרון-גרף-טוב-מספר-סיפור-בלי-הסבר">עקרון: גרף טוב מספר סיפור בלי הסבר</a></li>
+  <li><a href="#גרף-1-combo-chart-קו-עמודות" id="toc-גרף-1-combo-chart-קו-עמודות" class="nav-link" data-scroll-target="#גרף-1-combo-chart-קו-עמודות">גרף 1: Combo Chart (קו + עמודות)</a></li>
+  <li><a href="#גרף-2-bar-chart-השוואתי" id="toc-גרף-2-bar-chart-השוואתי" class="nav-link" data-scroll-target="#גרף-2-bar-chart-השוואתי">גרף 2: Bar Chart השוואתי</a></li>
+  <li><a href="#גרף-3-scatter-plot-כלכלי" id="toc-גרף-3-scatter-plot-כלכלי" class="nav-link" data-scroll-target="#גרף-3-scatter-plot-כלכלי">גרף 3: Scatter Plot כלכלי</a></li>
+  </ul></li>
+  <li><a href="#משימות-השבוע" id="toc-משימות-השבוע" class="nav-link" data-scroll-target="#משימות-השבוע">משימות השבוע</a>
+  <ul class="collapse">
+  <li><a href="#משימה-1-vlookup-מורכב-25-נקודות" id="toc-משימה-1-vlookup-מורכב-25-נקודות" class="nav-link" data-scroll-target="#משימה-1-vlookup-מורכב-25-נקודות">משימה 1: VLOOKUP מורכב (25 נקודות)</a></li>
+  <li><a href="#משימה-2-pivot-table-דו-ממדי-35-נקודות" id="toc-משימה-2-pivot-table-דו-ממדי-35-נקודות" class="nav-link" data-scroll-target="#משימה-2-pivot-table-דו-ממדי-35-נקודות">משימה 2: Pivot Table דו-ממדי (35 נקודות)</a></li>
+  <li><a href="#משימה-3-גרף-לפרסום-40-נקודות" id="toc-משימה-3-גרף-לפרסום-40-נקודות" class="nav-link" data-scroll-target="#משימה-3-גרף-לפרסום-40-נקודות">משימה 3: גרף לפרסום (40 נקודות)</a></li>
+  </ul></li>
+  <li><a href="#הגשה" id="toc-הגשה" class="nav-link" data-scroll-target="#הגשה">הגשה</a>
+  <ul class="collapse">
+  <li><a href="#תרגול-מעשי-hands-on" id="toc-תרגול-מעשי-hands-on" class="nav-link" data-scroll-target="#תרגול-מעשי-hands-on">💻 תרגול מעשי (Hands-on)</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/econlabppe-cloud/econlabppe/edit/main/Assignments/Week_03_Excel_Intermediate/README.md" class="toc-action"><i class="bi bi-github"></i>ערוך עמוד זה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/issues/new" class="toc-action"><i class="bi empty"></i>דווח על בעיה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_03_Excel_Intermediate/README.md" class="toc-action"><i class="bi empty"></i>הצג מקור</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Assignments/Week_01_Setup/README.html">🛠️ מודול 1: הגדרה ו-Excel</a></li><li class="breadcrumb-item"><a href="../../Assignments/Week_03_Excel_Intermediate/README.html"><span class="chapter-title">שבוע 3 – Excel בינוני: VLOOKUP, Pivot Tables, וגרפים לפרסום</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">שבוע 3 – Excel בינוני: VLOOKUP, Pivot Tables, וגרפים לפרסום</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="סרטוני-הדרכה-לפרק-זה" class="level3">
+<h3 class="anchored" data-anchor-id="סרטוני-הדרכה-לפרק-זה">🎥 סרטוני הדרכה לפרק זה</h3>
+<p>כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות: ::: {.panel-tabset} ## 🟢 רמת מתחילים <strong>מבוא והיכרות עם המושגים הבסיסיים:</strong> </p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/m0wI61ahfvY](https://www.youtube.com/watch?v=m0wI61ahfvY)" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> ## 🟡 רמת ביניים <strong>העמקה ופרקטיקה מעשית:</strong> <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/igSovq_H24A](https://www.youtube.com/watch?v=igSovq_H24A)" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> ## 🔴 רמת מתקדמים <strong>מקרי קצה, אופטימיזציה ושימושים מורכבים:</strong> <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/sUxrA8NIVK0](https://www.youtube.com/watch?v=sUxrA8NIVK0)" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> :::<p></p>
+</section>
+<section id="רמת-מתחילים" class="level2">
+<h2 class="anchored" data-anchor-id="רמת-מתחילים">🟢 רמת מתחילים</h2>
+<p><strong>מבוא והיכרות עם המושגים הבסיסיים:</strong> </p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/m0wI61ahfvY" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+<section id="רמת-ביניים" class="level2">
+<h2 class="anchored" data-anchor-id="רמת-ביניים">🟡 רמת ביניים</h2>
+<p><strong>העמקה ופרקטיקה מעשית:</strong> </p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/igSovq_H24A" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+<section id="רמת-מתקדמים" class="level2">
+<h2 class="anchored" data-anchor-id="רמת-מתקדמים">🔴 רמת מתקדמים</h2>
+<p><strong>מקרי קצה, אופטימיזציה ושימושים מורכבים:</strong> </p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/sUxrA8NIVK0" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>::: ## מה נלמד השבוע?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>נושא</th>
+<th>זמן משוער</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>VLOOKUP ו-INDEX/MATCH</td>
+<td>90 דקות</td>
+</tr>
+<tr class="even">
+<td>SUMIF, AVERAGEIF, COUNTIFS</td>
+<td>45 דקות</td>
+</tr>
+<tr class="odd">
+<td>Conditional Formatting</td>
+<td>30 דקות</td>
+</tr>
+<tr class="even">
+<td>Data Validation</td>
+<td>30 דקות</td>
+</tr>
+<tr class="odd">
+<td>Pivot Tables מלאות</td>
+<td>90 דקות</td>
+</tr>
+<tr class="even">
+<td>Slicers ו-Timelines</td>
+<td>30 דקות</td>
+</tr>
+<tr class="odd">
+<td>גרפים מקצועיים</td>
+<td>60 דקות</td>
+</tr>
+<tr class="even">
+<td><strong>סה”כ</strong></td>
+<td><strong>~7 שעות</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="הנתונים-שנעבוד-איתם" class="level2">
+<h2 class="anchored" data-anchor-id="הנתונים-שנעבוד-איתם">הנתונים שנעבוד איתם</h2>
+<p>הורד / הכן <strong>שני</strong> קבצי נתונים:</p>
+<p><strong>קובץ 1: <code>macro_annual.xlsx</code></strong> – נתוני מאקרו שנתיים (המשך משבוע 2)</p>
+<p><strong>קובץ 2: <code>districts_quarterly.xlsx</code></strong> – נתוני מחוזות לפי רבעון:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>רבעון</th>
+<th>מחוז</th>
+<th>תוצר מחוזי (מיליארד ₪)</th>
+<th>אבטלה %</th>
+<th>שכר ממוצע (₪)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2022-Q1</td>
+<td>תל אביב</td>
+<td>320</td>
+<td>3.2</td>
+<td>14,500</td>
+</tr>
+<tr class="even">
+<td>2022-Q1</td>
+<td>ירושלים</td>
+<td>180</td>
+<td>5.1</td>
+<td>11,200</td>
+</tr>
+<tr class="odd">
+<td>2022-Q1</td>
+<td>חיפה</td>
+<td>145</td>
+<td>4.8</td>
+<td>12,100</td>
+</tr>
+<tr class="even">
+<td>2022-Q1</td>
+<td>צפון</td>
+<td>95</td>
+<td>6.2</td>
+<td>9,800</td>
+</tr>
+<tr class="odd">
+<td>2022-Q1</td>
+<td>דרום</td>
+<td>88</td>
+<td>7.1</td>
+<td>9,200</td>
+</tr>
+<tr class="even">
+<td>2022-Q2</td>
+<td>תל אביב</td>
+<td>335</td>
+<td>3.0</td>
+<td>14,800</td>
+</tr>
+<tr class="odd">
+<td>2022-Q2</td>
+<td>ירושלים</td>
+<td>185</td>
+<td>4.9</td>
+<td>11,400</td>
+</tr>
+<tr class="even">
+<td>2022-Q2</td>
+<td>חיפה</td>
+<td>148</td>
+<td>4.5</td>
+<td>12,300</td>
+</tr>
+<tr class="odd">
+<td>2022-Q2</td>
+<td>צפון</td>
+<td>97</td>
+<td>6.0</td>
+<td>9,900</td>
+</tr>
+<tr class="even">
+<td>2022-Q2</td>
+<td>דרום</td>
+<td>90</td>
+<td>6.9</td>
+<td>9,300</td>
+</tr>
+<tr class="odd">
+<td>2022-Q3</td>
+<td>תל אביב</td>
+<td>340</td>
+<td>2.8</td>
+<td>15,000</td>
+</tr>
+<tr class="even">
+<td>2022-Q3</td>
+<td>ירושלים</td>
+<td>188</td>
+<td>4.7</td>
+<td>11,600</td>
+</tr>
+<tr class="odd">
+<td>2022-Q3</td>
+<td>חיפה</td>
+<td>150</td>
+<td>4.3</td>
+<td>12,500</td>
+</tr>
+<tr class="even">
+<td>2022-Q3</td>
+<td>צפון</td>
+<td>99</td>
+<td>5.8</td>
+<td>10,000</td>
+</tr>
+<tr class="odd">
+<td>2022-Q3</td>
+<td>דרום</td>
+<td>92</td>
+<td>6.7</td>
+<td>9,400</td>
+</tr>
+<tr class="even">
+<td>2022-Q4</td>
+<td>תל אביב</td>
+<td>328</td>
+<td>3.1</td>
+<td>14,700</td>
+</tr>
+<tr class="odd">
+<td>2022-Q4</td>
+<td>ירושלים</td>
+<td>183</td>
+<td>5.0</td>
+<td>11,300</td>
+</tr>
+<tr class="even">
+<td>2022-Q4</td>
+<td>חיפה</td>
+<td>146</td>
+<td>4.6</td>
+<td>12,200</td>
+</tr>
+<tr class="odd">
+<td>2022-Q4</td>
+<td>צפון</td>
+<td>96</td>
+<td>6.1</td>
+<td>9,850</td>
+</tr>
+<tr class="even">
+<td>2022-Q4</td>
+<td>דרום</td>
+<td>89</td>
+<td>7.0</td>
+<td>9,250</td>
+</tr>
+<tr class="odd">
+<td>2023-Q1</td>
+<td>תל אביב</td>
+<td>315</td>
+<td>3.5</td>
+<td>14,900</td>
+</tr>
+<tr class="even">
+<td>2023-Q1</td>
+<td>ירושלים</td>
+<td>178</td>
+<td>5.3</td>
+<td>11,500</td>
+</tr>
+<tr class="odd">
+<td>2023-Q1</td>
+<td>חיפה</td>
+<td>142</td>
+<td>5.0</td>
+<td>12,400</td>
+</tr>
+<tr class="even">
+<td>2023-Q1</td>
+<td>צפון</td>
+<td>93</td>
+<td>6.5</td>
+<td>9,950</td>
+</tr>
+<tr class="odd">
+<td>2023-Q1</td>
+<td>דרום</td>
+<td>86</td>
+<td>7.4</td>
+<td>9,350</td>
+</tr>
+</tbody>
+</table>
+<p><em>(הכן נתוני 2023 Q2-Q4 בדומה – תוכל להמציא ערכים סבירים)</em></p>
+<hr>
+</section>
+<section id="חלק-א-vlookup-חיפוש-נתונים-בטבלה" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-א-vlookup-חיפוש-נתונים-בטבלה">חלק א – VLOOKUP: חיפוש נתונים בטבלה</h2>
+<section id="מה-זה-vlookup" class="level3">
+<h3 class="anchored" data-anchor-id="מה-זה-vlookup">מה זה VLOOKUP?</h3>
+<p>דמיין שיש לך <strong>שתי טבלאות</strong> ואתה רוצה “לתפור” ביניהן לפי ערך משותף.</p>
+<p><strong>מבנה:</strong></p>
+<pre class="excel"><code>=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</code></pre>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>פרמטר</th>
+<th>הסבר</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>lookup_value</code></td>
+<td>הערך שמחפשים</td>
+</tr>
+<tr class="even">
+<td><code>table_array</code></td>
+<td>הטבלה שמחפשים בה</td>
+</tr>
+<tr class="odd">
+<td><code>col_index_num</code></td>
+<td>מספר העמודה שרוצים להחזיר</td>
+</tr>
+<tr class="even">
+<td><code>range_lookup</code></td>
+<td><strong>FALSE</strong> = חיפוש מדויק (כמעט תמיד זה מה שצריך)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="דוגמה-מחירי-דיור-לפי-מחוז" class="level3">
+<h3 class="anchored" data-anchor-id="דוגמה-מחירי-דיור-לפי-מחוז">דוגמה: מחירי דיור לפי מחוז</h3>
+<p>נניח שיש לך טבלה של מחירי דיור לפי מחוז:</p>
+<pre><code>A        B
+מחוז     מחיר ממוצע (₪)
+תל אביב  4,200,000
+ירושלים  2,800,000
+חיפה     1,900,000
+צפון     1,200,000
+דרום     1,100,000</code></pre>
+<p>ובטבלת <code>districts_quarterly</code> רוצה להוסיף עמודת מחיר דיור לכל מחוז:</p>
+<pre class="excel"><code>=VLOOKUP(B2, $H$1:$I$5, 2, FALSE)</code></pre>
+<p>כאשר B2 = שם המחוז, $H<span class="math inline">\(1:\)</span>I$5 = הטבלה השנייה.</p>
+<p><strong>שים לב:</strong> - הטבלה חייבת להיות ממויינת לפי עמודת החיפוש (לחיפוש מדויק – לא חייב) - VLOOKUP מחפש <strong>בעמודה הראשונה</strong> של הטבלה - לא יכול להחזיר נתונים מעמודות <strong>שמשמאל</strong> לעמודת החיפוש</p>
+</section>
+<section id="vlookup-שגיאות-נפוצות" class="level3">
+<h3 class="anchored" data-anchor-id="vlookup-שגיאות-נפוצות">VLOOKUP – שגיאות נפוצות</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>שגיאה</th>
+<th>סיבה</th>
+<th>פתרון</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>#N/A</code></td>
+<td>הערך לא נמצא</td>
+<td>בדוק איות, רווחים מיותרים</td>
+</tr>
+<tr class="even">
+<td><code>#REF!</code></td>
+<td>col_index גדול ממספר העמודות</td>
+<td>הקטן את col_index</td>
+</tr>
+<tr class="odd">
+<td>ערך שגוי</td>
+<td>range_lookup=TRUE בטעות</td>
+<td>שנה ל-FALSE</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="חלק-ב-indexmatch-הגרסה-המתקדמת" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ב-indexmatch-הגרסה-המתקדמת">חלק ב – INDEX/MATCH: הגרסה המתקדמת</h2>
+<p>INDEX/MATCH עושה את אותו הדבר כמו VLOOKUP אבל: - יכול לחפש בכל כיוון (גם שמאלה!) - מהיר יותר על טבלאות גדולות - הרבה יותר גמיש</p>
+<pre class="excel"><code>=INDEX(return_range, MATCH(lookup_value, lookup_range, 0))</code></pre>
+<p><strong>דוגמה:</strong></p>
+<pre class="excel"><code>=INDEX($I$1:$I$5, MATCH(B2, $H$1:$H$5, 0))</code></pre>
+<ul>
+<li><code>MATCH</code> מוצא <strong>איפה</strong> B2 נמצא בעמודת המחוזות → מחזיר מספר שורה</li>
+<li><code>INDEX</code> מחזיר את <strong>הערך</strong> באותה שורה מעמודת המחירים</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>כלל:</strong> אם אתה מחפש ל<strong>שמאל</strong> של עמודת ה-key, חייב INDEX/MATCH. אחרת VLOOKUP גם עובד.</p>
+</blockquote>
+<hr>
+</section>
+<section id="חלק-ג-sumif-averageif-countifs" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ג-sumif-averageif-countifs">חלק ג – SUMIF, AVERAGEIF, COUNTIFS</h2>
+<section id="sumif-סכום-לפי-תנאי" class="level3">
+<h3 class="anchored" data-anchor-id="sumif-סכום-לפי-תנאי">SUMIF – סכום לפי תנאי</h3>
+<pre class="excel"><code>=SUMIF(range, criteria, sum_range)</code></pre>
+<p><strong>דוגמה:</strong> סכום תוצר מחוזי <strong>רק לתל אביב</strong>:</p>
+<pre class="excel"><code>=SUMIF(B:B, "תל אביב", C:C)</code></pre>
+<p><strong>דוגמה עם תנאי מספרי:</strong> סכום תוצר מחוזות עם אבטלה &gt; 5%:</p>
+<pre class="excel"><code>=SUMIF(D:D, "&gt;5", C:C)</code></pre>
+</section>
+<section id="averageif-ממוצע-לפי-תנאי" class="level3">
+<h3 class="anchored" data-anchor-id="averageif-ממוצע-לפי-תנאי">AVERAGEIF – ממוצע לפי תנאי</h3>
+<pre class="excel"><code>=AVERAGEIF(B:B, "ירושלים", E:E)</code></pre>
+<p>ממוצע שכר <strong>רק בירושלים</strong>.</p>
+</section>
+<section id="countifs-ספירה-עם-מספר-תנאים" class="level3">
+<h3 class="anchored" data-anchor-id="countifs-ספירה-עם-מספר-תנאים">COUNTIFS – ספירה עם מספר תנאים</h3>
+<pre class="excel"><code>=COUNTIFS(D:D, "&gt;5", C:C, "&gt;100")</code></pre>
+<p>כמה רשומות יש עם אבטלה &gt; 5% <strong>וגם</strong> תוצר &gt; 100?</p>
+<hr>
+</section>
+</section>
+<section id="חלק-ד-conditional-formatting-צבע-שמספר-סיפור" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ד-conditional-formatting-צבע-שמספר-סיפור">חלק ד – Conditional Formatting: צבע שמספר סיפור</h2>
+<p>עיצוב מותנה = Excel <strong>צובע תאים אוטומטית</strong> לפי הערך שלהם.</p>
+<section id="heat-map-על-עמודת-אבטלה" class="level3">
+<h3 class="anchored" data-anchor-id="heat-map-על-עמודת-אבטלה">1. Heat Map על עמודת אבטלה</h3>
+<ol type="1">
+<li>סמן עמודת אבטלה (D2:D25)</li>
+<li>Home → Conditional Formatting → Color Scales → בחר: ירוק-צהוב-אדום
+<ul>
+<li>ירוק = אבטלה נמוכה (טוב)</li>
+<li>אדום = אבטלה גבוהה (רע)</li>
+</ul></li>
+</ol>
+</section>
+<section id="data-bars" class="level3">
+<h3 class="anchored" data-anchor-id="data-bars">2. Data Bars</h3>
+<ol type="1">
+<li>סמן עמודת שכר ממוצע (E2:E25)</li>
+<li>Home → Conditional Formatting → Data Bars</li>
+<li>כל תא מציג “בר” יחסי לגודל הערך</li>
+</ol>
+</section>
+<section id="כלל-מותאם-אישית" class="level3">
+<h3 class="anchored" data-anchor-id="כלל-מותאם-אישית">3. כלל מותאם אישית</h3>
+<p>רוצה להדגיש שורות שלמות עם אבטלה קיצונית?</p>
+<ol type="1">
+<li>סמן כל הטבלה (A2:E25)</li>
+<li>Home → Conditional Formatting → New Rule → “Use a formula”</li>
+<li>הכנס: <code>=$D2&gt;6</code></li>
+<li>בחר צבע רקע אדום</li>
+<li>OK</li>
+</ol>
+<p>עכשיו כל שורה עם אבטלה &gt; 6% תאיר באדום!</p>
+<hr>
+</section>
+</section>
+<section id="חלק-ה-data-validation-מניעת-שגיאות-הזנה" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ה-data-validation-מניעת-שגיאות-הזנה">חלק ה – Data Validation: מניעת שגיאות הזנה</h2>
+<p>Data Validation מגבילה <strong>מה אפשר להכניס לתא</strong>.</p>
+<section id="רשימה-נפתחת-dropdown" class="level3">
+<h3 class="anchored" data-anchor-id="רשימה-נפתחת-dropdown">1. רשימה נפתחת (Dropdown)</h3>
+<p>נניח שיש עמודה “מחוז” וצריך לבחור רק מ-5 מחוזות:</p>
+<ol type="1">
+<li>סמן תא / עמודה ריקה</li>
+<li>Data → Data Validation</li>
+<li>Allow: <strong>List</strong></li>
+<li>Source: <code>תל אביב,ירושלים,חיפה,צפון,דרום</code></li>
+<li>OK</li>
+</ol>
+<p>עכשיו לחיצה על כל תא בעמודה מציגה dropdown!</p>
+</section>
+<section id="מגבלת-מספר" class="level3">
+<h3 class="anchored" data-anchor-id="מגבלת-מספר">2. מגבלת מספר</h3>
+<pre><code>Allow: Decimal
+Data: between
+Minimum: -20
+Maximum: 100</code></pre>
+<p>זה יחסום הזנת אינפלציה של 500% בטעות.</p>
+</section>
+<section id="הודעת-שגיאה-מותאמת" class="level3">
+<h3 class="anchored" data-anchor-id="הודעת-שגיאה-מותאמת">3. הודעת שגיאה מותאמת</h3>
+<p>בלשונית “Error Alert”: - Style: Stop - Title: שגיאת הזנה - Message: הכנס ערך בין -20 ל-100</p>
+<hr>
+</section>
+</section>
+<section id="חלק-ו-pivot-tables-ניתוח-נתונים-בלחיצה" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ו-pivot-tables-ניתוח-נתונים-בלחיצה">חלק ו – Pivot Tables: ניתוח נתונים בלחיצה</h2>
+<p>Pivot Tables הן הכלי <strong>הכי חזק</strong> ב-Excel לסיכום נתונים.</p>
+<section id="מה-pivot-table-עושה" class="level3">
+<h3 class="anchored" data-anchor-id="מה-pivot-table-עושה">מה Pivot Table עושה?</h3>
+<p>מטבלה של 25 שורות ו-5 עמודות → סיכום בכל חתך שתרצה, בשניות.</p>
+</section>
+<section id="יצירת-pivot-table-ראשון" class="level3">
+<h3 class="anchored" data-anchor-id="יצירת-pivot-table-ראשון">יצירת Pivot Table ראשון</h3>
+<ol type="1">
+<li>לחץ על תא כלשהו בטבלת <code>districts_quarterly</code></li>
+<li>Insert → PivotTable</li>
+<li>בחר “New Worksheet” → OK</li>
+</ol>
+<p>ייפתח <strong>PivotTable Field List</strong> מימין.</p>
+</section>
+<section id="מבנה-ה-pivottable" class="level3">
+<h3 class="anchored" data-anchor-id="מבנה-ה-pivottable">מבנה ה-PivotTable</h3>
+<pre><code>┌─────────────────────────────────┐
+│ FILTERS:    [רבעון ▼]           │  ← סינון כלל הנתונים
+│─────────────────────────────────│
+│ COLUMNS:    [שנה]               │  ← עמודות הטבלה
+│─────────────────────────────────│
+│ ROWS:       [מחוז]              │  ← שורות הטבלה
+│─────────────────────────────────│
+│ VALUES:     [Sum of תוצר]       │  ← הערכים שמסכמים
+└─────────────────────────────────┘</code></pre>
+</section>
+<section id="pivot-1-תוצר-ממוצע-לפי-מחוז" class="level3">
+<h3 class="anchored" data-anchor-id="pivot-1-תוצר-ממוצע-לפי-מחוז">Pivot 1: תוצר ממוצע לפי מחוז</h3>
+<ul>
+<li>Rows: מחוז</li>
+<li>Values: תוצר מחוזי → לחץ על הערך → Value Field Settings → Average</li>
+</ul>
+<p><strong>תוצאה:</strong> טבלה שמציגה את ממוצע התוצר הרבעוני לכל מחוז.</p>
+</section>
+<section id="pivot-2-שכר-ממוצע-לפי-מחוז-ורבעון" class="level3">
+<h3 class="anchored" data-anchor-id="pivot-2-שכר-ממוצע-לפי-מחוז-ורבעון">Pivot 2: שכר ממוצע לפי מחוז ורבעון</h3>
+<ul>
+<li>Rows: מחוז</li>
+<li>Columns: רבעון</li>
+<li>Values: שכר ממוצע → Average</li>
+</ul>
+<p><strong>תוצאה:</strong> טבלה בצורת מטריצה – מחוז × רבעון.</p>
+</section>
+<section id="pivot-3-מדד-אי-שוויון-בין-מחוזות" class="level3">
+<h3 class="anchored" data-anchor-id="pivot-3-מדד-אי-שוויון-בין-מחוזות">Pivot 3: מדד אי-שוויון בין מחוזות</h3>
+<ul>
+<li>Rows: מחוז</li>
+<li>Values (3 פעמים!):
+<ul>
+<li>שכר ממוצע → Average</li>
+<li>אבטלה → Average</li>
+<li>תוצר → Sum</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="חלק-ז-slicers-ממשק-סינון-ויזואלי" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ז-slicers-ממשק-סינון-ויזואלי">חלק ז – Slicers: ממשק סינון ויזואלי</h2>
+<p>Slicer הוא כפתורי סינון ויזואליים שמחוברים ל-Pivot Table.</p>
+<ol type="1">
+<li>לחץ בתוך Pivot Table שלך</li>
+<li>PivotTable Analyze → Insert Slicer</li>
+<li>סמן: מחוז ✅ → OK</li>
+</ol>
+<p>עכשיו מופיעות כפתורות לכל מחוז. לחיצה מסננת את ה-Pivot!</p>
+<p><strong>Timeline (לנתוני תאריך):</strong> 1. PivotTable Analyze → Insert Timeline 2. בחר עמודת רבעון → OK</p>
+<p>מציג slider שמאפשר לבחור טווח זמן ויזואלית.</p>
+<hr>
+</section>
+<section id="חלק-ח-גרפים-מקצועיים" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ח-גרפים-מקצועיים">חלק ח – גרפים מקצועיים</h2>
+<section id="עקרון-גרף-טוב-מספר-סיפור-בלי-הסבר" class="level3">
+<h3 class="anchored" data-anchor-id="עקרון-גרף-טוב-מספר-סיפור-בלי-הסבר">עקרון: גרף טוב מספר סיפור בלי הסבר</h3>
+<p><strong>5 כללים לגרף כלכלי מקצועי:</strong> 1. <strong>כותרת ברורה:</strong> “צמיחת תמ”ג ישראל 2018-2024” – לא “Chart 1” 2. <strong>ציר Y עם יחידות:</strong> %, מיליארד ₪, מדד 3. <strong>מקור נתונים:</strong> “מקור: בנק ישראל” 4. <strong>לא יותר מדי צבעים:</strong> 1-3 צבעים מקסימום 5. <strong>ללא 3D:</strong> גרפים תלת-ממדיים מעוותים תפיסה</p>
+</section>
+<section id="גרף-1-combo-chart-קו-עמודות" class="level3">
+<h3 class="anchored" data-anchor-id="גרף-1-combo-chart-קו-עמודות">גרף 1: Combo Chart (קו + עמודות)</h3>
+<p>הצג ריבית (עמודות) + אינפלציה (קו) על אותו גרף:</p>
+<ol type="1">
+<li>סמן נתוני שנה + ריבית + אינפלציה</li>
+<li>Insert → Charts → Recommended Charts → Combo</li>
+<li>שנה ריבית ל-Clustered Column ואינפלציה ל-Line with Markers</li>
+<li>עיצב:
+<ul>
+<li>צבע ריבית: כחול כהה</li>
+<li>צבע אינפלציה: אדום</li>
+<li>הוסף Secondary Axis לאינפלציה (אם ההתפלגות שונה)</li>
+</ul></li>
+</ol>
+</section>
+<section id="גרף-2-bar-chart-השוואתי" class="level3">
+<h3 class="anchored" data-anchor-id="גרף-2-bar-chart-השוואתי">גרף 2: Bar Chart השוואתי</h3>
+<p>שכר ממוצע לפי מחוז (נתונים מה-Pivot):</p>
+<ol type="1">
+<li>סמן את Pivot Table של שכר לפי מחוז</li>
+<li>Insert → Bar Chart (Horizontal)</li>
+<li>מיין את הנתונים מגבוה לנמוך לפני יצירת הגרף</li>
+</ol>
+<p><strong>עיצוב:</strong></p>
+<pre><code>כותרת: "פערי שכר בין מחוזות ישראל – 2022"
+Data Labels: כן (לראות את המספרים)
+Legend: בטל (יש רק סדרה אחת)
+Gridlines: רק אופקיות, דקות</code></pre>
+</section>
+<section id="גרף-3-scatter-plot-כלכלי" class="level3">
+<h3 class="anchored" data-anchor-id="גרף-3-scatter-plot-כלכלי">גרף 3: Scatter Plot כלכלי</h3>
+<p>היחס בין שכר ממוצע לאבטלה לפי מחוז:</p>
+<ol type="1">
+<li>סמן עמודת שכר + עמודת אבטלה (לפי מחוז)</li>
+<li>Insert → Scatter → Scatter</li>
+<li>כל נקודה = מחוז</li>
+</ol>
+<p><strong>הוסף תוויות:</strong> - לחץ ימין על נקודה → Add Data Label - עצב: Label Contains → Value From Cells → בחר עמודת שם המחוז</p>
+<p><strong>שאלה כלכלית:</strong> האם יש קשר שלילי בין שכר לאבטלה? (כן – זה פיליפס-קרב בינמחוזי!)</p>
+<hr>
+</section>
+</section>
+<section id="משימות-השבוע" class="level2">
+<h2 class="anchored" data-anchor-id="משימות-השבוע">משימות השבוע</h2>
+<section id="משימה-1-vlookup-מורכב-25-נקודות" class="level3">
+<h3 class="anchored" data-anchor-id="משימה-1-vlookup-מורכב-25-נקודות">משימה 1: VLOOKUP מורכב (25 נקודות)</h3>
+<p>צור גיליון <code>housing_merge</code>: - עמודה א: שם מחוז - עמודה ב: אבטלה ממוצעת (מ-districts_quarterly באמצעות AVERAGEIF) - עמודה ג: מחיר דיור ממוצע (המציא ערכים סבירים לטבלה נפרדת, ואחזר עם VLOOKUP) - עמודה ד: יחס אבטלה/מחיר דיור</p>
+</section>
+<section id="משימה-2-pivot-table-דו-ממדי-35-נקודות" class="level3">
+<h3 class="anchored" data-anchor-id="משימה-2-pivot-table-דו-ממדי-35-נקודות">משימה 2: Pivot Table דו-ממדי (35 נקודות)</h3>
+<p>צור Pivot Table: - שורות: מחוז - עמודות: רבעון (Q1, Q2, Q3, Q4) - ערכים: ממוצע שכר</p>
+<p>הוסף: - Slicer לסינון לפי שנה - עיצוב: הפוך ל-Tabular form + הסר Subtotals</p>
+</section>
+<section id="משימה-3-גרף-לפרסום-40-נקודות" class="level3">
+<h3 class="anchored" data-anchor-id="משימה-3-גרף-לפרסום-40-נקודות">משימה 3: גרף לפרסום (40 נקודות)</h3>
+<p>בנה גרף Combo (ריבית + אינפלציה) שמוכן ל<strong>פרזנטציה</strong>: - כותרת ברורה בעברית - צבעים עקביים - ציר Y כפול (secondary axis) - הוסף תיבת טקסט שמציינת “עידן הריבית הגבוהה” ומסמן 2022-2024 - מקור נתונים בתחתית</p>
+<hr>
+</section>
+</section>
+<section id="הגשה" class="level2">
+<h2 class="anchored" data-anchor-id="הגשה">הגשה</h2>
+<pre><code>Members/YourName/Week_03/
+├── macro_intermediate.xlsx    ← כל הגיליונות + Pivots + גרפים
+└── week03_summary.md          ← 5 תובנות כלכליות שגילית</code></pre>
+<p><strong>בקובץ הסיכום:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># סיכום שבוע 3 – Excel Intermediate</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5 תובנות מהנתונים</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="co">[</span><span class="ot">פערי שכר בין מחוזות</span><span class="co">]</span> ...</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="co">[</span><span class="ot">קשר שכר-אבטלה</span><span class="co">]</span> ...</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="co">[</span><span class="ot">שינוי לאורך 2022</span><span class="co">]</span> ...</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span><span class="co">[</span><span class="ot">מחוז עם האבטלה הגבוהה ביותר</span><span class="co">]</span> ...</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span><span class="co">[</span><span class="ot">מחוז עם הצמיחה המהירה ביותר</span><span class="co">]</span> ...</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## אתגרים שנתקלתי בהם</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>...</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## כישורים שרכשתי</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>VLOOKUP / INDEX-MATCH</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pivot Tables</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Conditional Formatting</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+<p><strong>השבוע הבא:</strong> Excel מתקדם – Power Query, NPV/IRR, ודשבורד מאקרו-כלכלי → <a href="../../Assignments/Week_04_Excel_Advanced/README.html">שבוע 4</a></p>
+<section id="תרגול-מעשי-hands-on" class="level3">
+<h3 class="anchored" data-anchor-id="תרגול-מעשי-hands-on">💻 תרגול מעשי (Hands-on)</h3>
+<p>
+לחצו על המשולש (Play) כדי להפעיל את סביבת הפיתוח בתוך העמוד, או פתחו בלשונית חדשה לנוחות מירבית.
+</p>
+<iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_03_Excel_Intermediate/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen="">
+</iframe>
+<p>
+</p><table class="caption-top table">
+<thead>
+<tr class="header">
+<th><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_03_Excel_Intermediate/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>### 💬 הערות, שאלות ודיונים</td>
+</tr>
+<tr class="even">
+<td>יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?</td>
+</tr>
+<tr class="odd">
+<td><strong>כתבו לנו כאן למטה!</strong> המערכת מחוברת ישירות לגיטהאב של הקורס. כל שאלה שתשאלו כאן תישמר אוטומטית בצורה מסודרת תחת נושא זה, והצוות (או סטודנטים אחרים) יוכלו לענות לכם ולעזור.</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script src="custom.js"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "הועתק!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "הועתק!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="econlabppe-cloud/econlabppe" issue-term="title" theme="github-light" crossorigin="anonymous" async="">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../Assignments/Week_02_Excel_Basics/README.html" class="pagination-link" aria-label="שבוע 2 – Excel מאפס: הכלי שכל כלכלן מתחיל בו">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">שבוע 2 – Excel מאפס: הכלי שכל כלכלן מתחיל בו</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../Assignments/Week_04_Excel_Advanced/README.html" class="pagination-link" aria-label="שבוע 4 – Excel מתקדם: Power Query, פונקציות פיננסיות, ודשבורד כלכלי">
+        <span class="nav-page-text"><span class="chapter-title">שבוע 4 – Excel מתקדם: Power Query, פונקציות פיננסיות, ודשבורד כלכלי</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 EconLabPPE — מעבדת אקונומטריקה</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/econlabppe-cloud/econlabppe/edit/main/Assignments/Week_03_Excel_Intermediate/README.md" class="toc-action"><i class="bi bi-github"></i>ערוך עמוד זה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/issues/new" class="toc-action"><i class="bi empty"></i>דווח על בעיה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_03_Excel_Intermediate/README.md" class="toc-action"><i class="bi empty"></i>הצג מקור</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>בנוי עם ❤️ ו-<a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

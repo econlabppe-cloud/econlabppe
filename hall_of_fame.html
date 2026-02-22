@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="he" xml:lang="he" dir="rtl"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>🏆 היכל התהילה – מעבדת אקונומטריקה</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./leaderboard.html" rel="prev">
+<link href="./favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-f8fae465bfcf93f59030998d38b15c9b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "אין תוצאות",
+    "search-matching-documents-text": "מסמכים תואמים",
+    "search-copy-link-title": "העתק קישור לחיפוש",
+    "search-hide-matches-text": "הסתר התאמות נוספות",
+    "search-more-match-text": "התאמה נוספת במסמך זה",
+    "search-more-matches-text": "התאמות נוספות במסמך זה",
+    "search-clear-button-title": "נקה",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "בטל",
+    "search-submit-button-title": "שלח",
+    "search-label": "חפש"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="custom.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">מעבדת אקונומטריקה</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="הצג/הסתר ניווט" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/econlabppe-cloud/econlabppe"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./leaderboard.html" aria-current="page"> 
+<span class="menu-text">📊 לוח תוצאות</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./hall_of_fame.html"> 
+<span class="menu-text">🏆 היכל התהילה</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/econlabppe-cloud/econlabppe" title="קוד מקור" class="quarto-navigation-tool px-1" aria-label="קוד מקור"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="הצג/הסתר מצב קריאה">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="הצג/הסתר את סרגל הניווט" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hall_of_fame.html"><span class="chapter-title">🏆 היכל התהילה</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="הצג/הסתר את סרגל הניווט" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="חפש" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <div id="quarto-search" class="quarto-navigation-tool px-1" title="חפש"></div>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">מעבדת אקונומטריקה — EconLabPPE</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">🛠️ מודול 1: הגדרה ו-Excel</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_01_Setup/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 1 – הכנת הסביבה: בניית מחשב של כלכלן נתונים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_02_Excel_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 2 – Excel מאפס: הכלי שכל כלכלן מתחיל בו</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_03_Excel_Intermediate/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 3 – Excel בינוני: VLOOKUP, Pivot Tables, וגרפים לפרסום</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_04_Excel_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 4 – Excel מתקדם: Power Query, פונקציות פיננסיות, ודשבורד כלכלי</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">🗄️ מודול 2: SQL</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_05_SQL_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 5 – SQL מאפס: שפת הנתונים של העולם</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_06_SQL_Intermediate/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 6 – SQL בינוני: GROUP BY, JOINs, ושאילתות מורכבות</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_07_SQL_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 7 – SQL מתקדם: Window Functions, CTEs, ו-Python+SQL</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">🐍 מודול 3: Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_08_Python_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 8 – Python מאפס: שפת התכנות של כלכלנים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_09_Pandas_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 9 – Pandas בסיסי: Excel של Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_10_Pandas_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 10 – Pandas מתקדם: Time Series, Merge, ו-Pipeline מלא</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">🌐 מודול 4: APIs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_11_APIs_Israel/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 11 – APIs ישראליים: גישה לנתוני בנק ישראל והלמ”ס בזמן אמת</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_12_APIs_International/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 12 – APIs בין-לאומיים: השוואה גלובלית עם בנק עולמי, OECD ו-FRED</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">📊 מודול 5: R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_13_R_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 13 – R מאפס: שפת הסטטיסטיקה של כלכלנים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_14_R_Tidyverse/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 14 – Tidyverse: dplyr, tidyr ו-ggplot2</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">📈 מודול 6: אקונומטריקה</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_15_Econometrics_Regression/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 15 – אקונומטריקה: רגרסיה לינארית ב-R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_16_Econometrics_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 16 – אקונומטריקה מתקדמת: DiD, ARIMA ו-Panel Data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">🎨 מודול 7: ויזואליזציה</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_17_Visualization_Python/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 17 – ויזואליזציה אינטראקטיבית עם Plotly (Python)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_18_Visualization_R/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 18 – ggplot2 מתקדם ו-R Markdown: דוחות לפרסום</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">📉 מודול 8: כלי BI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_19_BI_PowerBI/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 19 – Power BI: דשבורדים כלכליים לביזנס</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_20_BI_Tableau/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 20 – Tableau: ויזואליזציה מקצועית ו-Storytelling</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">🏛️ מודול 9: DSGE</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_21_DSGE_Intro/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 21 – מבוא ל-DSGE: מודלים מאקרו-כלכליים דינמיים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Assignments/Week_22_DSGE_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 22 – DSGE מלא: אמידה בייזיאנית, תחזיות ופרויקט סיום</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./leaderboard.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🏆 לוח תוצאות</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hall_of_fame.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">🏆 היכל התהילה</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">🏆 היכל התהילה</span></h1>
+<p class="subtitle lead">הפרויקטים הטובים ביותר של סטודנטים EconLabPPE</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="hero-section" style="padding:3rem 2rem;margin:-1rem -1rem 2rem;">
+  <div class="hero-badge">🏆 Hall of Fame</div>
+  <h1 class="hero-title" style="font-size:2.5rem;">היכל התהילה</h1>
+  <p class="hero-subtitle">
+    עבודות מצטיינות של סטודנטים ב-EconLabPPE — הכלכלה בפעולה.
+  </p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">הערה</span>כיצד להיכנס להיכל התהילה?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>השלימו אחד משלושת פרויקטי הגמר (שוק הדיור, מעקב אינפלציה, שוק העבודה) ברמה גבוהה, ושלחו Pull Request עם הקוד + דוח. הפרויקטים המצטיינים יוצגו כאן עם שם המגיש ותיאור הממצאים.</p>
+</div>
+</div>
+<hr>
+<section id="פרויקטי-הגמר" class="level2">
+<h2 class="anchored" data-anchor-id="פרויקטי-הגמר">🗂️ פרויקטי הגמר</h2>
+<div class="hof-grid">
+
+  <!-- Housing Market -->
+  <div class="hof-card">
+    <div class="hof-card-header" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);">
+      <div class="hof-card-icon" style="background:#bfdbfe;font-size:2rem;">🏠</div>
+      <div>
+        <h3 class="hof-card-title anchored">שוק הדיור הישראלי</h3>
+        <p class="hof-card-subtitle">Housing Market Analysis</p>
+      </div>
+    </div>
+    <div class="hof-card-body">
+      <p class="hof-card-desc">
+        ניתוח מגמות מחירי הדיור בישראל לאורך זמן, בחינת הקשר לריביות, לשכר ולביקוש.
+        כולל מודל רגרסיה, ויזואליזציה אינטראקטיבית וחיזוי.
+      </p>
+      <div class="hof-skills">
+        <span class="hof-skill-tag">Python</span>
+        <span class="hof-skill-tag">Pandas</span>
+        <span class="hof-skill-tag">Plotly</span>
+        <span class="hof-skill-tag">OLS</span>
+        <span class="hof-skill-tag">API בנק ישראל</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inflation Tracker -->
+  <div class="hof-card">
+    <div class="hof-card-header" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);">
+      <div class="hof-card-icon" style="background:#fed7aa;font-size:2rem;">📊</div>
+      <div>
+        <h3 class="hof-card-title anchored">מעקב אינפלציה</h3>
+        <p class="hof-card-subtitle">Inflation Tracker</p>
+      </div>
+    </div>
+    <div class="hof-card-body">
+      <p class="hof-card-desc">
+        מעקב אחר אינפלציה בישראל ובעולם, השוואה בין מדינות, ניתוח מרכיבי CPI
+        ובניית מודל ARIMA לחיזוי קצר-טווח.
+      </p>
+      <div class="hof-skills">
+        <span class="hof-skill-tag">R</span>
+        <span class="hof-skill-tag">tidyverse</span>
+        <span class="hof-skill-tag">ARIMA</span>
+        <span class="hof-skill-tag">FRED API</span>
+        <span class="hof-skill-tag">ggplot2</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Labor Market -->
+  <div class="hof-card">
+    <div class="hof-card-header" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);">
+      <div class="hof-card-icon" style="background:#bbf7d0;font-size:2rem;">👷</div>
+      <div>
+        <h3 class="hof-card-title anchored">שוק העבודה</h3>
+        <p class="hof-card-subtitle">Labor Market Analysis</p>
+      </div>
+    </div>
+    <div class="hof-card-body">
+      <p class="hof-card-desc">
+        ניתוח תעסוקה, אבטלה ושכר בישראל: מגמות לפי מגדר, גיל ואזור גיאוגרפי.
+        כולל השוואה בין-לאומית ומודל Panel Data.
+      </p>
+      <div class="hof-skills">
+        <span class="hof-skill-tag">SQL</span>
+        <span class="hof-skill-tag">Python</span>
+        <span class="hof-skill-tag">Panel Data</span>
+        <span class="hof-skill-tag">OECD API</span>
+        <span class="hof-skill-tag">Power BI</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+<hr>
+</section>
+<section id="פרויקטים-מצטיינים-של-סטודנטים" class="level2">
+<h2 class="anchored" data-anchor-id="פרויקטים-מצטיינים-של-סטודנטים">🌟 פרויקטים מצטיינים של סטודנטים</h2>
+<div class="hof-placeholder-banner">
+  <div style="font-size:3rem;margin-bottom:1rem;">🚀</div>
+  <h3 class="anchored">אתם יכולים להיות כאן!</h3>
+  <p>
+    פרויקטים מצטיינים יוצגו כאן בתום הקורס.<br>
+    בצעו את פרויקט הגמר, שלחו <strong>Pull Request</strong> ל-
+    <code>Projects/</code> — והמנחים יבחרו את הטובים ביותר.
+  </p>
+  <a href="https://github.com/econlabppe/econlabppe/pulls" target="_blank" class="btn-primary" style="display:inline-flex;margin-top:1rem;text-decoration:none;background:linear-gradient(135deg,#f59e0b,#d97706);color:white;">
+    📤 שלח פרויקט
+  </a>
+</div>
+<section id="כרטיס-דוגמה-כיצד-ייראה-הפרויקט-שלכם" class="level3">
+<h3 class="anchored" data-anchor-id="כרטיס-דוגמה-כיצד-ייראה-הפרויקט-שלכם">כרטיס דוגמה — כיצד ייראה הפרויקט שלכם:</h3>
+<div class="hof-grid" style="max-width:400px;">
+  <div class="hof-card" style="opacity:0.6;border:2px dashed #e2e8f0;">
+    <div class="hof-card-header" style="background:#f8fafc;">
+      <div class="hof-card-icon" style="background:#e2e8f0;">👤</div>
+      <div>
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <h3 class="hof-card-title anchored" style="margin:0;">שם הסטודנט</h3>
+          <span class="hof-winner-badge">🏆 מצטיין</span>
+        </div>
+        <p class="hof-card-subtitle">כותרת הפרויקט</p>
+      </div>
+    </div>
+    <div class="hof-card-body">
+      <p class="hof-card-desc">
+        תיאור קצר של הממצאים המרכזיים, המתודולוגיה ותרומת הפרויקט.
+        ניתן לכלול קישור ל-GitHub Pages של הפרויקט.
+      </p>
+      <div class="hof-skills">
+        <span class="hof-skill-tag">Python</span>
+        <span class="hof-skill-tag">R</span>
+        <span class="hof-skill-tag">OLS</span>
+      </div>
+      <div style="margin-top:1rem;">
+        <a href="#" style="color:var(--primary);font-size:0.85rem;font-weight:600;">
+          🔗 צפה בפרויקט ←
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+</section>
+</section>
+<section id="קריטריוני-שיפוט" class="level2">
+<h2 class="anchored" data-anchor-id="קריטריוני-שיפוט">📋 קריטריוני שיפוט</h2>
+<div class="modules-grid" style="margin-top:1rem;">
+
+  <div class="module-card" style="border-right-color:#6366f1;">
+    <div class="module-icon">🎯</div>
+    <div class="module-info">
+      <h3 class="anchored">עומק ניתוחי</h3>
+      <p>שימוש נכון בכלים כמותיים, פרשנות נכונה של תוצאות ומסקנות מבוססות נתונים.</p>
+    </div>
+  </div>
+
+  <div class="module-card" style="border-right-color:#10b981;">
+    <div class="module-icon">💻</div>
+    <div class="module-info">
+      <h3 class="anchored">איכות קוד</h3>
+      <p>קוד נקי, מתועד ומאורגן. שימוש ב-Best Practices של Python/R.</p>
+    </div>
+  </div>
+
+  <div class="module-card" style="border-right-color:#f59e0b;">
+    <div class="module-icon">🎨</div>
+    <div class="module-info">
+      <h3 class="anchored">ויזואליזציה</h3>
+      <p>גרפים ברורים, מוסברים ואינטראקטיביים שמספרים סיפור.</p>
+    </div>
+  </div>
+
+  <div class="module-card" style="border-right-color:#ef4444;">
+    <div class="module-icon">📝</div>
+    <div class="module-info">
+      <h3 class="anchored">דוח כתוב</h3>
+      <p>RMarkdown / Quarto עם הסבר מתודולוגי ברור, ממצאים ומסקנות.</p>
+    </div>
+  </div>
+
+</div>
+<hr>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">עצה</span>טיפ לפרויקט מצטיין
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>השתמשו ב-Quarto לכתיבת הדוח — כך תוכלו לשלב קוד, גרפים וטקסט בצורה מקצועית, ואף לפרסם את הפרויקט כאתר GitHub Pages מלוטש.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script src="custom.js"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "הועתק!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "הועתק!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="econlabppe-cloud/econlabppe" issue-term="title" theme="github-light" crossorigin="anonymous" async="">
+</script>
+<nav class="page-navigation column-page-right">
+  <div class="nav-page nav-page-previous">
+      <a href="./leaderboard.html" class="pagination-link" aria-label="🏆 לוח תוצאות">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">🏆 לוח תוצאות</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 EconLabPPE — מעבדת אקונומטריקה</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions"><ul><li><a href="https://github.com/econlabppe-cloud/econlabppe/edit/main/hall_of_fame.qmd" class="toc-action"><i class="bi bi-github"></i>ערוך עמוד זה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/issues/new" class="toc-action"><i class="bi empty"></i>דווח על בעיה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/blob/main/hall_of_fame.qmd" class="toc-action"><i class="bi empty"></i>הצג מקור</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>בנוי עם ❤️ ו-<a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

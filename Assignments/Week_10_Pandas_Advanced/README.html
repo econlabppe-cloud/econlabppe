@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="he" xml:lang="he" dir="rtl"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>שבוע 10 – Pandas מתקדם: Time Series, Merge, ו-Pipeline מלא – מעבדת אקונומטריקה</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../Assignments/Week_11_APIs_Israel/README.html" rel="next">
+<link href="../../Assignments/Week_09_Pandas_Basics/README.html" rel="prev">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f8fae465bfcf93f59030998d38b15c9b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "אין תוצאות",
+    "search-matching-documents-text": "מסמכים תואמים",
+    "search-copy-link-title": "העתק קישור לחיפוש",
+    "search-hide-matches-text": "הסתר התאמות נוספות",
+    "search-more-match-text": "התאמה נוספת במסמך זה",
+    "search-more-matches-text": "התאמות נוספות במסמך זה",
+    "search-clear-button-title": "נקה",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "בטל",
+    "search-submit-button-title": "שלח",
+    "search-label": "חפש"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../custom.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">מעבדת אקונומטריקה</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="הצג/הסתר ניווט" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/econlabppe-cloud/econlabppe"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../leaderboard.html" aria-current="page"> 
+<span class="menu-text">📊 לוח תוצאות</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../hall_of_fame.html"> 
+<span class="menu-text">🏆 היכל התהילה</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/econlabppe-cloud/econlabppe" title="קוד מקור" class="quarto-navigation-tool px-1" aria-label="קוד מקור"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="הצג/הסתר מצב קריאה">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="הצג/הסתר את סרגל הניווט" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Assignments/Week_08_Python_Basics/README.html">🐍 מודול 3: Python</a></li><li class="breadcrumb-item"><a href="../../Assignments/Week_10_Pandas_Advanced/README.html"><span class="chapter-title">שבוע 10 – Pandas מתקדם: Time Series, Merge, ו-Pipeline מלא</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="הצג/הסתר את סרגל הניווט" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="חפש" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <div id="quarto-search" class="quarto-navigation-tool px-1" title="חפש"></div>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">מעבדת אקונומטריקה — EconLabPPE</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">🛠️ מודול 1: הגדרה ו-Excel</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_01_Setup/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 1 – הכנת הסביבה: בניית מחשב של כלכלן נתונים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_02_Excel_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 2 – Excel מאפס: הכלי שכל כלכלן מתחיל בו</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_03_Excel_Intermediate/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 3 – Excel בינוני: VLOOKUP, Pivot Tables, וגרפים לפרסום</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_04_Excel_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 4 – Excel מתקדם: Power Query, פונקציות פיננסיות, ודשבורד כלכלי</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">🗄️ מודול 2: SQL</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_05_SQL_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 5 – SQL מאפס: שפת הנתונים של העולם</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_06_SQL_Intermediate/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 6 – SQL בינוני: GROUP BY, JOINs, ושאילתות מורכבות</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_07_SQL_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 7 – SQL מתקדם: Window Functions, CTEs, ו-Python+SQL</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">🐍 מודול 3: Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_08_Python_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 8 – Python מאפס: שפת התכנות של כלכלנים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_09_Pandas_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 9 – Pandas בסיסי: Excel של Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_10_Pandas_Advanced/README.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">שבוע 10 – Pandas מתקדם: Time Series, Merge, ו-Pipeline מלא</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">🌐 מודול 4: APIs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_11_APIs_Israel/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 11 – APIs ישראליים: גישה לנתוני בנק ישראל והלמ”ס בזמן אמת</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_12_APIs_International/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 12 – APIs בין-לאומיים: השוואה גלובלית עם בנק עולמי, OECD ו-FRED</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">📊 מודול 5: R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_13_R_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 13 – R מאפס: שפת הסטטיסטיקה של כלכלנים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_14_R_Tidyverse/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 14 – Tidyverse: dplyr, tidyr ו-ggplot2</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">📈 מודול 6: אקונומטריקה</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_15_Econometrics_Regression/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 15 – אקונומטריקה: רגרסיה לינארית ב-R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_16_Econometrics_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 16 – אקונומטריקה מתקדמת: DiD, ARIMA ו-Panel Data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">🎨 מודול 7: ויזואליזציה</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_17_Visualization_Python/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 17 – ויזואליזציה אינטראקטיבית עם Plotly (Python)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_18_Visualization_R/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 18 – ggplot2 מתקדם ו-R Markdown: דוחות לפרסום</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">📉 מודול 8: כלי BI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_19_BI_PowerBI/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 19 – Power BI: דשבורדים כלכליים לביזנס</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_20_BI_Tableau/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 20 – Tableau: ויזואליזציה מקצועית ו-Storytelling</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">🏛️ מודול 9: DSGE</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_21_DSGE_Intro/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 21 – מבוא ל-DSGE: מודלים מאקרו-כלכליים דינמיים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_22_DSGE_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 22 – DSGE מלא: אמידה בייזיאנית, תחזיות ופרויקט סיום</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../leaderboard.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🏆 לוח תוצאות</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../hall_of_fame.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🏆 היכל התהילה</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">בדף זה</h2>
+   
+  <ul>
+  <li><a href="#סרטוני-הדרכה-לפרק-זה" id="toc-סרטוני-הדרכה-לפרק-זה" class="nav-link active" data-scroll-target="#סרטוני-הדרכה-לפרק-זה">🎥 סרטוני הדרכה לפרק זה</a></li>
+  <li><a href="#רמת-מתחילים" id="toc-רמת-מתחילים" class="nav-link" data-scroll-target="#רמת-מתחילים">🟢 רמת מתחילים</a></li>
+  <li><a href="#רמת-ביניים" id="toc-רמת-ביניים" class="nav-link" data-scroll-target="#רמת-ביניים">🟡 רמת ביניים</a></li>
+  <li><a href="#רמת-מתקדמים" id="toc-רמת-מתקדמים" class="nav-link" data-scroll-target="#רמת-מתקדמים">🔴 רמת מתקדמים</a></li>
+  <li><a href="#חלק-א-time-series-עבודה-עם-תאריכים" id="toc-חלק-א-time-series-עבודה-עם-תאריכים" class="nav-link" data-scroll-target="#חלק-א-time-series-עבודה-עם-תאריכים">חלק א – Time Series: עבודה עם תאריכים</a>
+  <ul class="collapse">
+  <li><a href="#pd.to_datetime-ו-datetimeindex" id="toc-pd.to_datetime-ו-datetimeindex" class="nav-link" data-scroll-target="#pd.to_datetime-ו-datetimeindex">pd.to_datetime() ו-DatetimeIndex</a></li>
+  <li><a href="#גישה-לרכיבי-תאריך" id="toc-גישה-לרכיבי-תאריך" class="nav-link" data-scroll-target="#גישה-לרכיבי-תאריך">גישה לרכיבי תאריך</a></li>
+  <li><a href="#סינון-לפי-תאריך" id="toc-סינון-לפי-תאריך" class="nav-link" data-scroll-target="#סינון-לפי-תאריך">סינון לפי תאריך</a></li>
+  </ul></li>
+  <li><a href="#חלק-ב-resampling-שינוי-תדירות" id="toc-חלק-ב-resampling-שינוי-תדירות" class="nav-link" data-scroll-target="#חלק-ב-resampling-שינוי-תדירות">חלק ב – Resampling: שינוי תדירות</a></li>
+  <li><a href="#חלק-ג-rolling-ו-shift-ניתוח-לאורך-זמן" id="toc-חלק-ג-rolling-ו-shift-ניתוח-לאורך-זמן" class="nav-link" data-scroll-target="#חלק-ג-rolling-ו-shift-ניתוח-לאורך-זמן">חלק ג – Rolling ו-Shift: ניתוח לאורך זמן</a>
+  <ul class="collapse">
+  <li><a href="#rolling-ממוצע-נע" id="toc-rolling-ממוצע-נע" class="nav-link" data-scroll-target="#rolling-ממוצע-נע">rolling() – ממוצע נע</a></li>
+  <li><a href="#shift-ערך-מתקופה-קודמת" id="toc-shift-ערך-מתקופה-קודמת" class="nav-link" data-scroll-target="#shift-ערך-מתקופה-קודמת">shift() – ערך מתקופה קודמת</a></li>
+  <li><a href="#diff-הפרש" id="toc-diff-הפרש" class="nav-link" data-scroll-target="#diff-הפרש">diff() – הפרש</a></li>
+  </ul></li>
+  <li><a href="#חלק-ד-merge-מיזוג-dataframes" id="toc-חלק-ד-merge-מיזוג-dataframes" class="nav-link" data-scroll-target="#חלק-ד-merge-מיזוג-dataframes">חלק ד – Merge: מיזוג DataFrames</a>
+  <ul class="collapse">
+  <li><a href="#pd.merge-כמו-join-ב-sql" id="toc-pd.merge-כמו-join-ב-sql" class="nav-link" data-scroll-target="#pd.merge-כמו-join-ב-sql">pd.merge() – כמו JOIN ב-SQL</a></li>
+  <li><a href="#pd.concat-הוספת-שורותעמודות" id="toc-pd.concat-הוספת-שורותעמודות" class="nav-link" data-scroll-target="#pd.concat-הוספת-שורותעמודות">pd.concat() – הוספת שורות/עמודות</a></li>
+  </ul></li>
+  <li><a href="#חלק-ה-pivot_table-melt-stackunstack" id="toc-חלק-ה-pivot_table-melt-stackunstack" class="nav-link" data-scroll-target="#חלק-ה-pivot_table-melt-stackunstack">חלק ה – pivot_table, melt, stack/unstack</a>
+  <ul class="collapse">
+  <li><a href="#pivot_table-ניתוח-צולב" id="toc-pivot_table-ניתוח-צולב" class="nav-link" data-scroll-target="#pivot_table-ניתוח-צולב">pivot_table – ניתוח צולב</a></li>
+  <li><a href="#melt-wide-long-מה-שunpivot-עושה-ב-power-query" id="toc-melt-wide-long-מה-שunpivot-עושה-ב-power-query" class="nav-link" data-scroll-target="#melt-wide-long-מה-שunpivot-עושה-ב-power-query">melt – Wide → Long (מה שUnpivot עושה ב-Power Query)</a></li>
+  <li><a href="#stack-unstack" id="toc-stack-unstack" class="nav-link" data-scroll-target="#stack-unstack">stack / unstack</a></li>
+  </ul></li>
+  <li><a href="#חלק-ו-matplotlib-מלא-לפרסום" id="toc-חלק-ו-matplotlib-מלא-לפרסום" class="nav-link" data-scroll-target="#חלק-ו-matplotlib-מלא-לפרסום">חלק ו – Matplotlib מלא לפרסום</a>
+  <ul class="collapse">
+  <li><a href="#מבנה-figureaxes" id="toc-מבנה-figureaxes" class="nav-link" data-scroll-target="#מבנה-figureaxes">מבנה Figure/Axes</a></li>
+  <li><a href="#עיצוב-מקצועי" id="toc-עיצוב-מקצועי" class="nav-link" data-scroll-target="#עיצוב-מקצועי">עיצוב מקצועי</a></li>
+  </ul></li>
+  <li><a href="#חלק-ז-pipeline-מלא-מנתונים-גולמיים-לניתוח" id="toc-חלק-ז-pipeline-מלא-מנתונים-גולמיים-לניתוח" class="nav-link" data-scroll-target="#חלק-ז-pipeline-מלא-מנתונים-גולמיים-לניתוח">חלק ז – Pipeline מלא: מנתונים גולמיים לניתוח</a>
+  <ul class="collapse">
+  <li><a href="#הגישה-המקצועית" id="toc-הגישה-המקצועית" class="nav-link" data-scroll-target="#הגישה-המקצועית">הגישה המקצועית</a></li>
+  </ul></li>
+  <li><a href="#משימות-השבוע-פרויקט-מסכם-pythonpandas" id="toc-משימות-השבוע-פרויקט-מסכם-pythonpandas" class="nav-link" data-scroll-target="#משימות-השבוע-פרויקט-מסכם-pythonpandas">משימות השבוע – פרויקט מסכם Python/Pandas</a>
+  <ul class="collapse">
+  <li><a href="#פרויקט-ניתוח-מאקרו-כלכלי-ישראל-2015-2024" id="toc-פרויקט-ניתוח-מאקרו-כלכלי-ישראל-2015-2024" class="nav-link" data-scroll-target="#פרויקט-ניתוח-מאקרו-כלכלי-ישראל-2015-2024">פרויקט: “ניתוח מאקרו-כלכלי ישראל 2015-2024”</a></li>
+  <li><a href="#תרגול-מעשי-hands-on" id="toc-תרגול-מעשי-hands-on" class="nav-link" data-scroll-target="#תרגול-מעשי-hands-on">💻 תרגול מעשי (Hands-on)</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/econlabppe-cloud/econlabppe/edit/main/Assignments/Week_10_Pandas_Advanced/README.md" class="toc-action"><i class="bi bi-github"></i>ערוך עמוד זה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/issues/new" class="toc-action"><i class="bi empty"></i>דווח על בעיה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_10_Pandas_Advanced/README.md" class="toc-action"><i class="bi empty"></i>הצג מקור</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Assignments/Week_08_Python_Basics/README.html">🐍 מודול 3: Python</a></li><li class="breadcrumb-item"><a href="../../Assignments/Week_10_Pandas_Advanced/README.html"><span class="chapter-title">שבוע 10 – Pandas מתקדם: Time Series, Merge, ו-Pipeline מלא</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">שבוע 10 – Pandas מתקדם: Time Series, Merge, ו-Pipeline מלא</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="סרטוני-הדרכה-לפרק-זה" class="level3">
+<h3 class="anchored" data-anchor-id="סרטוני-הדרכה-לפרק-זה">🎥 סרטוני הדרכה לפרק זה</h3>
+<p>כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות: ::: {.panel-tabset} ## 🟢 רמת מתחילים <strong>מבוא והיכרות עם המושגים הבסיסיים:</strong> </p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/eMOA1pPVUc4](https://www.youtube.com/watch?v=eMOA1pPVUc4)" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> ## 🟡 רמת ביניים <strong>העמקה ופרקטיקה מעשית:</strong> <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/h4hOPGo4UVU](https://www.youtube.com/watch?v=h4hOPGo4UVU)" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> ## 🔴 רמת מתקדמים <strong>מקרי קצה, אופטימיזציה ושימושים מורכבים:</strong> <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Kk6piJkoIEw](https://www.youtube.com/watch?v=Kk6piJkoIEw)" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> :::<p></p>
+</section>
+<section id="רמת-מתחילים" class="level2">
+<h2 class="anchored" data-anchor-id="רמת-מתחילים">🟢 רמת מתחילים</h2>
+<p><strong>מבוא והיכרות עם המושגים הבסיסיים:</strong> </p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/eMOA1pPVUc4" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+<section id="רמת-ביניים" class="level2">
+<h2 class="anchored" data-anchor-id="רמת-ביניים">🟡 רמת ביניים</h2>
+<p><strong>העמקה ופרקטיקה מעשית:</strong> </p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/0GrciaGYzV0" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+<section id="רמת-מתקדמים" class="level2">
+<h2 class="anchored" data-anchor-id="רמת-מתקדמים">🔴 רמת מתקדמים</h2>
+<p><strong>מקרי קצה, אופטימיזציה ושימושים מורכבים:</strong> </p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/zYttXz_59gU" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>::: ## מה נלמד השבוע?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>נושא</th>
+<th>זמן משוער</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Time Series: תאריכים וזמן</td>
+<td>90 דקות</td>
+</tr>
+<tr class="even">
+<td>resample, rolling, shift</td>
+<td>75 דקות</td>
+</tr>
+<tr class="odd">
+<td>merge, concat, join</td>
+<td>75 דקות</td>
+</tr>
+<tr class="even">
+<td>pivot_table, melt, stack/unstack</td>
+<td>60 דקות</td>
+</tr>
+<tr class="odd">
+<td>Matplotlib מלא לפרסום</td>
+<td>60 דקות</td>
+</tr>
+<tr class="even">
+<td>Pipeline נתונים שלם</td>
+<td>90 דקות</td>
+</tr>
+<tr class="odd">
+<td><strong>סה”כ</strong></td>
+<td><strong>~8 שעות</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="חלק-א-time-series-עבודה-עם-תאריכים" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-א-time-series-עבודה-עם-תאריכים">חלק א – Time Series: עבודה עם תאריכים</h2>
+<section id="pd.to_datetime-ו-datetimeindex" class="level3">
+<h3 class="anchored" data-anchor-id="pd.to_datetime-ו-datetimeindex">pd.to_datetime() ו-DatetimeIndex</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># יצירת DatetimeIndex</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(start<span class="op">=</span><span class="st">"2022-01-01"</span>, end<span class="op">=</span><span class="st">"2023-12-31"</span>, freq<span class="op">=</span><span class="st">"M"</span>)  <span class="co"># חודשי</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dates[:<span class="dv">5</span>])</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># DatetimeIndex(['2022-01-31', '2022-02-28', '2022-03-31'...])</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># יצירת סדרה עתית</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>cpi <span class="op">=</span> pd.Series(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>np.cumsum(np.random.normal(<span class="fl">0.3</span>, <span class="fl">0.1</span>, <span class="bu">len</span>(dates))),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>dates,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"CPI_monthly_change"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cpi.head())</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># המרת עמודה לתאריך</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"date"</span>: [<span class="st">"2022-01"</span>, <span class="st">"2022-02"</span>, <span class="st">"2022-03"</span>],</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"inflation"</span>: [<span class="fl">4.1</span>, <span class="fl">4.3</span>, <span class="fl">4.5</span>]</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"date"</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">"date"</span>])</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.set_index(<span class="st">"date"</span>)</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="גישה-לרכיבי-תאריך" class="level3">
+<h3 class="anchored" data-anchor-id="גישה-לרכיבי-תאריך">גישה לרכיבי תאריך</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.index.year      <span class="co"># שנה</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df.index.month     <span class="co"># חודש (1-12)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df.index.quarter   <span class="co"># רבעון (1-4)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df.index.dayofweek <span class="co"># יום בשבוע (0=שני)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># הוסף כעמודות</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"year"</span>] <span class="op">=</span> df.index.year</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"quarter"</span>] <span class="op">=</span> df.index.quarter</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"month_name"</span>] <span class="op">=</span> df.index.strftime(<span class="st">"%b"</span>)  <span class="co"># Jan, Feb...</span></span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="סינון-לפי-תאריך" class="level3">
+<h3 class="anchored" data-anchor-id="סינון-לפי-תאריך">סינון לפי תאריך</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># שנה ספציפית</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_2022 <span class="op">=</span> df[<span class="st">"2022"</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># טווח תאריכים</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df_range <span class="op">=</span> df[<span class="st">"2022-06"</span>:<span class="st">"2023-03"</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># חודש ספציפי</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>df_jan <span class="op">=</span> df[df.index.month <span class="op">==</span> <span class="dv">1</span>]</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="חלק-ב-resampling-שינוי-תדירות" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ב-resampling-שינוי-תדירות">חלק ב – Resampling: שינוי תדירות</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># נתונים חודשיים → רבעוניים</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_quarterly <span class="op">=</span> df.resample(<span class="st">"Q"</span>).mean()   <span class="co"># ממוצע לכל רבעון</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df_quarterly <span class="op">=</span> df.resample(<span class="st">"Q"</span>).<span class="bu">sum</span>()    <span class="co"># סכום לכל רבעון</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df_quarterly <span class="op">=</span> df.resample(<span class="st">"Q"</span>).last()   <span class="co"># ערך אחרון ברבעון</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># נתונים חודשיים → שנתיים</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>df_annual <span class="op">=</span> df.resample(<span class="st">"A"</span>).mean()      <span class="co"># "A" = Annual</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># תדרים נפוצים:</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># "D" = יומי, "W" = שבועי, "M" = חודשי, "Q" = רבעוני, "A" = שנתי</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># דוגמה מלאה: BOI ריבית חודשית → שנתית</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>interest_monthly <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"date"</span>: pd.date_range(<span class="st">"2022-01"</span>, <span class="st">"2024-01"</span>, freq<span class="op">=</span><span class="st">"M"</span>),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"interest_rate"</span>: [<span class="fl">0.1</span>]<span class="op">*</span><span class="dv">5</span> <span class="op">+</span> [<span class="fl">0.5</span>, <span class="fl">1.0</span>, <span class="fl">1.5</span>, <span class="fl">2.0</span>, <span class="fl">2.5</span>, <span class="fl">3.0</span>, <span class="fl">3.25</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                                 <span class="fl">3.5</span>, <span class="fl">3.75</span>, <span class="fl">4.0</span>, <span class="fl">4.25</span>, <span class="fl">4.5</span>, <span class="fl">4.75</span>]<span class="op">*</span><span class="dv">1</span> <span class="op">+</span> [<span class="fl">4.5</span>]<span class="op">*</span><span class="dv">5</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>interest_monthly <span class="op">=</span> interest_monthly.set_index(<span class="st">"date"</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>annual_avg_rate <span class="op">=</span> interest_monthly.resample(<span class="st">"A"</span>).mean()</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(annual_avg_rate)</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="חלק-ג-rolling-ו-shift-ניתוח-לאורך-זמן" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ג-rolling-ו-shift-ניתוח-לאורך-זמן">חלק ג – Rolling ו-Shift: ניתוח לאורך זמן</h2>
+<section id="rolling-ממוצע-נע" class="level3">
+<h3 class="anchored" data-anchor-id="rolling-ממוצע-נע">rolling() – ממוצע נע</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ממוצע נע 3 חודשים</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"inflation_ma3"</span>] <span class="op">=</span> df[<span class="st">"inflation"</span>].rolling(window<span class="op">=</span><span class="dv">3</span>).mean()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ממוצע נע 12 חודשים (מגמה שנתית)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"inflation_ma12"</span>] <span class="op">=</span> df[<span class="st">"inflation"</span>].rolling(window<span class="op">=</span><span class="dv">12</span>).mean()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># סטיית תקן נעה (מדד תנודתיות)</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"inflation_vol"</span>] <span class="op">=</span> df[<span class="st">"inflation"</span>].rolling(window<span class="op">=</span><span class="dv">6</span>).std()</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># min/max נע</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"inflation_max_12m"</span>] <span class="op">=</span> df[<span class="st">"inflation"</span>].rolling(<span class="dv">12</span>).<span class="bu">max</span>()</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="shift-ערך-מתקופה-קודמת" class="level3">
+<h3 class="anchored" data-anchor-id="shift-ערך-מתקופה-קודמת">shift() – ערך מתקופה קודמת</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># שינוי Year-over-Year (השוואה לשנה קודמת)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"inflation_yoy"</span>] <span class="op">=</span> df[<span class="st">"inflation"</span>] <span class="op">-</span> df[<span class="st">"inflation"</span>].shift(<span class="dv">12</span>)  <span class="co"># 12 חודשים קודם</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># שינוי Quarter-over-Quarter</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"gdp_qoq"</span>] <span class="op">=</span> df[<span class="st">"gdp"</span>].pct_change(periods<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># שינוי YoY אחוזים</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"gdp_yoy_pct"</span>] <span class="op">=</span> df[<span class="st">"gdp"</span>].pct_change(periods<span class="op">=</span><span class="dv">4</span>) <span class="op">*</span> <span class="dv">100</span>  <span class="co"># 4 רבעונים קודם</span></span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="diff-הפרש" class="level3">
+<h3 class="anchored" data-anchor-id="diff-הפרש">diff() – הפרש</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># שינוי ריבית מחודש לחודש</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"rate_change"</span>] <span class="op">=</span> df[<span class="st">"interest_rate"</span>].diff()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># שינוי מצטבר</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"cumulative_inflation"</span>] <span class="op">=</span> df[<span class="st">"inflation"</span>].cumsum()</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="חלק-ד-merge-מיזוג-dataframes" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ד-merge-מיזוג-dataframes">חלק ד – Merge: מיזוג DataFrames</h2>
+<section id="pd.merge-כמו-join-ב-sql" class="level3">
+<h3 class="anchored" data-anchor-id="pd.merge-כמו-join-ב-sql">pd.merge() – כמו JOIN ב-SQL</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame 1: נתוני מאקרו שנתיים</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>macro_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"year"</span>: [<span class="dv">2019</span>, <span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>, <span class="dv">2023</span>],</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gdp_growth"</span>: [<span class="fl">3.8</span>, <span class="op">-</span><span class="fl">1.9</span>, <span class="fl">8.6</span>, <span class="fl">6.5</span>, <span class="fl">2.0</span>],</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"inflation"</span>:  [<span class="fl">0.8</span>, <span class="op">-</span><span class="fl">0.6</span>, <span class="fl">1.5</span>, <span class="fl">5.1</span>, <span class="fl">4.2</span>],</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame 2: נתוני ייצוא</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>exports_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"year"</span>: [<span class="dv">2019</span>, <span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>, <span class="dv">2023</span>],</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"exports_bn_usd"</span>: [<span class="fl">68.6</span>, <span class="fl">58.9</span>, <span class="fl">73.5</span>, <span class="fl">82.1</span>, <span class="fl">75.4</span>],</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrame 3: דירוג חינוך OECD</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>education_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"year"</span>: [<span class="dv">2019</span>, <span class="dv">2021</span>, <span class="dv">2023</span>],  <span class="co"># רק שנים אי-זוגיות!</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pisa_score"</span>: [<span class="dv">488</span>, <span class="dv">492</span>, <span class="dv">490</span>],</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co"># INNER JOIN (רק שורות שיש בשתיהן)</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge(macro_df, exports_df, on<span class="op">=</span><span class="st">"year"</span>, how<span class="op">=</span><span class="st">"inner"</span>)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(merged)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co"># LEFT JOIN (כל macro, גם אם אין exports)</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>merged_left <span class="op">=</span> pd.merge(macro_df, education_df, on<span class="op">=</span><span class="st">"year"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co"># שנים 2020, 2022 יקבלו NaN ב-pisa_score</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co"># מיזוג על עמודות בשמות שונים</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> pd.DataFrame({<span class="st">"yr"</span>: [<span class="dv">2022</span>, <span class="dv">2023</span>], <span class="st">"gdp"</span>: [<span class="fl">6.5</span>, <span class="fl">2.0</span>]})</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.DataFrame({<span class="st">"year"</span>: [<span class="dv">2022</span>, <span class="dv">2023</span>], <span class="st">"exports"</span>: [<span class="fl">82.1</span>, <span class="fl">75.4</span>]})</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>merged_diff <span class="op">=</span> pd.merge(df1, df2, left_on<span class="op">=</span><span class="st">"yr"</span>, right_on<span class="op">=</span><span class="st">"year"</span>).drop(<span class="st">"year"</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="co"># מיזוג על כמה עמודות</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>housing_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"year"</span>: [<span class="dv">2022</span>, <span class="dv">2022</span>, <span class="dv">2023</span>, <span class="dv">2023</span>],</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"district"</span>: [<span class="st">"תל אביב"</span>, <span class="st">"ירושלים"</span>, <span class="st">"תל אביב"</span>, <span class="st">"ירושלים"</span>],</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"avg_price"</span>: [<span class="dv">4050000</span>, <span class="dv">2720000</span>, <span class="dv">3900000</span>, <span class="dv">2650000</span>]</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>population_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"year"</span>: [<span class="dv">2022</span>, <span class="dv">2022</span>, <span class="dv">2023</span>, <span class="dv">2023</span>],</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"district"</span>: [<span class="st">"תל אביב"</span>, <span class="st">"ירושלים"</span>, <span class="st">"תל אביב"</span>, <span class="st">"ירושלים"</span>],</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"population"</span>: [<span class="dv">1380000</span>, <span class="dv">1100000</span>, <span class="dv">1400000</span>, <span class="dv">1120000</span>]</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>combined <span class="op">=</span> pd.merge(housing_df, population_df, on<span class="op">=</span>[<span class="st">"year"</span>, <span class="st">"district"</span>])</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>combined[<span class="st">"price_per_capita"</span>] <span class="op">=</span> combined[<span class="st">"avg_price"</span>] <span class="op">/</span> combined[<span class="st">"population"</span>]</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="pd.concat-הוספת-שורותעמודות" class="level3">
+<h3 class="anchored" data-anchor-id="pd.concat-הוספת-שורותעמודות">pd.concat() – הוספת שורות/עמודות</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># הוסף שורות (stack vertically)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df_2022 <span class="op">=</span> pd.DataFrame({<span class="st">"year"</span>: [<span class="dv">2022</span>], <span class="st">"gdp"</span>: [<span class="fl">6.5</span>]})</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>df_2023 <span class="op">=</span> pd.DataFrame({<span class="st">"year"</span>: [<span class="dv">2023</span>], <span class="st">"gdp"</span>: [<span class="fl">2.0</span>]})</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>combined <span class="op">=</span> pd.concat([df_2022, df_2023], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># הוסף עמודות (stack horizontally)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>gdp_col <span class="op">=</span> pd.DataFrame({<span class="st">"gdp_growth"</span>: [<span class="fl">3.8</span>, <span class="op">-</span><span class="fl">1.9</span>, <span class="fl">8.6</span>]})</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>inflation_col <span class="op">=</span> pd.DataFrame({<span class="st">"inflation"</span>: [<span class="fl">0.8</span>, <span class="op">-</span><span class="fl">0.6</span>, <span class="fl">1.5</span>]})</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>combined <span class="op">=</span> pd.concat([gdp_col, inflation_col], axis<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="חלק-ה-pivot_table-melt-stackunstack" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ה-pivot_table-melt-stackunstack">חלק ה – pivot_table, melt, stack/unstack</h2>
+<section id="pivot_table-ניתוח-צולב" class="level3">
+<h3 class="anchored" data-anchor-id="pivot_table-ניתוח-צולב">pivot_table – ניתוח צולב</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>housing_data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"year"</span>:     [<span class="dv">2022</span>]<span class="op">*</span><span class="dv">4</span> <span class="op">+</span> [<span class="dv">2023</span>]<span class="op">*</span><span class="dv">4</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"quarter"</span>:  [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>]<span class="op">*</span><span class="dv">2</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"district"</span>: [<span class="st">"ת''א"</span>,<span class="st">"ירושלים"</span>]<span class="op">*</span><span class="dv">4</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"price"</span>:    [<span class="dv">3800000</span>, <span class="dv">3950000</span>, <span class="dv">4100000</span>, <span class="dv">4050000</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                 <span class="dv">3900000</span>, <span class="dv">3850000</span>, <span class="dv">3820000</span>, <span class="dv">3780000</span>],</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivot: שורות=שנה, עמודות=מחוז, ערכים=ממוצע מחיר</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>pivot <span class="op">=</span> housing_data.pivot_table(</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">"price"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">"year"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">"district"</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    aggfunc<span class="op">=</span><span class="st">"mean"</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pivot)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co"># עם מספר פונקציות</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>pivot_detailed <span class="op">=</span> housing_data.pivot_table(</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">"price"</span>,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">"quarter"</span>,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"year"</span>, <span class="st">"district"</span>],</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    aggfunc<span class="op">=</span>[<span class="st">"mean"</span>, <span class="st">"max"</span>]</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="melt-wide-long-מה-שunpivot-עושה-ב-power-query" class="level3">
+<h3 class="anchored" data-anchor-id="melt-wide-long-מה-שunpivot-עושה-ב-power-query">melt – Wide → Long (מה שUnpivot עושה ב-Power Query)</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>wide_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"year"</span>:       [<span class="dv">2021</span>, <span class="dv">2022</span>, <span class="dv">2023</span>],</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tel_aviv"</span>:   [<span class="dv">3700000</span>, <span class="dv">4050000</span>, <span class="dv">3900000</span>],</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"jerusalem"</span>:  [<span class="dv">2500000</span>, <span class="dv">2720000</span>, <span class="dv">2650000</span>],</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"haifa"</span>:      [<span class="dv">1600000</span>, <span class="dv">1780000</span>, <span class="dv">1720000</span>],</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>long_df <span class="op">=</span> wide_df.melt(</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    id_vars<span class="op">=</span><span class="st">"year"</span>,          <span class="co"># עמודות שלא מומסים</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">"district"</span>,     <span class="co"># שם עמודת הקטגוריה</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    value_name<span class="op">=</span><span class="st">"avg_price"</span>   <span class="co"># שם עמודת הערך</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(long_df)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># year | district  | avg_price</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 2021 | tel_aviv  | 3700000</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 2021 | jerusalem | 2500000</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="stack-unstack" class="level3">
+<h3 class="anchored" data-anchor-id="stack-unstack">stack / unstack</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stack: עמודות → שורות (Wide → Long)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>stacked <span class="op">=</span> pivot.stack()</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># unstack: שורות → עמודות (Long → Wide)</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>unstacked <span class="op">=</span> stacked.unstack(<span class="st">"district"</span>)</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="חלק-ו-matplotlib-מלא-לפרסום" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ו-matplotlib-מלא-לפרסום">חלק ו – Matplotlib מלא לפרסום</h2>
+<section id="מבנה-figureaxes" class="level3">
+<h3 class="anchored" data-anchor-id="מבנה-figureaxes">מבנה Figure/Axes</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.gridspec <span class="im">as</span> gridspec</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure מורכב עם GridSpec</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">10</span>))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>gs <span class="op">=</span> gridspec.GridSpec(<span class="dv">2</span>, <span class="dv">3</span>, figure<span class="op">=</span>fig, hspace<span class="op">=</span><span class="fl">0.4</span>, wspace<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> fig.add_subplot(gs[<span class="dv">0</span>, :])    <span class="co"># כל השורה הראשונה</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> fig.add_subplot(gs[<span class="dv">1</span>, <span class="dv">0</span>])    <span class="co"># שמאל תחתון</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> fig.add_subplot(gs[<span class="dv">1</span>, <span class="dv">1</span>])    <span class="co"># אמצע תחתון</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>ax4 <span class="op">=</span> fig.add_subplot(gs[<span class="dv">1</span>, <span class="dv">2</span>])    <span class="co"># ימין תחתון</span></span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="עיצוב-מקצועי" class="level3">
+<h3 class="anchored" data-anchor-id="עיצוב-מקצועי">עיצוב מקצועי</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Economist-style plot</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"font.size"</span>: <span class="dv">11</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.top"</span>: <span class="va">False</span>,      <span class="co"># ללא מסגרת עליונה</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.right"</span>: <span class="va">False</span>,    <span class="co"># ללא מסגרת ימנית</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.grid"</span>: <span class="va">True</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"grid.alpha"</span>: <span class="fl">0.3</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"grid.linestyle"</span>: <span class="st">"--"</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># צמיחה עם background shading</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>years <span class="op">=</span> [<span class="dv">2018</span>, <span class="dv">2019</span>, <span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>, <span class="dv">2023</span>, <span class="dv">2024</span>]</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>gdp <span class="op">=</span> [<span class="fl">4.2</span>, <span class="fl">3.8</span>, <span class="op">-</span><span class="fl">1.9</span>, <span class="fl">8.6</span>, <span class="fl">6.5</span>, <span class="fl">2.0</span>, <span class="fl">1.1</span>]</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>ax.bar(years, gdp,</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>       color<span class="op">=</span>[<span class="st">"#2ca02c"</span> <span class="cf">if</span> g <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">"#d62728"</span> <span class="cf">for</span> g <span class="kw">in</span> gdp],</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>       alpha<span class="op">=</span><span class="fl">0.8</span>, edgecolor<span class="op">=</span><span class="st">"white"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co"># הדגשת שנת הקורונה</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>ax.axvspan(<span class="fl">2019.5</span>, <span class="fl">2020.5</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span><span class="st">"gray"</span>, label<span class="op">=</span><span class="st">"קורונה"</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co"># קו ממוצע</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>avg <span class="op">=</span> <span class="bu">sum</span>(gdp) <span class="op">/</span> <span class="bu">len</span>(gdp)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>ax.axhline(avg, color<span class="op">=</span><span class="st">"navy"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>,</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>           label<span class="op">=</span><span class="ss">f"ממוצע: </span><span class="sc">{</span>avg<span class="sc">:.1f}</span><span class="ss">%"</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="co"># אנוטציות</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>ax.annotate(<span class="st">"קורונה"</span>, xy<span class="op">=</span>(<span class="dv">2020</span>, <span class="op">-</span><span class="fl">1.9</span>), xytext<span class="op">=</span>(<span class="fl">2020.5</span>, <span class="op">-</span><span class="fl">1.5</span>),</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">"gray"</span>),</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">"gray"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="co"># עיצוב</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"צמיחת תמ</span><span class="ch">\"</span><span class="st">ג ישראל 2018-2024"</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"שיעור צמיחה (%)"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"שנה"</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper right"</span>)</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="dv">4</span>, <span class="dv">11</span>)</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="co"># מקור נתונים</span></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>fig.text(<span class="fl">0.01</span>, <span class="fl">0.01</span>, <span class="st">"מקור: בנק ישראל"</span>, fontsize<span class="op">=</span><span class="dv">8</span>, color<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"gdp_publication.png"</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>,</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>            facecolor<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="חלק-ז-pipeline-מלא-מנתונים-גולמיים-לניתוח" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ז-pipeline-מלא-מנתונים-גולמיים-לניתוח">חלק ז – Pipeline מלא: מנתונים גולמיים לניתוח</h2>
+<section id="הגישה-המקצועית" class="level3">
+<h3 class="anchored" data-anchor-id="הגישה-המקצועית">הגישה המקצועית</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 1: LOAD &amp; VALIDATE</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"שלב 1: טעינת נתונים..."</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>macro <span class="op">=</span> pd.read_csv(<span class="st">"macro_annual.csv"</span>, parse_dates<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>housing <span class="op">=</span> pd.read_csv(<span class="st">"housing_quarterly.csv"</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="kw">not</span> macro.isnull().<span class="bu">all</span>().<span class="bu">any</span>(), <span class="st">"עמודה שלמה ריקה ב-macro!"</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Macro: </span><span class="sc">{</span>macro<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> שורות"</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  Housing: </span><span class="sc">{</span>housing<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> שורות"</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 2: CLEAN</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">שלב 2: ניקוי נתונים..."</span>)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="co"># macro</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>macro <span class="op">=</span> macro.drop_duplicates(subset<span class="op">=</span>[<span class="st">"year"</span>])</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>macro <span class="op">=</span> macro[macro[<span class="st">"year"</span>].between(<span class="dv">2015</span>, <span class="dv">2024</span>)]</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>macro[<span class="st">"year"</span>] <span class="op">=</span> macro[<span class="st">"year"</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="co"># housing</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>housing[<span class="st">"district"</span>] <span class="op">=</span> housing[<span class="st">"district"</span>].<span class="bu">str</span>.strip()</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>housing <span class="op">=</span> housing[housing[<span class="st">"avg_price"</span>].between(<span class="dv">500000</span>, <span class="dv">10000000</span>)]</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"  ✓ ניקוי הסתיים"</span>)</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 3: ENGINEER FEATURES</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">שלב 3: חישוב פיצ'רים..."</span>)</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>macro[<span class="st">"real_interest"</span>] <span class="op">=</span> macro[<span class="st">"interest_rate"</span>] <span class="op">-</span> macro[<span class="st">"inflation"</span>]</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>macro[<span class="st">"era"</span>] <span class="op">=</span> macro[<span class="st">"year"</span>].<span class="bu">apply</span>(</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> y: <span class="st">"ריבית נמוכה"</span> <span class="cf">if</span> y <span class="op">&lt;=</span> <span class="dv">2021</span> <span class="cf">else</span> <span class="st">"ריבית גבוהה"</span></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>housing_annual <span class="op">=</span> housing.groupby([<span class="st">"year"</span>, <span class="st">"district"</span>]).agg(</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>    avg_price<span class="op">=</span>(<span class="st">"avg_price"</span>, <span class="st">"mean"</span>),</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>    total_transactions<span class="op">=</span>(<span class="st">"transactions"</span>, <span class="st">"sum"</span>)</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 4: MERGE</span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">שלב 4: מיזוג נתונים..."</span>)</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>combined <span class="op">=</span> pd.merge(macro, housing_annual, on<span class="op">=</span><span class="st">"year"</span>, how<span class="op">=</span><span class="st">"left"</span>)</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  תוצאה: </span><span class="sc">{</span>combined<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> שורות"</span>)</span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 5: ANALYZE</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">שלב 5: ניתוח..."</span>)</span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>era_summary <span class="op">=</span> combined.groupby(<span class="st">"era"</span>).agg({</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gdp_growth"</span>:     [<span class="st">"mean"</span>, <span class="st">"std"</span>],</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a>    <span class="st">"inflation"</span>:      <span class="st">"mean"</span>,</span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">"real_interest"</span>:  <span class="st">"mean"</span>,</span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">"avg_price"</span>:      <span class="st">"mean"</span>,</span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">"total_transactions"</span>: <span class="st">"sum"</span></span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a>}).<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(era_summary)</span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a><span class="co"># קורלציות</span></span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>corr_matrix <span class="op">=</span> combined[</span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"interest_rate"</span>, <span class="st">"inflation"</span>, <span class="st">"gdp_growth"</span>, <span class="st">"avg_price"</span>, <span class="st">"total_transactions"</span>]</span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>].corr().<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">מטריצת קורלציות:"</span>)</span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(corr_matrix)</span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 6: VISUALIZE</span></span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">שלב 6: ויזואליזציה..."</span>)</span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"ניתוח שוק הדיור ומדיניות הריבית – ישראל 2015-2024"</span>,</span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">"bold"</span>)</span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a><span class="co"># גרף 1: ריבית לאורך זמן</span></span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>, <span class="dv">0</span>]</span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a>ax.step(macro[<span class="st">"year"</span>], macro[<span class="st">"interest_rate"</span>], color<span class="op">=</span><span class="st">"royalblue"</span>, linewidth<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a>ax.fill_between(macro[<span class="st">"year"</span>], macro[<span class="st">"interest_rate"</span>], alpha<span class="op">=</span><span class="fl">0.15</span>, color<span class="op">=</span><span class="st">"royalblue"</span>, step<span class="op">=</span><span class="st">"pre"</span>)</span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"ריבית בנק ישראל (%)"</span>)</span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>ax.axhline(macro[<span class="st">"interest_rate"</span>].mean(), color<span class="op">=</span><span class="st">"gray"</span>, linestyle<span class="op">=</span><span class="st">":"</span>, label<span class="op">=</span><span class="st">"ממוצע"</span>)</span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a><span class="co"># גרף 2: אינפלציה vs ריבית</span></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> axes[<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a>ax.plot(macro[<span class="st">"year"</span>], macro[<span class="st">"inflation"</span>], <span class="st">"o-"</span>, color<span class="op">=</span><span class="st">"orange"</span>, label<span class="op">=</span><span class="st">"אינפלציה"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a>ax.plot(macro[<span class="st">"year"</span>], macro[<span class="st">"real_interest"</span>], <span class="st">"s--"</span>, color<span class="op">=</span><span class="st">"darkred"</span>, label<span class="op">=</span><span class="st">"ריבית ריאלית"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"black"</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"אינפלציה מול ריבית ריאלית (%)"</span>)</span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a><span class="co"># גרף 3: מחיר דיור לפי מחוז</span></span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"avg_price"</span> <span class="kw">in</span> combined.columns <span class="kw">and</span> <span class="kw">not</span> combined[<span class="st">"avg_price"</span>].isna().<span class="bu">all</span>():</span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>    district_price <span class="op">=</span> combined.groupby([<span class="st">"year"</span>, <span class="st">"district"</span>])[<span class="st">"avg_price"</span>].mean().unstack()</span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> district_price.columns:</span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>        axes[<span class="dv">1</span>, <span class="dv">0</span>].plot(district_price.index, district_price[col] <span class="op">/</span> <span class="dv">1_000_000</span>,</span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a>                        marker<span class="op">=</span><span class="st">"o"</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>, markersize<span class="op">=</span><span class="dv">4</span>, label<span class="op">=</span>col)</span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>, <span class="dv">0</span>].set_title(<span class="st">"מחיר דיור ממוצע לפי מחוז (מ' ₪)"</span>)</span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>, <span class="dv">0</span>].legend(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a><span class="co"># גרף 4: scatter ריבית vs עסקאות</span></span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"total_transactions"</span> <span class="kw">in</span> combined.columns:</span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> axes[<span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a>    ax.scatter(combined[<span class="st">"interest_rate"</span>], combined[<span class="st">"total_transactions"</span>] <span class="op">/</span> <span class="dv">1000</span>,</span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a>               c<span class="op">=</span>combined[<span class="st">"year"</span>], cmap<span class="op">=</span><span class="st">"viridis"</span>, s<span class="op">=</span><span class="dv">80</span>, alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"ריבית (%)"</span>)</span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"עסקאות (אלפים)"</span>)</span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">"ריבית vs נפח עסקאות"</span>)</span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"full_analysis.png"</span>, dpi<span class="op">=</span><span class="dv">150</span>, bbox_inches<span class="op">=</span><span class="st">"tight"</span>)</span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 7: EXPORT</span></span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a><span class="co"># =============================================================</span></span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">שלב 7: ייצוא..."</span>)</span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> pd.ExcelWriter(<span class="st">"analysis_results.xlsx"</span>, engine<span class="op">=</span><span class="st">"openpyxl"</span>) <span class="im">as</span> writer:</span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a>    macro.to_excel(writer, sheet_name<span class="op">=</span><span class="st">"Macro Data"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a>    era_summary.to_excel(writer, sheet_name<span class="op">=</span><span class="st">"Era Analysis"</span>)</span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a>    corr_matrix.to_excel(writer, sheet_name<span class="op">=</span><span class="st">"Correlations"</span>)</span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ הניתוח הסתיים! כל הקבצים נשמרו."</span>)</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="משימות-השבוע-פרויקט-מסכם-pythonpandas" class="level2">
+<h2 class="anchored" data-anchor-id="משימות-השבוע-פרויקט-מסכם-pythonpandas">משימות השבוע – פרויקט מסכם Python/Pandas</h2>
+<section id="פרויקט-ניתוח-מאקרו-כלכלי-ישראל-2015-2024" class="level3">
+<h3 class="anchored" data-anchor-id="פרויקט-ניתוח-מאקרו-כלכלי-ישראל-2015-2024">פרויקט: “ניתוח מאקרו-כלכלי ישראל 2015-2024”</h3>
+<p><strong>מה להגיש:</strong></p>
+<pre><code>Members/YourName/Week_10/
+├── data_pipeline.py           ← Pipeline מלא (7 שלבים)
+├── economic_analysis.ipynb    ← Notebook עם הסברים
+├── macro_analysis_report.md   ← דוח ממצאים
+├── full_analysis.png          ← גרף לפרסום
+└── analysis_results.xlsx      ← נתונים מעובדים</code></pre>
+<p><strong>דרישות:</strong></p>
+<ol type="1">
+<li><strong>נתונים:</strong> ייבא מ-2 מקורות לפחות (נתוני מאקרו + שוק הדיור/תעסוקה)</li>
+<li><strong>ניקוי:</strong> תעד כל שלב ניקוי עם <code>print</code> + אסרטים</li>
+<li><strong>פיצ’רים:</strong> ריבית ריאלית, ממוצע נע 3 שנים, סיווג עידן</li>
+<li><strong>ניתוח:</strong> <code>groupby</code>, <code>corr()</code>, ניתוח Pre/Post העלאת ריבית</li>
+<li><strong>גרפים:</strong> לפחות 4 גרפים שמוכנים לפרסום (עיצוב מקצועי, כותרות, מקור)</li>
+<li><strong>דוח:</strong> 5 תובנות כלכליות מבוססות-נתונים</li>
+</ol>
+<hr>
+<p><strong>המודול הבא:</strong> APIs – גישה אוטומטית לנתוני בנק ישראל, הלמ”ס, OECD → <a href="../../Assignments/Week_11_APIs_Israel/README.html">שבוע 11</a></p>
+</section>
+<section id="תרגול-מעשי-hands-on" class="level3">
+<h3 class="anchored" data-anchor-id="תרגול-מעשי-hands-on">💻 תרגול מעשי (Hands-on)</h3>
+<p>
+לחצו על המשולש (Play) כדי להפעיל את סביבת הפיתוח בתוך העמוד, או פתחו בלשונית חדשה לנוחות מירבית.
+</p>
+<iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_10_Pandas_Advanced/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen="">
+</iframe>
+<p>
+</p><table class="caption-top table">
+<thead>
+<tr class="header">
+<th><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_10_Pandas_Advanced/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>### 💬 הערות, שאלות ודיונים</td>
+</tr>
+<tr class="even">
+<td>יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?</td>
+</tr>
+<tr class="odd">
+<td><strong>כתבו לנו כאן למטה!</strong> המערכת מחוברת ישירות לגיטהאב של הקורס. כל שאלה שתשאלו כאן תישמר אוטומטית בצורה מסודרת תחת נושא זה, והצוות (או סטודנטים אחרים) יוכלו לענות לכם ולעזור.</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script src="custom.js"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "הועתק!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "הועתק!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="econlabppe-cloud/econlabppe" issue-term="title" theme="github-light" crossorigin="anonymous" async="">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../Assignments/Week_09_Pandas_Basics/README.html" class="pagination-link" aria-label="שבוע 9 – Pandas בסיסי: Excel של Python">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">שבוע 9 – Pandas בסיסי: Excel של Python</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../Assignments/Week_11_APIs_Israel/README.html" class="pagination-link" aria-label="שבוע 11 – APIs ישראליים: גישה לנתוני בנק ישראל והלמ&quot;ס בזמן אמת">
+        <span class="nav-page-text"><span class="chapter-title">שבוע 11 – APIs ישראליים: גישה לנתוני בנק ישראל והלמ”ס בזמן אמת</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 EconLabPPE — מעבדת אקונומטריקה</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/econlabppe-cloud/econlabppe/edit/main/Assignments/Week_10_Pandas_Advanced/README.md" class="toc-action"><i class="bi bi-github"></i>ערוך עמוד זה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/issues/new" class="toc-action"><i class="bi empty"></i>דווח על בעיה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_10_Pandas_Advanced/README.md" class="toc-action"><i class="bi empty"></i>הצג מקור</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>בנוי עם ❤️ ו-<a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

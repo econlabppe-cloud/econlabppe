@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="he" xml:lang="he" dir="rtl"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>שבוע 6 – SQL בינוני: GROUP BY, JOINs, ושאילתות מורכבות – מעבדת אקונומטריקה</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../Assignments/Week_07_SQL_Advanced/README.html" rel="next">
+<link href="../../Assignments/Week_05_SQL_Basics/README.html" rel="prev">
+<link href="../../favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f8fae465bfcf93f59030998d38b15c9b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "אין תוצאות",
+    "search-matching-documents-text": "מסמכים תואמים",
+    "search-copy-link-title": "העתק קישור לחיפוש",
+    "search-hide-matches-text": "הסתר התאמות נוספות",
+    "search-more-match-text": "התאמה נוספת במסמך זה",
+    "search-more-matches-text": "התאמות נוספות במסמך זה",
+    "search-clear-button-title": "נקה",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "בטל",
+    "search-submit-button-title": "שלח",
+    "search-label": "חפש"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../custom.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">מעבדת אקונומטריקה</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="הצג/הסתר ניווט" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/econlabppe-cloud/econlabppe"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../leaderboard.html" aria-current="page"> 
+<span class="menu-text">📊 לוח תוצאות</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../hall_of_fame.html"> 
+<span class="menu-text">🏆 היכל התהילה</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/econlabppe-cloud/econlabppe" title="קוד מקור" class="quarto-navigation-tool px-1" aria-label="קוד מקור"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="הצג/הסתר מצב קריאה">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="הצג/הסתר את סרגל הניווט" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Assignments/Week_05_SQL_Basics/README.html">🗄️ מודול 2: SQL</a></li><li class="breadcrumb-item"><a href="../../Assignments/Week_06_SQL_Intermediate/README.html"><span class="chapter-title">שבוע 6 – SQL בינוני: GROUP BY, JOINs, ושאילתות מורכבות</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="הצג/הסתר את סרגל הניווט" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="חפש" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <div id="quarto-search" class="quarto-navigation-tool px-1" title="חפש"></div>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">מעבדת אקונומטריקה — EconLabPPE</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">🛠️ מודול 1: הגדרה ו-Excel</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_01_Setup/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 1 – הכנת הסביבה: בניית מחשב של כלכלן נתונים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_02_Excel_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 2 – Excel מאפס: הכלי שכל כלכלן מתחיל בו</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_03_Excel_Intermediate/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 3 – Excel בינוני: VLOOKUP, Pivot Tables, וגרפים לפרסום</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_04_Excel_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 4 – Excel מתקדם: Power Query, פונקציות פיננסיות, ודשבורד כלכלי</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">🗄️ מודול 2: SQL</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_05_SQL_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 5 – SQL מאפס: שפת הנתונים של העולם</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_06_SQL_Intermediate/README.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">שבוע 6 – SQL בינוני: GROUP BY, JOINs, ושאילתות מורכבות</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_07_SQL_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 7 – SQL מתקדם: Window Functions, CTEs, ו-Python+SQL</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">🐍 מודול 3: Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_08_Python_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 8 – Python מאפס: שפת התכנות של כלכלנים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_09_Pandas_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 9 – Pandas בסיסי: Excel של Python</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_10_Pandas_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 10 – Pandas מתקדם: Time Series, Merge, ו-Pipeline מלא</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">🌐 מודול 4: APIs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_11_APIs_Israel/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 11 – APIs ישראליים: גישה לנתוני בנק ישראל והלמ”ס בזמן אמת</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_12_APIs_International/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 12 – APIs בין-לאומיים: השוואה גלובלית עם בנק עולמי, OECD ו-FRED</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">📊 מודול 5: R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_13_R_Basics/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 13 – R מאפס: שפת הסטטיסטיקה של כלכלנים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_14_R_Tidyverse/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 14 – Tidyverse: dplyr, tidyr ו-ggplot2</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">📈 מודול 6: אקונומטריקה</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_15_Econometrics_Regression/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 15 – אקונומטריקה: רגרסיה לינארית ב-R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_16_Econometrics_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 16 – אקונומטריקה מתקדמת: DiD, ARIMA ו-Panel Data</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">🎨 מודול 7: ויזואליזציה</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_17_Visualization_Python/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 17 – ויזואליזציה אינטראקטיבית עם Plotly (Python)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_18_Visualization_R/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 18 – ggplot2 מתקדם ו-R Markdown: דוחות לפרסום</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">📉 מודול 8: כלי BI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_19_BI_PowerBI/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 19 – Power BI: דשבורדים כלכליים לביזנס</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_20_BI_Tableau/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 20 – Tableau: ויזואליזציה מקצועית ו-Storytelling</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">🏛️ מודול 9: DSGE</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="הצג/הסתר מקטע">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_21_DSGE_Intro/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 21 – מבוא ל-DSGE: מודלים מאקרו-כלכליים דינמיים</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Assignments/Week_22_DSGE_Advanced/README.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">שבוע 22 – DSGE מלא: אמידה בייזיאנית, תחזיות ופרויקט סיום</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../leaderboard.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🏆 לוח תוצאות</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../hall_of_fame.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">🏆 היכל התהילה</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">בדף זה</h2>
+   
+  <ul>
+  <li><a href="#סרטוני-הדרכה-לפרק-זה" id="toc-סרטוני-הדרכה-לפרק-זה" class="nav-link active" data-scroll-target="#סרטוני-הדרכה-לפרק-זה">🎥 סרטוני הדרכה לפרק זה</a></li>
+  <li><a href="#רמת-מתחילים" id="toc-רמת-מתחילים" class="nav-link" data-scroll-target="#רמת-מתחילים">🟢 רמת מתחילים</a></li>
+  <li><a href="#רמת-ביניים" id="toc-רמת-ביניים" class="nav-link" data-scroll-target="#רמת-ביניים">🟡 רמת ביניים</a></li>
+  <li><a href="#רמת-מתקדמים" id="toc-רמת-מתקדמים" class="nav-link" data-scroll-target="#רמת-מתקדמים">🔴 רמת מתקדמים</a></li>
+  <li><a href="#הכנה-הרחבת-בסיס-הנתונים" id="toc-הכנה-הרחבת-בסיס-הנתונים" class="nav-link" data-scroll-target="#הכנה-הרחבת-בסיס-הנתונים">הכנה: הרחבת בסיס הנתונים</a></li>
+  <li><a href="#חלק-א-group-by-ניתוח-לפי-קטגוריות" id="toc-חלק-א-group-by-ניתוח-לפי-קטגוריות" class="nav-link" data-scroll-target="#חלק-א-group-by-ניתוח-לפי-קטגוריות">חלק א – GROUP BY: ניתוח לפי קטגוריות</a>
+  <ul class="collapse">
+  <li><a href="#הבעיה-שgroup-by-פותרת" id="toc-הבעיה-שgroup-by-פותרת" class="nav-link" data-scroll-target="#הבעיה-שgroup-by-פותרת">הבעיה שGROUP BY פותרת</a></li>
+  <li><a href="#group-by-על-מספר-עמודות" id="toc-group-by-על-מספר-עמודות" class="nav-link" data-scroll-target="#group-by-על-מספר-עמודות">GROUP BY על מספר עמודות</a></li>
+  <li><a href="#having-סינון-אחרי-אגרגציה" id="toc-having-סינון-אחרי-אגרגציה" class="nav-link" data-scroll-target="#having-סינון-אחרי-אגרגציה">HAVING – סינון אחרי אגרגציה</a></li>
+  <li><a href="#שאילתת-group-by-מלאה-עם-where-having" id="toc-שאילתת-group-by-מלאה-עם-where-having" class="nav-link" data-scroll-target="#שאילתת-group-by-מלאה-עם-where-having">שאילתת GROUP BY מלאה עם WHERE + HAVING</a></li>
+  </ul></li>
+  <li><a href="#חלק-ב-join-מיזוג-טבלאות" id="toc-חלק-ב-join-מיזוג-טבלאות" class="nav-link" data-scroll-target="#חלק-ב-join-מיזוג-טבלאות">חלק ב – JOIN: מיזוג טבלאות</a>
+  <ul class="collapse">
+  <li><a href="#למה-join" id="toc-למה-join" class="nav-link" data-scroll-target="#למה-join">למה JOIN?</a></li>
+  <li><a href="#inner-join" id="toc-inner-join" class="nav-link" data-scroll-target="#inner-join">INNER JOIN</a></li>
+  <li><a href="#שאילתה-עם-join-where-order" id="toc-שאילתה-עם-join-where-order" class="nav-link" data-scroll-target="#שאילתה-עם-join-where-order">שאילתה עם JOIN + WHERE + ORDER</a></li>
+  <li><a href="#שאילתה-כלכלית-האם-ייצוא-גבוה-מוביל-לצמיחה" id="toc-שאילתה-כלכלית-האם-ייצוא-גבוה-מוביל-לצמיחה" class="nav-link" data-scroll-target="#שאילתה-כלכלית-האם-ייצוא-גבוה-מוביל-לצמיחה">שאילתה כלכלית: האם ייצוא גבוה מוביל לצמיחה?</a></li>
+  <li><a href="#left-join" id="toc-left-join" class="nav-link" data-scroll-target="#left-join">LEFT JOIN</a></li>
+  <li><a href="#ויזואליזציה-של-סוגי-join" id="toc-ויזואליזציה-של-סוגי-join" class="nav-link" data-scroll-target="#ויזואליזציה-של-סוגי-join">ויזואליזציה של סוגי JOIN</a></li>
+  <li><a href="#join-שלישי-מיזוג-שלוש-טבלאות" id="toc-join-שלישי-מיזוג-שלוש-טבלאות" class="nav-link" data-scroll-target="#join-שלישי-מיזוג-שלוש-טבלאות">JOIN שלישי – מיזוג שלוש טבלאות</a></li>
+  </ul></li>
+  <li><a href="#חלק-ג-subqueries" id="toc-חלק-ג-subqueries" class="nav-link" data-scroll-target="#חלק-ג-subqueries">חלק ג – Subqueries</a>
+  <ul class="collapse">
+  <li><a href="#מה-זה-subquery" id="toc-מה-זה-subquery" class="nav-link" data-scroll-target="#מה-זה-subquery">מה זה Subquery?</a></li>
+  <li><a href="#subquery-ב-where" id="toc-subquery-ב-where" class="nav-link" data-scroll-target="#subquery-ב-where">1. Subquery ב-WHERE</a></li>
+  <li><a href="#subquery-ב-from-derived-table" id="toc-subquery-ב-from-derived-table" class="nav-link" data-scroll-target="#subquery-ב-from-derived-table">2. Subquery ב-FROM (Derived Table)</a></li>
+  <li><a href="#correlated-subquery-שאילתה-בתוך-שאילתה-שתלויה-בשורה-החיצונית" id="toc-correlated-subquery-שאילתה-בתוך-שאילתה-שתלויה-בשורה-החיצונית" class="nav-link" data-scroll-target="#correlated-subquery-שאילתה-בתוך-שאילתה-שתלויה-בשורה-החיצונית">3. Correlated Subquery: שאילתה בתוך שאילתה שתלויה בשורה החיצונית</a></li>
+  <li><a href="#subquery-עם-in" id="toc-subquery-עם-in" class="nav-link" data-scroll-target="#subquery-עם-in">Subquery עם IN</a></li>
+  </ul></li>
+  <li><a href="#חלק-ד-null-handling" id="toc-חלק-ד-null-handling" class="nav-link" data-scroll-target="#חלק-ד-null-handling">חלק ד – NULL Handling</a>
+  <ul class="collapse">
+  <li><a href="#מה-זה-null" id="toc-מה-זה-null" class="nav-link" data-scroll-target="#מה-זה-null">מה זה NULL?</a></li>
+  <li><a href="#coalesce-ערך-ברירת-מחדל-ל-null" id="toc-coalesce-ערך-ברירת-מחדל-ל-null" class="nav-link" data-scroll-target="#coalesce-ערך-ברירת-מחדל-ל-null">COALESCE – ערך ברירת מחדל ל-NULL</a></li>
+  <li><a href="#null-בפונקציות-אגרגציה" id="toc-null-בפונקציות-אגרגציה" class="nav-link" data-scroll-target="#null-בפונקציות-אגרגציה">NULL בפונקציות אגרגציה</a></li>
+  </ul></li>
+  <li><a href="#חלק-ה-שאילתות-כלכליות-מורכבות" id="toc-חלק-ה-שאילתות-כלכליות-מורכבות" class="nav-link" data-scroll-target="#חלק-ה-שאילתות-כלכליות-מורכבות">חלק ה – שאילתות כלכליות מורכבות</a>
+  <ul class="collapse">
+  <li><a href="#ניתוח-1-מחזור-כלכלי-ישראלי" id="toc-ניתוח-1-מחזור-כלכלי-ישראלי" class="nav-link" data-scroll-target="#ניתוח-1-מחזור-כלכלי-ישראלי">ניתוח 1: מחזור כלכלי ישראלי</a></li>
+  <li><a href="#ניתוח-2-קורלציה-ריבית-מחירי-דיור" id="toc-ניתוח-2-קורלציה-ריבית-מחירי-דיור" class="nav-link" data-scroll-target="#ניתוח-2-קורלציה-ריבית-מחירי-דיור">ניתוח 2: קורלציה ריבית-מחירי דיור</a></li>
+  <li><a href="#ניתוח-3-ייצוא-ותמג" id="toc-ניתוח-3-ייצוא-ותמג" class="nav-link" data-scroll-target="#ניתוח-3-ייצוא-ותמג">ניתוח 3: ייצוא ותמ”ג</a></li>
+  <li><a href="#ניתוח-4-פערים-בין-מחוזות" id="toc-ניתוח-4-פערים-בין-מחוזות" class="nav-link" data-scroll-target="#ניתוח-4-פערים-בין-מחוזות">ניתוח 4: פערים בין מחוזות</a></li>
+  </ul></li>
+  <li><a href="#חלק-ו-create-table-as-select" id="toc-חלק-ו-create-table-as-select" class="nav-link" data-scroll-target="#חלק-ו-create-table-as-select">חלק ו – CREATE TABLE AS SELECT</a></li>
+  <li><a href="#משימות-השבוע" id="toc-משימות-השבוע" class="nav-link" data-scroll-target="#משימות-השבוע">משימות השבוע</a>
+  <ul class="collapse">
+  <li><a href="#משימה-1-group-by-having-25-נקודות" id="toc-משימה-1-group-by-having-25-נקודות" class="nav-link" data-scroll-target="#משימה-1-group-by-having-25-נקודות">משימה 1: GROUP BY + HAVING (25 נקודות)</a></li>
+  <li><a href="#משימה-2-joins-35-נקודות" id="toc-משימה-2-joins-35-נקודות" class="nav-link" data-scroll-target="#משימה-2-joins-35-נקודות">משימה 2: JOINs (35 נקודות)</a></li>
+  <li><a href="#משימה-3-ניתוח-כלכלי-מקיף-40-נקודות" id="toc-משימה-3-ניתוח-כלכלי-מקיף-40-נקודות" class="nav-link" data-scroll-target="#משימה-3-ניתוח-כלכלי-מקיף-40-נקודות">משימה 3: ניתוח כלכלי מקיף (40 נקודות)</a></li>
+  </ul></li>
+  <li><a href="#הגשה" id="toc-הגשה" class="nav-link" data-scroll-target="#הגשה">הגשה</a>
+  <ul class="collapse">
+  <li><a href="#תרגול-מעשי-hands-on" id="toc-תרגול-מעשי-hands-on" class="nav-link" data-scroll-target="#תרגול-מעשי-hands-on">💻 תרגול מעשי (Hands-on)</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/econlabppe-cloud/econlabppe/edit/main/Assignments/Week_06_SQL_Intermediate/README.md" class="toc-action"><i class="bi bi-github"></i>ערוך עמוד זה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/issues/new" class="toc-action"><i class="bi empty"></i>דווח על בעיה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_06_SQL_Intermediate/README.md" class="toc-action"><i class="bi empty"></i>הצג מקור</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../Assignments/Week_05_SQL_Basics/README.html">🗄️ מודול 2: SQL</a></li><li class="breadcrumb-item"><a href="../../Assignments/Week_06_SQL_Intermediate/README.html"><span class="chapter-title">שבוע 6 – SQL בינוני: GROUP BY, JOINs, ושאילתות מורכבות</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">שבוע 6 – SQL בינוני: GROUP BY, JOINs, ושאילתות מורכבות</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="סרטוני-הדרכה-לפרק-זה" class="level3">
+<h3 class="anchored" data-anchor-id="סרטוני-הדרכה-לפרק-זה">🎥 סרטוני הדרכה לפרק זה</h3>
+<p>כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות: ::: {.panel-tabset} ## 🟢 רמת מתחילים <strong>מבוא והיכרות עם המושגים הבסיסיים:</strong> </p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/9yeOJ0ZMUYw](https://www.youtube.com/watch?v=9yeOJ0ZMUYw)" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> ## 🟡 רמת ביניים <strong>העמקה ופרקטיקה מעשית:</strong> <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/0UQJC_FEQ_A](https://www.youtube.com/watch?v=0UQJC_FEQ_A)" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> ## 🔴 רמת מתקדמים <strong>מקרי קצה, אופטימיזציה ושימושים מורכבים:</strong> <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/CJzeKzKz_KU](https://www.youtube.com/watch?v=CJzeKzKz_KU)" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div> :::<p></p>
+</section>
+<section id="רמת-מתחילים" class="level2">
+<h2 class="anchored" data-anchor-id="רמת-מתחילים">🟢 רמת מתחילים</h2>
+<p><strong>מבוא והיכרות עם המושגים הבסיסיים:</strong> </p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/0OQJC_FEQ_A" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+<section id="רמת-ביניים" class="level2">
+<h2 class="anchored" data-anchor-id="רמת-ביניים">🟡 רמת ביניים</h2>
+<p><strong>העמקה ופרקטיקה מעשית:</strong> </p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/9yeOJ0ZMUYw" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+</section>
+<section id="רמת-מתקדמים" class="level2">
+<h2 class="anchored" data-anchor-id="רמת-מתקדמים">🔴 רמת מתקדמים</h2>
+<p><strong>מקרי קצה, אופטימיזציה ושימושים מורכבים:</strong> </p><div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/CJzeKzKz_KU" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div><p></p>
+<p>::: ## מה נלמד השבוע?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>נושא</th>
+<th>זמן משוער</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GROUP BY + HAVING</td>
+<td>90 דקות</td>
+</tr>
+<tr class="even">
+<td>JOIN: INNER, LEFT, RIGHT</td>
+<td>120 דקות</td>
+</tr>
+<tr class="odd">
+<td>Subqueries בסיסיות</td>
+<td>60 דקות</td>
+</tr>
+<tr class="even">
+<td>NULL handling</td>
+<td>30 דקות</td>
+</tr>
+<tr class="odd">
+<td>CREATE TABLE AS SELECT</td>
+<td>30 דקות</td>
+</tr>
+<tr class="even">
+<td>שאילתות כלכליות מורכבות</td>
+<td>90 דקות</td>
+</tr>
+<tr class="odd">
+<td><strong>סה”כ</strong></td>
+<td><strong>~7 שעות</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="הכנה-הרחבת-בסיס-הנתונים" class="level2">
+<h2 class="anchored" data-anchor-id="הכנה-הרחבת-בסיס-הנתונים">הכנה: הרחבת בסיס הנתונים</h2>
+<p>לפני שמתחילים, הוסף עוד טבלאות לבסיס הנתונים מ-Week 5:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- נתוני ייצוא שנתיים</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> exports (</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">year</span>              <span class="dt">INTEGER</span> <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    exports_bn_usd    <span class="dt">REAL</span>,    <span class="co">-- ייצוא במיליארד דולר</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    hi_tech_share_pct <span class="dt">REAL</span>,    <span class="co">-- חלק הייצוא עתיר טכנולוגיה %</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    main_destination  TEXT     <span class="co">-- יעד ייצוא עיקרי</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> exports <span class="kw">VALUES</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2015</span>, <span class="fl">55.2</span>, <span class="fl">45.0</span>, <span class="st">'ארה"ב'</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2016</span>, <span class="fl">54.0</span>, <span class="fl">46.2</span>, <span class="st">'ארה"ב'</span>),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2017</span>, <span class="fl">60.1</span>, <span class="fl">47.5</span>, <span class="st">'ארה"ב'</span>),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2018</span>, <span class="fl">65.4</span>, <span class="fl">48.1</span>, <span class="st">'ארה"ב'</span>),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2019</span>, <span class="fl">68.6</span>, <span class="fl">49.3</span>, <span class="st">'ארה"ב'</span>),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2020</span>, <span class="fl">58.9</span>, <span class="fl">52.1</span>, <span class="st">'ארה"ב'</span>),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2021</span>, <span class="fl">73.5</span>, <span class="fl">53.4</span>, <span class="st">'ארה"ב'</span>),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="fl">82.1</span>, <span class="fl">54.2</span>, <span class="st">'ארה"ב'</span>),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="fl">75.4</span>, <span class="fl">55.0</span>, <span class="st">'ארה"ב'</span>),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2024</span>, <span class="fl">71.2</span>, <span class="fl">54.8</span>, <span class="st">'ארה"ב'</span>);</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">-- נתוני שוק הדיור (רבעוני)</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> housing_market (</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">year</span>      <span class="dt">INTEGER</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    quarter   <span class="dt">INTEGER</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    district  TEXT,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    avg_price <span class="dt">INTEGER</span>,   <span class="co">-- מחיר ממוצע לדירה 4 חדרים (₪)</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    transactions <span class="dt">INTEGER</span>, <span class="co">-- מספר עסקאות</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (<span class="dt">year</span>, quarter, district)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> housing_market <span class="kw">VALUES</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">1</span>, <span class="st">'תל אביב'</span>,   <span class="dv">3800000</span>, <span class="dv">2100</span>),</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">1</span>, <span class="st">'ירושלים'</span>,   <span class="dv">2600000</span>, <span class="dv">1800</span>),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">1</span>, <span class="st">'חיפה'</span>,      <span class="dv">1700000</span>, <span class="dv">1200</span>),</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">1</span>, <span class="st">'מרכז'</span>,      <span class="dv">2900000</span>, <span class="dv">3200</span>),</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">2</span>, <span class="st">'תל אביב'</span>,   <span class="dv">3950000</span>, <span class="dv">1950</span>),</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">2</span>, <span class="st">'ירושלים'</span>,   <span class="dv">2700000</span>, <span class="dv">1700</span>),</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">2</span>, <span class="st">'חיפה'</span>,      <span class="dv">1750000</span>, <span class="dv">1150</span>),</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">2</span>, <span class="st">'מרכז'</span>,      <span class="dv">3050000</span>, <span class="dv">3000</span>),</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">3</span>, <span class="st">'תל אביב'</span>,   <span class="dv">4100000</span>, <span class="dv">1800</span>),</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">3</span>, <span class="st">'ירושלים'</span>,   <span class="dv">2780000</span>, <span class="dv">1650</span>),</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">3</span>, <span class="st">'חיפה'</span>,      <span class="dv">1800000</span>, <span class="dv">1100</span>),</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">3</span>, <span class="st">'מרכז'</span>,      <span class="dv">3150000</span>, <span class="dv">2850</span>),</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">4</span>, <span class="st">'תל אביב'</span>,   <span class="dv">4050000</span>, <span class="dv">1750</span>),</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">4</span>, <span class="st">'ירושלים'</span>,   <span class="dv">2720000</span>, <span class="dv">1620</span>),</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">4</span>, <span class="st">'חיפה'</span>,      <span class="dv">1780000</span>, <span class="dv">1080</span>),</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2022</span>, <span class="dv">4</span>, <span class="st">'מרכז'</span>,      <span class="dv">3100000</span>, <span class="dv">2800</span>),</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">1</span>, <span class="st">'תל אביב'</span>,   <span class="dv">3900000</span>, <span class="dv">1500</span>),</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">1</span>, <span class="st">'ירושלים'</span>,   <span class="dv">2650000</span>, <span class="dv">1400</span>),</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">1</span>, <span class="st">'חיפה'</span>,      <span class="dv">1720000</span>, <span class="dv">950</span>),</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">1</span>, <span class="st">'מרכז'</span>,      <span class="dv">3000000</span>, <span class="dv">2400</span>),</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'תל אביב'</span>,   <span class="dv">3850000</span>, <span class="dv">1450</span>),</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'ירושלים'</span>,   <span class="dv">2630000</span>, <span class="dv">1380</span>),</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'חיפה'</span>,      <span class="dv">1710000</span>, <span class="dv">930</span>),</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">2</span>, <span class="st">'מרכז'</span>,      <span class="dv">2980000</span>, <span class="dv">2350</span>),</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">3</span>, <span class="st">'תל אביב'</span>,   <span class="dv">3820000</span>, <span class="dv">1420</span>),</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">3</span>, <span class="st">'ירושלים'</span>,   <span class="dv">2610000</span>, <span class="dv">1360</span>),</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">3</span>, <span class="st">'חיפה'</span>,      <span class="dv">1700000</span>, <span class="dv">910</span>),</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">3</span>, <span class="st">'מרכז'</span>,      <span class="dv">2960000</span>, <span class="dv">2300</span>),</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">4</span>, <span class="st">'תל אביב'</span>,   <span class="dv">3780000</span>, <span class="dv">1380</span>),</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">4</span>, <span class="st">'ירושלים'</span>,   <span class="dv">2590000</span>, <span class="dv">1340</span>),</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">4</span>, <span class="st">'חיפה'</span>,      <span class="dv">1690000</span>, <span class="dv">890</span>),</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2023</span>, <span class="dv">4</span>, <span class="st">'מרכז'</span>,      <span class="dv">2940000</span>, <span class="dv">2250</span>);</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="חלק-א-group-by-ניתוח-לפי-קטגוריות" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-א-group-by-ניתוח-לפי-קטגוריות">חלק א – GROUP BY: ניתוח לפי קטגוריות</h2>
+<section id="הבעיה-שgroup-by-פותרת" class="level3">
+<h3 class="anchored" data-anchor-id="הבעיה-שgroup-by-פותרת">הבעיה שGROUP BY פותרת</h3>
+<p><code>SELECT AVG(avg_price) FROM housing_market</code> מחזיר ממוצע כולל. אבל מה אם רוצים ממוצע <strong>לכל מחוז בנפרד</strong>?</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ממוצע מחיר דיור לפי מחוז</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    district,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">AVG</span>(avg_price)     <span class="kw">AS</span> avg_price,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(transactions)  <span class="kw">AS</span> total_transactions,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>)           <span class="kw">AS</span> num_quarters</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> housing_market</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> district;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>כלל ברזל:</strong> כל עמודה ב-SELECT שאינה פונקציית אגרגציה <strong>חייבת</strong> להופיע ב-GROUP BY.</p>
+</section>
+<section id="group-by-על-מספר-עמודות" class="level3">
+<h3 class="anchored" data-anchor-id="group-by-על-מספר-עמודות">GROUP BY על מספר עמודות</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ממוצע מחיר לפי שנה ומחוז</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">year</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    district,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">AVG</span>(avg_price)    <span class="kw">AS</span> avg_price,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(transactions) <span class="kw">AS</span> total_transactions</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> housing_market</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="dt">year</span>, district</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="dt">year</span>, avg_price <span class="kw">DESC</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="having-סינון-אחרי-אגרגציה" class="level3">
+<h3 class="anchored" data-anchor-id="having-סינון-אחרי-אגרגציה">HAVING – סינון אחרי אגרגציה</h3>
+<p><strong>ההבדל המהותי:</strong> - <code>WHERE</code> → מסנן <strong>לפני</strong> האגרגציה (על שורות בודדות) - <code>HAVING</code> → מסנן <strong>אחרי</strong> האגרגציה (על קבוצות)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- מחוזות שממוצע מחירם מעל 2.5M</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    district,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">AVG</span>(avg_price) <span class="kw">AS</span> avg_price</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> housing_market</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> district</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(avg_price) <span class="op">&gt;</span> <span class="dv">2500000</span>;</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- שנים עם יותר מ-10,000 עסקאות סה"כ</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">year</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(transactions) <span class="kw">AS</span> total_transactions</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> housing_market</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="dt">year</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">SUM</span>(transactions) <span class="op">&gt;</span> <span class="dv">10000</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="שאילתת-group-by-מלאה-עם-where-having" class="level3">
+<h3 class="anchored" data-anchor-id="שאילתת-group-by-מלאה-עם-where-having">שאילתת GROUP BY מלאה עם WHERE + HAVING</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- מחוזות (לא חיפה) עם ממוצע מחיר מעל 2M בשנת 2023</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    district,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">AVG</span>(avg_price)    <span class="kw">AS</span> avg_price,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(transactions) <span class="kw">AS</span> total_transactions</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> housing_market</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="dt">year</span> <span class="op">=</span> <span class="dv">2023</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span> district <span class="op">!=</span> <span class="st">'חיפה'</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> district</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">AVG</span>(avg_price) <span class="op">&gt;</span> <span class="dv">2000000</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> avg_price <span class="kw">DESC</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>סדר פעולות ב-SQL (חשוב להבין):</strong></p>
+<pre><code>1. FROM       ← מאיזו טבלה
+2. WHERE      ← סנן שורות
+3. GROUP BY   ← קבץ
+4. HAVING     ← סנן קבוצות
+5. SELECT     ← בחר עמודות
+6. ORDER BY   ← מיין
+7. LIMIT      ← הגבל</code></pre>
+<hr>
+</section>
+</section>
+<section id="חלק-ב-join-מיזוג-טבלאות" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ב-join-מיזוג-טבלאות">חלק ב – JOIN: מיזוג טבלאות</h2>
+<section id="למה-join" class="level3">
+<h3 class="anchored" data-anchor-id="למה-join">למה JOIN?</h3>
+<p>כי נתונים אמיתיים מפוצלים בין טבלאות רבות. JOIN מחבר ביניהן.</p>
+<pre><code>macro_annual          exports
++-----------+         +-----------+
+| year 2022 |---JOIN--|  year 2022|
+| gdp: 6.5% |    |    | exp: 82.1B|
++-----------+    |    +-----------+
+                 |
+                 על בסיס year = year</code></pre>
+</section>
+<section id="inner-join" class="level3">
+<h3 class="anchored" data-anchor-id="inner-join">INNER JOIN</h3>
+<p>מחזיר <strong>רק שורות שיש להן התאמה בשתי הטבלאות</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- מיזוג נתוני מאקרו עם נתוני ייצוא</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    m.<span class="dt">year</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    m.gdp_growth,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    m.inflation,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    e.exports_bn_usd,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    e.hi_tech_share_pct</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> macro_annual <span class="kw">AS</span> m</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> exports <span class="kw">AS</span> e <span class="kw">ON</span> m.<span class="dt">year</span> <span class="op">=</span> e.<span class="dt">year</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> m.<span class="dt">year</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>טיפ:</strong> השתמש ב-aliases (<code>m</code>, <code>e</code>) לשמות קצרים. הופך שאילתות קלות לקריאה.</p>
+</section>
+<section id="שאילתה-עם-join-where-order" class="level3">
+<h3 class="anchored" data-anchor-id="שאילתה-עם-join-where-order">שאילתה עם JOIN + WHERE + ORDER</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- שנים עם צמיחה &gt; 3% וייצוא &gt; 65B</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    m.<span class="dt">year</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    m.gdp_growth,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    e.exports_bn_usd</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> macro_annual <span class="kw">AS</span> m</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> exports <span class="kw">AS</span> e <span class="kw">ON</span> m.<span class="dt">year</span> <span class="op">=</span> e.<span class="dt">year</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> m.gdp_growth <span class="op">&gt;</span> <span class="dv">3</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span> e.exports_bn_usd <span class="op">&gt;</span> <span class="dv">65</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> m.gdp_growth <span class="kw">DESC</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="שאילתה-כלכלית-האם-ייצוא-גבוה-מוביל-לצמיחה" class="level3">
+<h3 class="anchored" data-anchor-id="שאילתה-כלכלית-האם-ייצוא-גבוה-מוביל-לצמיחה">שאילתה כלכלית: האם ייצוא גבוה מוביל לצמיחה?</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    m.<span class="dt">year</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    m.gdp_growth,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    e.exports_bn_usd,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(e.exports_bn_usd <span class="op">/</span> m.gdp_growth, <span class="dv">1</span>) <span class="kw">AS</span> exports_per_gdp_point</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> macro_annual <span class="kw">AS</span> m</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> exports <span class="kw">AS</span> e <span class="kw">ON</span> m.<span class="dt">year</span> <span class="op">=</span> e.<span class="dt">year</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> m.gdp_growth <span class="op">&gt;</span> <span class="dv">0</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> exports_per_gdp_point;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="left-join" class="level3">
+<h3 class="anchored" data-anchor-id="left-join">LEFT JOIN</h3>
+<p>מחזיר <strong>כל השורות מהטבלה השמאלית</strong>, גם אם אין התאמה בטבלה הימנית.</p>
+<p><strong>מתי שימושי?</strong> כשנתוני ייצוא חסרים לחלק מהשנים:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    m.<span class="dt">year</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    m.gdp_growth,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    e.exports_bn_usd  <span class="co">-- יהיה NULL אם אין נתוני ייצוא</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> macro_annual <span class="kw">AS</span> m</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> exports <span class="kw">AS</span> e <span class="kw">ON</span> m.<span class="dt">year</span> <span class="op">=</span> e.<span class="dt">year</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> m.<span class="dt">year</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="ויזואליזציה-של-סוגי-join" class="level3">
+<h3 class="anchored" data-anchor-id="ויזואליזציה-של-סוגי-join">ויזואליזציה של סוגי JOIN</h3>
+<pre><code>                INNER JOIN:
+תמ"ג:   [2015][2016][2017][2018][2019][2020][2021][2022][2023][2024]
+ייצוא:  [2015][2016][2017][2018][2019][2020][2021][2022][2023][2024]
+תוצאה: [████][████][████][████][████][████][████][████][████][████]
+
+                LEFT JOIN (macro LEFT JOIN exports):
+תמ"ג:   [2015][2016][2017][████][2018][...]
+ייצוא:  [2015][2016][2017][ -- ][2018][...]  ← 2018 חסר מהייצוא
+תוצאה: [2015][2016][2017][2018,NULL][2018][...]
+
+                RIGHT JOIN:
+הופכי LEFT JOIN – כל הטבלה הימנית + NULL לשמאלית</code></pre>
+</section>
+<section id="join-שלישי-מיזוג-שלוש-טבלאות" class="level3">
+<h3 class="anchored" data-anchor-id="join-שלישי-מיזוג-שלוש-טבלאות">JOIN שלישי – מיזוג שלוש טבלאות</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    m.<span class="dt">year</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    m.gdp_growth,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    m.inflation,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    e.exports_bn_usd,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    p.district,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    p.population</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> macro_annual <span class="kw">AS</span> m</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> exports <span class="kw">AS</span> e <span class="kw">ON</span> m.<span class="dt">year</span> <span class="op">=</span> e.<span class="dt">year</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> population_district <span class="kw">AS</span> p <span class="kw">ON</span> m.<span class="dt">year</span> <span class="op">=</span> p.<span class="dt">year</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> m.<span class="dt">year</span> <span class="op">&gt;=</span> <span class="dv">2022</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> m.<span class="dt">year</span>, p.district;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="חלק-ג-subqueries" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ג-subqueries">חלק ג – Subqueries</h2>
+<section id="מה-זה-subquery" class="level3">
+<h3 class="anchored" data-anchor-id="מה-זה-subquery">מה זה Subquery?</h3>
+<p>שאילתה <strong>בתוך</strong> שאילתה. מאפשרת לחשב ביניים ולהשתמש בתוצאה.</p>
+</section>
+<section id="subquery-ב-where" class="level3">
+<h3 class="anchored" data-anchor-id="subquery-ב-where">1. Subquery ב-WHERE</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- שנים עם ייצוא מעל הממוצע</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="dt">year</span>, exports_bn_usd</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> exports</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> exports_bn_usd <span class="op">&gt;</span> (<span class="kw">SELECT</span> <span class="fu">AVG</span>(exports_bn_usd) <span class="kw">FROM</span> exports)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> exports_bn_usd <span class="kw">DESC</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<p>הסבר: קודם מחשב <code>SELECT AVG(...)</code> ← מקבל 66.5 (לדוגמה) ← אחר כך מסנן WHERE &gt; 66.5.</p>
+</section>
+<section id="subquery-ב-from-derived-table" class="level3">
+<h3 class="anchored" data-anchor-id="subquery-ב-from-derived-table">2. Subquery ב-FROM (Derived Table)</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- ממוצע מחיר דיור לפי מחוז, ואז מיין לפי מחיר</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> district, avg_price</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> (</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        district,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">AVG</span>(avg_price) <span class="kw">AS</span> avg_price</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> housing_market</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">GROUP</span> <span class="kw">BY</span> district</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> district_averages</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> avg_price <span class="op">&gt;</span> <span class="dv">2000000</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> avg_price <span class="kw">DESC</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="correlated-subquery-שאילתה-בתוך-שאילתה-שתלויה-בשורה-החיצונית" class="level3">
+<h3 class="anchored" data-anchor-id="correlated-subquery-שאילתה-בתוך-שאילתה-שתלויה-בשורה-החיצונית">3. Correlated Subquery: שאילתה בתוך שאילתה שתלויה בשורה החיצונית</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- לכל מחוז, מצא את הרבעון עם המחיר הגבוה ביותר</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    h1.district,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    h1.<span class="dt">year</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    h1.quarter,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    h1.avg_price</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> housing_market <span class="kw">AS</span> h1</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> h1.avg_price <span class="op">=</span> (</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="fu">MAX</span>(h2.avg_price)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> housing_market <span class="kw">AS</span> h2</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> h2.district <span class="op">=</span> h1.district  <span class="co">-- תלוי בשורה החיצונית</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="subquery-עם-in" class="level3">
+<h3 class="anchored" data-anchor-id="subquery-עם-in">Subquery עם IN</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- כל השנים שהייצוא בהן היה מעל 70B (גישה אלטרנטיבית ל-JOIN)</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="dt">year</span>, gdp_growth, inflation</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> macro_annual</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="dt">year</span> <span class="kw">IN</span> (</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="dt">year</span> <span class="kw">FROM</span> exports <span class="kw">WHERE</span> exports_bn_usd <span class="op">&gt;</span> <span class="dv">70</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="חלק-ד-null-handling" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ד-null-handling">חלק ד – NULL Handling</h2>
+<section id="מה-זה-null" class="level3">
+<h3 class="anchored" data-anchor-id="מה-זה-null">מה זה NULL?</h3>
+<p><code>NULL</code> ≠ 0, ≠ ““, ≠ כלום. NULL = <strong>ערך חסר/לא ידוע</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- בדיקה ל-NULL</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> housing_market</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> avg_price <span class="kw">IS</span> <span class="kw">NULL</span>;</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> housing_market</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> avg_price <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="coalesce-ערך-ברירת-מחדל-ל-null" class="level3">
+<h3 class="anchored" data-anchor-id="coalesce-ערך-ברירת-מחדל-ל-null">COALESCE – ערך ברירת מחדל ל-NULL</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- אם exports_bn_usd חסר, השתמש ב-0</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    m.<span class="dt">year</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    m.gdp_growth,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COALESCE</span>(e.exports_bn_usd, <span class="dv">0</span>) <span class="kw">AS</span> exports_or_zero</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> macro_annual <span class="kw">AS</span> m</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> exports <span class="kw">AS</span> e <span class="kw">ON</span> m.<span class="dt">year</span> <span class="op">=</span> e.<span class="dt">year</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="null-בפונקציות-אגרגציה" class="level3">
+<h3 class="anchored" data-anchor-id="null-בפונקציות-אגרגציה">NULL בפונקציות אגרגציה</h3>
+<p>חשוב לדעת: <code>AVG()</code>, <code>SUM()</code>, <code>COUNT(column)</code> מתעלמים מ-NULL אוטומטית. <code>COUNT(*)</code> סופר <strong>את כל השורות</strong> כולל NULL.</p>
+<hr>
+</section>
+</section>
+<section id="חלק-ה-שאילתות-כלכליות-מורכבות" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ה-שאילתות-כלכליות-מורכבות">חלק ה – שאילתות כלכליות מורכבות</h2>
+<section id="ניתוח-1-מחזור-כלכלי-ישראלי" class="level3">
+<h3 class="anchored" data-anchor-id="ניתוח-1-מחזור-כלכלי-ישראלי">ניתוח 1: מחזור כלכלי ישראלי</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- חלק את השנים לתקופות ונתח</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">CASE</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">WHEN</span> <span class="dt">year</span> <span class="kw">BETWEEN</span> <span class="dv">2015</span> <span class="kw">AND</span> <span class="dv">2019</span> <span class="cf">THEN</span> <span class="st">'לפני קורונה'</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">WHEN</span> <span class="dt">year</span> <span class="op">=</span> <span class="dv">2020</span>               <span class="cf">THEN</span> <span class="st">'קורונה'</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">WHEN</span> <span class="dt">year</span> <span class="kw">BETWEEN</span> <span class="dv">2021</span> <span class="kw">AND</span> <span class="dv">2021</span> <span class="cf">THEN</span> <span class="st">'התאוששות'</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">WHEN</span> <span class="dt">year</span> <span class="kw">BETWEEN</span> <span class="dv">2022</span> <span class="kw">AND</span> <span class="dv">2024</span> <span class="cf">THEN</span> <span class="st">'אחרי קורונה + מלחמה'</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">END</span> <span class="kw">AS</span> period,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> num_years,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fu">AVG</span>(gdp_growth), <span class="dv">2</span>)    <span class="kw">AS</span> avg_gdp_growth,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fu">AVG</span>(inflation), <span class="dv">2</span>)     <span class="kw">AS</span> avg_inflation,</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fu">AVG</span>(unemployment), <span class="dv">2</span>)  <span class="kw">AS</span> avg_unemployment,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fu">AVG</span>(interest_rate), <span class="dv">2</span>) <span class="kw">AS</span> avg_interest_rate</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> macro_annual</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> period</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> <span class="fu">MIN</span>(<span class="dt">year</span>);</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="ניתוח-2-קורלציה-ריבית-מחירי-דיור" class="level3">
+<h3 class="anchored" data-anchor-id="ניתוח-2-קורלציה-ריבית-מחירי-דיור">ניתוח 2: קורלציה ריבית-מחירי דיור</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- כיצד הריבית הגבוהה ב-2022-2023 השפיעה על שוק הדיור?</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    m.<span class="dt">year</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    m.interest_rate,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">AVG</span>(h.avg_price)      <span class="kw">AS</span> avg_housing_price,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(h.transactions)   <span class="kw">AS</span> total_transactions</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> macro_annual <span class="kw">AS</span> m</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> housing_market <span class="kw">AS</span> h <span class="kw">ON</span> m.<span class="dt">year</span> <span class="op">=</span> h.<span class="dt">year</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> m.<span class="dt">year</span>, m.interest_rate</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> m.<span class="dt">year</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="ניתוח-3-ייצוא-ותמג" class="level3">
+<h3 class="anchored" data-anchor-id="ניתוח-3-ייצוא-ותמג">ניתוח 3: ייצוא ותמ”ג</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- האם ייצוא מסביר צמיחה? חשב את תרומת הייצוא</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    m.<span class="dt">year</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    m.gdp_growth,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    e.exports_bn_usd,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- נורמל ייצוא ל-% מתמ"ג (הנח תמ"ג ~600B USD)</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(e.exports_bn_usd <span class="op">/</span> <span class="dv">600</span> <span class="op">*</span> <span class="dv">100</span>, <span class="dv">1</span>) <span class="kw">AS</span> exports_pct_gdp,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- שינוי בייצוא שנה לשנה</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(e.exports_bn_usd <span class="op">-</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">LAG</span>(e.exports_bn_usd, <span class="dv">1</span>) <span class="kw">OVER</span> (<span class="kw">ORDER</span> <span class="kw">BY</span> e.<span class="dt">year</span>), <span class="dv">1</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="kw">AS</span> exports_yoy_change</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> macro_annual <span class="kw">AS</span> m</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> exports <span class="kw">AS</span> e <span class="kw">ON</span> m.<span class="dt">year</span> <span class="op">=</span> e.<span class="dt">year</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> m.<span class="dt">year</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>(שים לב: <code>LAG()</code> = Window Function – נלמד לעומק ב-Week 7)</em></p>
+</section>
+<section id="ניתוח-4-פערים-בין-מחוזות" class="level3">
+<h3 class="anchored" data-anchor-id="ניתוח-4-פערים-בין-מחוזות">ניתוח 4: פערים בין מחוזות</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- פער מחירי הדיור בין תל אביב לחיפה לאורך זמן</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    ta.<span class="dt">year</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    ta.quarter,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    ta.avg_price <span class="kw">AS</span> ta_price,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    h.avg_price  <span class="kw">AS</span> haifa_price,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    ta.avg_price <span class="op">-</span> h.avg_price        <span class="kw">AS</span> price_gap,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(ta.avg_price <span class="op">*</span> <span class="fl">1.0</span> <span class="op">/</span> h.avg_price, <span class="dv">2</span>) <span class="kw">AS</span> ta_vs_haifa_ratio</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> housing_market <span class="kw">AS</span> ta</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> housing_market <span class="kw">AS</span> h</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ON</span> ta.<span class="dt">year</span> <span class="op">=</span> h.<span class="dt">year</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">AND</span> ta.quarter <span class="op">=</span> h.quarter</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> ta.district <span class="op">=</span> <span class="st">'תל אביב'</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span> h.district <span class="op">=</span> <span class="st">'חיפה'</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> ta.<span class="dt">year</span>, ta.quarter;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<p><em>(Self-JOIN: אותה טבלה פעמיים!)</em></p>
+<hr>
+</section>
+</section>
+<section id="חלק-ו-create-table-as-select" class="level2">
+<h2 class="anchored" data-anchor-id="חלק-ו-create-table-as-select">חלק ו – CREATE TABLE AS SELECT</h2>
+<p>שמור תוצאת שאילתה כטבלה חדשה:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- צור טבלת סיכום מחוזי</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> district_summary <span class="kw">AS</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    district,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">AVG</span>(avg_price)      <span class="kw">AS</span> avg_price_all_time,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">SUM</span>(transactions)   <span class="kw">AS</span> total_transactions,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>)            <span class="kw">AS</span> num_periods,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MAX</span>(avg_price)      <span class="kw">AS</span> peak_price,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">MIN</span>(avg_price)      <span class="kw">AS</span> trough_price</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> housing_market</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> district;</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- בדוק</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> district_summary <span class="kw">ORDER</span> <span class="kw">BY</span> avg_price_all_time <span class="kw">DESC</span>;</span></code></pre></div><button title="העתק ללוח" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="משימות-השבוע" class="level2">
+<h2 class="anchored" data-anchor-id="משימות-השבוע">משימות השבוע</h2>
+<section id="משימה-1-group-by-having-25-נקודות" class="level3">
+<h3 class="anchored" data-anchor-id="משימה-1-group-by-having-25-נקודות">משימה 1: GROUP BY + HAVING (25 נקודות)</h3>
+<p>כתוב שאילתות:</p>
+<ol type="1">
+<li>ממוצע מחיר דיור לפי <strong>שנה</strong>, ממוין מגבוה לנמוך</li>
+<li>מחוזות עם יותר מ-8,000 עסקאות סה”כ (כל השנים)</li>
+<li>שנים שבהן ממוצע מחירי הדיור היה מעל 2.8 מיליון</li>
+<li>לכל מחוז: מחיר מקסימלי, מינימלי, ממוצע – וגם <strong>מקדם וריאציה</strong> (<code>MAX-MIN / AVG</code>)</li>
+</ol>
+</section>
+<section id="משימה-2-joins-35-נקודות" class="level3">
+<h3 class="anchored" data-anchor-id="משימה-2-joins-35-נקודות">משימה 2: JOINs (35 נקודות)</h3>
+<ol type="1">
+<li><strong>INNER JOIN:</strong> מיזוג <code>macro_annual</code> + <code>exports</code> – כל שנה עם כל הנתונים</li>
+<li><strong>Correlated:</strong> לכל שנה, הצג את המחוז הכי יקר ואת המחוז הכי זול (השתמש ב-Subquery)</li>
+<li><strong>Self-JOIN:</strong> עבור כל זוג מחוזות (A,B), חשב את הפער הממוצע במחירים</li>
+</ol>
+</section>
+<section id="משימה-3-ניתוח-כלכלי-מקיף-40-נקודות" class="level3">
+<h3 class="anchored" data-anchor-id="משימה-3-ניתוח-כלכלי-מקיף-40-נקודות">משימה 3: ניתוח כלכלי מקיף (40 נקודות)</h3>
+<p>כתוב שאילתה אחת (מורכבת!) שמחזירה: - לכל שנה: ריבית, אינפלציה, ריבית ריאלית, ייצוא - תוספת: סיווג תקופה (לפני/אחרי העלאת ריבית) - תוספת: ממוצע מחיר דיור באותה שנה (JOIN עם housing_market) - ממויין לפי שנה</p>
+<p><strong>שאלת חקר:</strong> האם ניתן לזהות את ההשפעה של העלאת הריבית על מחירי הדיור? כתוב תשובה של 5-8 משפטים בקובץ הסיכום.</p>
+<hr>
+</section>
+</section>
+<section id="הגשה" class="level2">
+<h2 class="anchored" data-anchor-id="הגשה">הגשה</h2>
+<pre><code>Members/YourName/Week_06/
+├── week06_queries.sql         ← כל השאילתות
+└── week06_housing_analysis.md ← ניתוח שוק הדיור</code></pre>
+<hr>
+<p><strong>השבוע הבא:</strong> SQL מתקדם – Window Functions, CTEs, ושילוב Python+SQL → <a href="../../Assignments/Week_07_SQL_Advanced/README.html">שבוע 7</a></p>
+<section id="תרגול-מעשי-hands-on" class="level3">
+<h3 class="anchored" data-anchor-id="תרגול-מעשי-hands-on">💻 תרגול מעשי (Hands-on)</h3>
+<p>
+לחצו על המשולש (Play) כדי להפעיל את סביבת הפיתוח בתוך העמוד, או פתחו בלשונית חדשה לנוחות מירבית.
+</p>
+<iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_06_SQL_Intermediate/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen="">
+</iframe>
+<p>
+</p><table class="caption-top table">
+<thead>
+<tr class="header">
+<th><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_06_SQL_Intermediate/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>### 💬 הערות, שאלות ודיונים</td>
+</tr>
+<tr class="even">
+<td>יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?</td>
+</tr>
+<tr class="odd">
+<td><strong>כתבו לנו כאן למטה!</strong> המערכת מחוברת ישירות לגיטהאב של הקורס. כל שאלה שתשאלו כאן תישמר אוטומטית בצורה מסודרת תחת נושא זה, והצוות (או סטודנטים אחרים) יוכלו לענות לכם ולעזור.</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script src="custom.js"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "הועתק!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "הועתק!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<script src="https://utteranc.es/client.js" repo="econlabppe-cloud/econlabppe" issue-term="title" theme="github-light" crossorigin="anonymous" async="">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../Assignments/Week_05_SQL_Basics/README.html" class="pagination-link" aria-label="שבוע 5 – SQL מאפס: שפת הנתונים של העולם">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">שבוע 5 – SQL מאפס: שפת הנתונים של העולם</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../Assignments/Week_07_SQL_Advanced/README.html" class="pagination-link" aria-label="שבוע 7 – SQL מתקדם: Window Functions, CTEs, ו-Python+SQL">
+        <span class="nav-page-text"><span class="chapter-title">שבוע 7 – SQL מתקדם: Window Functions, CTEs, ו-Python+SQL</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 EconLabPPE — מעבדת אקונומטריקה</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/econlabppe-cloud/econlabppe/edit/main/Assignments/Week_06_SQL_Intermediate/README.md" class="toc-action"><i class="bi bi-github"></i>ערוך עמוד זה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/issues/new" class="toc-action"><i class="bi empty"></i>דווח על בעיה</a></li><li><a href="https://github.com/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_06_SQL_Intermediate/README.md" class="toc-action"><i class="bi empty"></i>הצג מקור</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>בנוי עם ❤️ ו-<a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
