@@ -36,8 +36,10 @@ book:
     background: primary
     right:
       - icon: github
-        href: https://github.com/econlabppe/econlabppe
+        href: https://github.com/econlabppe-cloud/econlabppe
         aria-label: GitHub
+      - text: "📊 לוח תוצאות"
+        href: leaderboard.qmd
       - text: "🏆 היכל התהילה"
         href: hall_of_fame.qmd
 
@@ -97,6 +99,7 @@ book:
         - Assignments/Week_21_DSGE_Intro/README.md
         - Assignments/Week_22_DSGE_Advanced/README.md
 
+    - leaderboard.qmd
     - hall_of_fame.qmd
 
   page-footer:
