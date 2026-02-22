@@ -190,6 +190,25 @@ cor(df$inflation[df$year > 2019], df$unemployment[df$year > 2019])
 <iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_06_R_Basics/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 <p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_06_R_Basics/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>
 ---
+### 🧠 בחן את עצמך (שאלות סיכום)
+JOINs הם הלב של עבודת האנליסט. בואו נוודא שזה יושב טוב:
+
+<details>
+<summary><b>שאלה 1: מה קורה כשמבצעים LEFT JOIN אבל אין התאמה בטבלה הימנית?</b> 👁️ לחץ לתשובה</summary>
+<br>
+SQL עדיין יחזיר את השורה מהטבלה השמאלית, אבל ישים ערכי <b>NULL</b> (ריק) בכל העמודות שאמורות היו להגיע מהטבלה הימנית. זה טריק מעולה למצוא "נתונים חסרים" (למשל, למצוא לקוחות שמעולם לא ביצעו הזמנה).
+</details>
+
+<details>
+<summary><b>שאלה 2: מה התפקיד של מפתח ראשי (Primary Key) ומפתח זר (Foreign Key)?</b> 👁️ לחץ לתשובה</summary>
+<br>
+<b>מפתח ראשי</b> הוא עמודה (או צירוף עמודות) שמזהה באופן חד-משמעי כל שורה בטבלה (כמו תעודת זהות).
+<br><b>מפתח זר</b> הוא עמודה שמצביעה למפתח הראשי בטבלה אחרת, וכך בעצם נוצר ה"קשר" (Relationship) בין הטבלאות שמאפשר לנו לחבר אותן בעזרת JOIN.
+</details>
+
+
+---
+
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?
 **כתבו לנו כאן למטה!** המערכת מחוברת ישירות לגיטהאב של הקורס. כל שאלה שתשאלו כאן תישמר אוטומטית בצורה מסודרת תחת נושא זה, והצוות (או סטודנטים אחרים) יוכלו לענות לכם ולעזור.

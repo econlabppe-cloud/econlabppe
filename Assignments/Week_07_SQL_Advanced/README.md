@@ -731,6 +731,26 @@ Members/YourName/Week_07/
 <iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_07_SQL_Advanced/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 <p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_07_SQL_Advanced/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>
 ---
+### 🧠 בחן את עצמך (שאלות סיכום)
+פונקציות חלון הן ה"נשק הסודי" של אנליסטים בכירים. בדקו את עצמכם:
+
+<details>
+<summary><b>שאלה 1: מה ההבדל המהותי בין GROUP BY לבין פונקציית חלון (OVER)?</b> 👁️ לחץ לתשובה</summary>
+<br>
+<b>GROUP BY</b> מכווץ את השורות (אם היו 100 עובדים ב-3 מחלקות, נקבל רק 3 שורות עם הממוצע של כל מחלקה).
+<br><b>פונקציית חלון</b> מחשבת את הממוצע אבל <b>שומרת על השורות המקוריות</b>, כך שאפשר לראות את השכר של כל עובד <i>לצד</i> הממוצע של המחלקה שלו באותה השורה.
+</details>
+
+<details>
+<summary><b>שאלה 2: מה ההבדל בין RANK לבין ROW_NUMBER בדירוג נתונים?</b> 👁️ לחץ לתשובה</summary>
+<br>
+<b>ROW_NUMBER</b> מחלק מספר רציף וייחודי לכל שורה (1, 2, 3, 4), גם אם יש ערכים זהים.
+<br><b>RANK</b> ייתן את אותו הדירוג לערכים זהים, וידלג על המספרים הבאים (למשל: שני עובדים עם אותו שכר יקבלו דירוג 1, והעובד הבא אחריהם יקבל דירוג 3).
+</details>
+
+
+---
+
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?
 **כתבו לנו כאן למטה!** המערכת מחוברת ישירות לגיטהאב של הקורס. כל שאלה שתשאלו כאן תישמר אוטומטית בצורה מסודרת תחת נושא זה, והצוות (או סטודנטים אחרים) יוכלו לענות לכם ולעזור.

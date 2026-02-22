@@ -391,6 +391,24 @@ git push
 <iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_01_Setup/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 <p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_01_Setup/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>
 ---
+### 🧠 בחן את עצמך (שאלות סיכום)
+לפני שאתם מתקדמים, ודאו שהבנתם את מושגי היסוד:
+
+<details>
+<summary><b>שאלה 1: למה כלכלנים מודרניים צריכים מעבר לאקסל (כמו SQL ופייתון)?</b> 👁️ לחץ לתשובה</summary>
+<br>
+אקסל מוגבל לכמיליון שורות ומתקשה להתמודד עם נתונים כבדים (Big Data). בנוסף, תהליכים באקסל הם לרוב ידניים, בעוד ששפות כמו פייתון ו-SQL מאפשרות <b>אוטומציה מלאה</b>, שחזור של המחקר (Reproducibility), ועבודה ישירה מול שרתים ומסדי נתונים.
+</details>
+
+<details>
+<summary><b>שאלה 2: מה המטרה של GitHub בתהליך הלמידה שלנו?</b> 👁️ לחץ לתשובה</summary>
+<br>
+GitHub משמש כ"מכונת זמן" וספריית גיבוי לקוד שלנו. הוא מאפשר לנו לשמור גרסאות (Version Control), לשתף פעולה עם חוקרים אחרים, ולבנות תיק עבודות (Portfolio) שמעסיקים יכולים לראות.
+</details>
+
+
+---
+
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?
 **כתבו לנו כאן למטה!** המערכת מחוברת ישירות לגיטהאב של הקורס. כל שאלה שתשאלו כאן תישמר אוטומטית בצורה מסודרת תחת נושא זה, והצוות (או סטודנטים אחרים) יוכלו לענות לכם ולעזור.
