@@ -1,0 +1,68 @@
+/* --- הפונטים שלנו --- */
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&family=Heebo:wght@400;700&display=swap');
+
+/* --- משתני צבע בסיסיים (Bootstrap Overrides) --- */
+$primary: #0f2b46 !default; /* כחול נייבי עמוק ויוקרתי */
+$secondary: #475569 !default; /* אפור צפחה */
+$body-bg: #fdfdfc !default; /* רקע טיפה שבור, לא לבן מסנוור */
+$body-color: #1e293b !default; /* טקסט כהה רך, עדיף על שחור מוחלט */
+
+/* --- טיפוגרפיה --- */
+$font-family-sans-serif: 'Assistant', sans-serif !default;
+$headings-font-family: 'Heebo', sans-serif !default;
+$headings-color: $primary !default;
+
+/* --- ייבוא הבסיס של Quarto --- */
+/*-- scss:defaults --*/
+
+/*-- scss:rules --*/
+
+/* --- התאמות אישיות נוספות (Custom Rules) --- */
+
+/* עיצוב התפריט העליון */
+.navbar {
+  background-color: $primary !important;
+  border-bottom: 3px solid #cbd5e1;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.navbar-title {
+  font-family: 'Heebo', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* עיצוב בלוקים של קוד */
+pre.sourceCode {
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+}
+
+/* עיצוב כותרות בתוך העמוד */
+h1, h2, h3 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.3em;
+}
+h1 { border-bottom: 2px solid $primary; }
+
+/* עיצוב תגיות האקורדיון (לשאלות התרגול) */
+details {
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+}
+summary {
+  font-weight: 600;
+  cursor: pointer;
+  color: $primary;
+}
+details[open] summary {
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid #cbd5e1;
+  padding-bottom: 0.5em;
+}

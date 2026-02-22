@@ -117,7 +117,9 @@ execute:
 
 format:
   html:
-    theme: cosmo
+    theme:
+      - cosmo
+      - custom.scss
     css: custom.css
     include-after-body: custom.html
     toc: true
