@@ -1,4 +1,8 @@
 # משימה 10 – DSGE: מודלים מאקרו-כלכליים דינמיים
+### 🎥 סרטון הדרכה מרכזי
+צפו בסרטון הבא שמכסה את ליבת החומר הטכני של שבוע זה:
+{{< video https://www.youtube.com/watch?v=eMOA1pPVUc4 >}}
+
 
 > DSGE (Dynamic Stochastic General Equilibrium) הוא הכלי שבנקים מרכזיים
 > (בנק ישראל, ה-Fed, ה-ECB) משתמשים בו לתחזיות ולניתוח מדיניות.
