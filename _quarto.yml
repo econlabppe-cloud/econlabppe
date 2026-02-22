@@ -22,9 +22,15 @@ book:
   search:
     location: sidebar
     type: overlay
-  repo-url: https://github.com/econlabppe/econlabppe
-  repo-actions: [edit, issue]
+  repo-url: https://github.com/econlabppe-cloud/econlabppe
+  repo-actions: [edit, issue, source]
   sharing: [twitter, linkedin]
+  comments:
+    utterances:
+      repo: econlabppe-cloud/econlabppe
+      label: "💬 discussion"
+      theme: "github-light"
+      issue-term: "title"
 
   navbar:
     background: primary
