@@ -508,3 +508,14 @@ Members/YourName/Final_Project/
 
 *"An economist who can program is an economist who can answer questions."*
 *― EconLab PPE*
+
+---
+
+### 💻 תרגול מעשי (Hands-on)
+קראתם את התיאוריה וראיתם את הסרטונים? עכשיו תורכם ללכלך את הידיים! 
+הכנו עבורכם מחברת תרגול מוכנה. לחצו על הכפתור כדי לפתוח אותה ישירות בדפדפן שלכם:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_22_DSGE_Advanced/starter_notebook.ipynb)
+
+[או לחצו כאן להורדת המחברת למחשב (קובץ ipynb)](starter_notebook.ipynb)
+

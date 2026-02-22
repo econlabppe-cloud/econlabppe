@@ -372,3 +372,14 @@ git push
 ---
 
 **השבוע הבא:** Excel מאפס – הכלי שכל כלכלן מתחיל בו → [שבוע 2](../Week_02_Excel_Basics/README.md)
+
+---
+
+### 💻 תרגול מעשי (Hands-on)
+קראתם את התיאוריה וראיתם את הסרטונים? עכשיו תורכם ללכלך את הידיים! 
+הכנו עבורכם מחברת תרגול מוכנה. לחצו על הכפתור כדי לפתוח אותה ישירות בדפדפן שלכם:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_01_Setup/starter_notebook.ipynb)
+
+[או לחצו כאן להורדת המחברת למחשב (קובץ ipynb)](starter_notebook.ipynb)
+

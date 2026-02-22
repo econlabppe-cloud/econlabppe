@@ -499,3 +499,14 @@ Members/YourName/Week_21/
 ---
 
 **השבוע הבא:** DSGE מלא – gEcon/Dynare, אמידה בייזיאנית, תחזיות → [שבוע 22](../Week_22_DSGE_Advanced/README.md)
+
+---
+
+### 💻 תרגול מעשי (Hands-on)
+קראתם את התיאוריה וראיתם את הסרטונים? עכשיו תורכם ללכלך את הידיים! 
+הכנו עבורכם מחברת תרגול מוכנה. לחצו על הכפתור כדי לפתוח אותה ישירות בדפדפן שלכם:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_21_DSGE_Intro/starter_notebook.ipynb)
+
+[או לחצו כאן להורדת המחברת למחשב (קובץ ipynb)](starter_notebook.ipynb)
+

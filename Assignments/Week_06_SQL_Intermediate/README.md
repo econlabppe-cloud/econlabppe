@@ -552,3 +552,14 @@ Members/YourName/Week_06/
 ---
 
 **השבוע הבא:** SQL מתקדם – Window Functions, CTEs, ושילוב Python+SQL → [שבוע 7](../Week_07_SQL_Advanced/README.md)
+
+---
+
+### 💻 תרגול מעשי (Hands-on)
+קראתם את התיאוריה וראיתם את הסרטונים? עכשיו תורכם ללכלך את הידיים! 
+הכנו עבורכם מחברת תרגול מוכנה. לחצו על הכפתור כדי לפתוח אותה ישירות בדפדפן שלכם:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_06_SQL_Intermediate/starter_notebook.ipynb)
+
+[או לחצו כאן להורדת המחברת למחשב (קובץ ipynb)](starter_notebook.ipynb)
+

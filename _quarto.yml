@@ -129,3 +129,11 @@ format:
       sidebar-width: 280px
       body-width: 800px
       margin-width: 200px
+
+comments:
+  giscus:
+    repo: "econlabppe-cloud/econlabppe"
+    category: "General"
+    mapping: "title"
+    reactions-enabled: true
+    theme: light

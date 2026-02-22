@@ -444,3 +444,14 @@ Members/YourName/Week_03/
 ---
 
 **השבוע הבא:** Excel מתקדם – Power Query, NPV/IRR, ודשבורד מאקרו-כלכלי → [שבוע 4](../Week_04_Excel_Advanced/README.md)
+
+---
+
+### 💻 תרגול מעשי (Hands-on)
+קראתם את התיאוריה וראיתם את הסרטונים? עכשיו תורכם ללכלך את הידיים! 
+הכנו עבורכם מחברת תרגול מוכנה. לחצו על הכפתור כדי לפתוח אותה ישירות בדפדפן שלכם:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_03_Excel_Intermediate/starter_notebook.ipynb)
+
+[או לחצו כאן להורדת המחברת למחשב (קובץ ipynb)](starter_notebook.ipynb)
+
