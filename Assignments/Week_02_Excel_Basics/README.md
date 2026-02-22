@@ -1,9 +1,21 @@
 # שבוע 2 – Excel מאפס: הכלי שכל כלכלן מתחיל בו
 
-### 🎥 סרטוני הדרכה לשבוע זה
-כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות:
 
+### 🎥 סרטוני הדרכה לפרק זה
+כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות:
 ::: {.panel-tabset}
+## 🟢 רמת מתחילים
+**מבוא והיכרות עם המושגים הבסיסיים:**
+{{< video [https://www.youtube.com/watch?v=k1VUZEVuDJ8](https://www.youtube.com/watch?v=k1VUZEVuDJ8) >}}
+## 🟡 רמת ביניים
+**העמקה ופרקטיקה מעשית:**
+{{< video [https://www.youtube.com/watch?v=g1kmDtCyVLg](https://www.youtube.com/watch?v=g1kmDtCyVLg) >}}
+## 🔴 רמת מתקדמים
+**מקרי קצה, אופטימיזציה ושימושים מורכבים:**
+{{< video [https://www.youtube.com/watch?v=9IeD-wB8kWE](https://www.youtube.com/watch?v=9IeD-wB8kWE) >}}
+:::
+
+
 
 ## 🟢 רמת מתחילים
 **מבוא והיכרות עם המושגים הבסיסיים:**

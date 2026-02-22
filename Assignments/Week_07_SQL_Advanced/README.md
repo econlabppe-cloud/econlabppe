@@ -1,9 +1,21 @@
 # שבוע 7 – SQL מתקדם: Window Functions, CTEs, ו-Python+SQL
 
-### 🎥 סרטוני הדרכה לשבוע זה
-כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות:
 
+### 🎥 סרטוני הדרכה לפרק זה
+כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות:
 ::: {.panel-tabset}
+## 🟢 רמת מתחילים
+**מבוא והיכרות עם המושגים הבסיסיים:**
+{{< video [https://www.youtube.com/watch?v=Ww71knvhQ-s](https://www.youtube.com/watch?v=Ww71knvhQ-s) >}}
+## 🟡 רמת ביניים
+**העמקה ופרקטיקה מעשית:**
+{{< video [https://www.youtube.com/watch?v=cNgMWD2mMWU](https://www.youtube.com/watch?v=cNgMWD2mMWU) >}}
+## 🔴 רמת מתקדמים
+**מקרי קצה, אופטימיזציה ושימושים מורכבים:**
+{{< video [https://www.youtube.com/watch?v=zAmJTGEGzAM](https://www.youtube.com/watch?v=zAmJTGEGzAM) >}}
+:::
+
+
 
 ## 🟢 רמת מתחילים
 **מבוא והיכרות עם המושגים הבסיסיים:**

@@ -1,9 +1,21 @@
 # שבוע 8 – Python מאפס: שפת התכנות של כלכלנים
 
-### 🎥 סרטוני הדרכה לשבוע זה
-כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות:
 
+### 🎥 סרטוני הדרכה לפרק זה
+כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות:
 ::: {.panel-tabset}
+## 🟢 רמת מתחילים
+**מבוא והיכרות עם המושגים הבסיסיים:**
+{{< video [https://www.youtube.com/watch?v=kqtD5dpn9C8](https://www.youtube.com/watch?v=kqtD5dpn9C8) >}}
+## 🟡 רמת ביניים
+**העמקה ופרקטיקה מעשית:**
+{{< video [https://www.youtube.com/watch?v=W8KRlNvCQOU](https://www.youtube.com/watch?v=W8KRlNvCQOU) >}}
+## 🔴 רמת מתקדמים
+**מקרי קצה, אופטימיזציה ושימושים מורכבים:**
+{{< video [https://www.youtube.com/watch?v=ZDa-Z5JzLSg](https://www.youtube.com/watch?v=ZDa-Z5JzLSg) >}}
+:::
+
+
 
 ## 🟢 רמת מתחילים
 **מבוא והיכרות עם המושגים הבסיסיים:**

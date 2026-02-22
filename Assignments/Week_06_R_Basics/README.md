@@ -1,9 +1,21 @@
 # משימה 6 – R: יסודות
 
-### 🎥 סרטוני הדרכה לשבוע זה
-כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות:
 
+### 🎥 סרטוני הדרכה לפרק זה
+כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות:
 ::: {.panel-tabset}
+## 🟢 רמת מתחילים
+**מבוא והיכרות עם המושגים הבסיסיים:**
+{{< video [https://www.youtube.com/watch?v=9yeOJ0ZMUYw](https://www.youtube.com/watch?v=9yeOJ0ZMUYw) >}}
+## 🟡 רמת ביניים
+**העמקה ופרקטיקה מעשית:**
+{{< video [https://www.youtube.com/watch?v=0UQJC_FEQ_A](https://www.youtube.com/watch?v=0UQJC_FEQ_A) >}}
+## 🔴 רמת מתקדמים
+**מקרי קצה, אופטימיזציה ושימושים מורכבים:**
+{{< video [https://www.youtube.com/watch?v=CJzeKzKz_KU](https://www.youtube.com/watch?v=CJzeKzKz_KU) >}}
+:::
+
+
 
 ## 🟢 רמת מתחילים
 **מבוא והיכרות עם המושגים הבסיסיים:**

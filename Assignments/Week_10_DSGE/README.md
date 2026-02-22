@@ -1,9 +1,21 @@
 # משימה 10 – DSGE: מודלים מאקרו-כלכליים דינמיים
 
-### 🎥 סרטוני הדרכה לשבוע זה
-כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות:
 
+### 🎥 סרטוני הדרכה לפרק זה
+כדי לכסות את החומר מכל הזוויות, ריכזנו עבורכם 3 סרטונים ברמות קושי שונות:
 ::: {.panel-tabset}
+## 🟢 רמת מתחילים
+**מבוא והיכרות עם המושגים הבסיסיים:**
+{{< video [https://www.youtube.com/watch?v=eMOA1pPVUc4](https://www.youtube.com/watch?v=eMOA1pPVUc4) >}}
+## 🟡 רמת ביניים
+**העמקה ופרקטיקה מעשית:**
+{{< video [https://www.youtube.com/watch?v=h4hOPGo4UVU](https://www.youtube.com/watch?v=h4hOPGo4UVU) >}}
+## 🔴 רמת מתקדמים
+**מקרי קצה, אופטימיזציה ושימושים מורכבים:**
+{{< video [https://www.youtube.com/watch?v=Kk6piJkoIEw](https://www.youtube.com/watch?v=Kk6piJkoIEw) >}}
+:::
+
+
 
 ## 🟢 רמת מתחילים
 **מבוא והיכרות עם המושגים הבסיסיים:**
