@@ -141,6 +141,26 @@ df.columns = ["year"] + [c for c in df.columns[1:]]
 <iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_09_BI_Tools/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 <p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_09_BI_Tools/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>
 ---
+### 🧠 בחן את עצמך (שאלות סיכום)
+ספריית Pandas היא האקסל על סטרואידים של עולם הפייתון. בדקו את עצמכם:
+
+<details>
+<summary><b>שאלה 1: מה ההבדל בין DataFrame לבין Series ב-Pandas?</b> 👁️ לחץ לתשובה</summary>
+<br>
+<b>Series</b> הוא למעשה עמודה אחת בלבד של נתונים (חד-ממדי).
+<br><b>DataFrame</b> היא טבלה שלמה (דו-ממדית) שמורכבת ממספר Series שחולקים את אותו האינדקס.
+</details>
+
+<details>
+<summary><b>שאלה 2: מה ההבדל בין שימוש ב-loc לבין iloc כאשר מסננים נתונים?</b> 👁️ לחץ לתשובה</summary>
+<br>
+<b>loc</b> בוחר נתונים לפי <b>השם/התווית (Label)</b> של השורות והעמודות (למשל: עמודת "Salary").
+<br><b>iloc</b> בוחר נתונים לפי <b>המיקום המספרי שלהם (Index)</b> בלבד (למשל: עמודה מספר 3, ללא קשר לשם שלה).
+</details>
+
+
+---
+
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?
 **כתבו לנו כאן למטה!** המערכת מחוברת ישירות לגיטהאב של הקורס. כל שאלה שתשאלו כאן תישמר אוטומטית בצורה מסודרת תחת נושא זה, והצוות (או סטודנטים אחרים) יוכלו לענות לכם ולעזור.

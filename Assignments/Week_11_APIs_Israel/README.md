@@ -540,6 +540,24 @@ Members/YourName/Week_11/
 <iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_11_APIs_Israel/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 <p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_11_APIs_Israel/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>
 ---
+### 🧠 בחן את עצמך (שאלות סיכום)
+ברוכים הבאים לעולם ה-APIs! זה הזמן להפסיק להוריד קבצי אקסל.
+
+<details>
+<summary><b>שאלה 1: מהו פורמט JSON ולמה הוא כל כך נפוץ בעבודה מול APIs?</b> 👁️ לחץ לתשובה</summary>
+<br>
+<b>JSON</b> (JavaScript Object Notation) הוא פורמט טקסטואלי קליל להעברת נתונים. הוא נראה ממש כמו מילון (Dictionary) בפייתון - בנוי מזוגות של מפתח וערך (Key-Value). הוא הפך לסטנדרט העולמי בגלל שהוא קל מאוד לקריאה גם על ידי בני אדם וגם על ידי מכונות (בניגוד ל-XML או HTML המסורבלים).
+</details>
+
+<details>
+<summary><b>שאלה 2: למה חשוב לבדוק את ה-Status Code (קוד הסטטוס) כששולחים בקשת GET?</b> 👁️ לחץ לתשובה</summary>
+<br>
+קוד הסטטוס אומר לנו אם הבקשה הצליחה. קוד <b>200</b> אומר שהכל תקין והנתונים התקבלו. קודים שמתחילים ב-4 (כמו <b>404</b>) מעידים על שגיאה אצלנו (כתובת לא נכונה או חוסר הרשאות), וקודים שמתחילים ב-5 מעידים על קריסה בשרת שאליו פנינו.
+</details>
+
+
+---
+
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?
 **כתבו לנו כאן למטה!** המערכת מחוברת ישירות לגיטהאב של הקורס. כל שאלה שתשאלו כאן תישמר אוטומטית בצורה מסודרת תחת נושא זה, והצוות (או סטודנטים אחרים) יוכלו לענות לכם ולעזור.

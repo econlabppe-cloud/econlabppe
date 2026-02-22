@@ -474,6 +474,25 @@ Members/YourName/Week_04/
 <iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_04_Excel_Advanced/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 <p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_04_Excel_Advanced/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>
 ---
+### 🧠 בחן את עצמך (שאלות סיכום)
+לפני שאתם מתקדמים, ודאו שהבנתם את העוצמה של Power Query:
+
+<details>
+<summary><b>שאלה 1: למה כדאי להשתמש ב-Power Query במקום סתם להעתיק ולהדביק נתונים באקסל?</b> 👁️ לחץ לתשובה</summary>
+<br>
+Power Query שומר את "צעדי הניקוי" שלכם. בפעם הבאה שתקבלו קובץ נתונים חדש (למשל בחודש הבא), תצטרכו רק ללחוץ על Refresh (רענן) וכל תהליך הניקוי, הסינון והמיזוג יקרה אוטומטית! בנוסף, הוא יכול להתמודד בקלות עם קבצים שגדולים ממגבלת מיליון השורות של אקסל.
+</details>
+
+<details>
+<summary><b>שאלה 2: מה ההבדל בין פעולת Append לפעולת Merge ב-Power Query?</b> 👁️ לחץ לתשובה</summary>
+<br>
+<b>Append</b> מחבר טבלאות זו תחת זו (מוסיף שורות, כמו לחבר נתונים של שנת 2022 לנתוני 2023).
+<br><b>Merge</b> מחבר טבלאות זו לצד זו (מוסיף עמודות, בדומה ל-VLOOKUP, למשל חיבור טבלת עסקאות עם טבלת פרטי לקוחות לפי תעודת זהות).
+</details>
+
+
+---
+
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?
 **כתבו לנו כאן למטה!** המערכת מחוברת ישירות לגיטהאב של הקורס. כל שאלה שתשאלו כאן תישמר אוטומטית בצורה מסודרת תחת נושא זה, והצוות (או סטודנטים אחרים) יוכלו לענות לכם ולעזור.

@@ -212,6 +212,25 @@ cat .gitignore | grep .env
 <iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_05_APIs/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 <p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_05_APIs/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>
 ---
+### 🧠 בחן את עצמך (שאלות סיכום)
+ברוכים הבאים לעולם ה-SQL! בואו נבדוק את ההבנה שלכם:
+
+<details>
+<summary><b>שאלה 1: מה ההבדל העיקרי בין סינון בעזרת WHERE לסינון בעזרת HAVING ב-SQL?</b> 👁️ לחץ לתשובה</summary>
+<br>
+<b>WHERE</b> מסנן שורות בודדות <i>לפני</i> פעולת הקיבוץ והאגרגציה (GROUP BY).
+<br><b>HAVING</b> מסנן קבוצות שלמות <i>לאחר</i> שהן כבר קובצו וחושבו (למשל, אם נרצה להציג רק מחלקות שממוצע השכר בהן גדול מ-10,000, נהיה חייבים להשתמש ב-HAVING כי זה סינון על חישוב).
+</details>
+
+<details>
+<summary><b>שאלה 2: למה חשוב לציין את סוג הנתונים (Data Type) כשיוצרים טבלה במסד נתונים?</b> 👁️ לחץ לתשובה</summary>
+<br>
+הגדרת סוג הנתונים (כמו INT למספרים, DATE לתאריכים או VARCHAR לטקסט) מונעת שגיאות אנוש (אכיפת תקינות), חוסכת מקום אחסון בשרת, ומאפשרת למסד הנתונים לבצע חיפושים וחישובים בצורה הרבה יותר מהירה ויעילה.
+</details>
+
+
+---
+
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?
 **כתבו לנו כאן למטה!** המערכת מחוברת ישירות לגיטהאב של הקורס. כל שאלה שתשאלו כאן תישמר אוטומטית בצורה מסודרת תחת נושא זה, והצוות (או סטודנטים אחרים) יוכלו לענות לכם ולעזור.

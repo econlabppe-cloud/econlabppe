@@ -463,6 +463,24 @@ Members/YourName/Week_03/
 <iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_03_Excel_Intermediate/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 <p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_03_Excel_Intermediate/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>
 ---
+### 🧠 בחן את עצמך (שאלות סיכום)
+הגענו לכלים החזקים של אקסל. בדקו את עצמכם:
+
+<details>
+<summary><b>שאלה 1: למה Pivot Table (טבלת ציר) היא כלי חובה לניתוח נתונים?</b> 👁️ לחץ לתשובה</summary>
+<br>
+Pivot Table מאפשרת לנו לקחת עשרות אלפי שורות של נתונים גולמיים (למשל, פירוט עסקאות יומי) ולסכם אותם תוך שניות לפי קטגוריות (למשל, סך הכנסות לפי חודש או לפי מוצר), בלי לכתוב אף נוסחה מסובכת.
+</details>
+
+<details>
+<summary><b>שאלה 2: מדוע שילוב הפונקציות INDEX ו-MATCH (או XLOOKUP) עדיף על VLOOKUP?</b> 👁️ לחץ לתשובה</summary>
+<br>
+בניגוד ל-VLOOKUP, שילוב של INDEX/MATCH (או שימוש ב-XLOOKUP החדשה) מאפשר לחפש ערכים בכל כיוון (גם ימינה וגם שמאלה), הוא אינו נשבר אם מוסיפים או מוחקים עמודות באמצע הטבלה, והוא יעיל ומהיר יותר בחישובים על קבצים גדולים.
+</details>
+
+
+---
+
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?
 **כתבו לנו כאן למטה!** המערכת מחוברת ישירות לגיטהאב של הקורס. כל שאלה שתשאלו כאן תישמר אוטומטית בצורה מסודרת תחת נושא זה, והצוות (או סטודנטים אחרים) יוכלו לענות לכם ולעזור.
