@@ -489,3 +489,9 @@ SELECT ...
 ---
 
 **השבוע הבא:** SQL בינוני – GROUP BY, JOINs, ושאילתות מורכבות → [שבוע 6](../Week_06_SQL_Intermediate/README.md)
+
+### 💻 תרגול מעשי (Hands-on)
+
+<p>לחצו על המשולש (Play) כדי להפעיל את סביבת הפיתוח בתוך העמוד, או פתחו בלשונית חדשה לנוחות מירבית.</p>
+<iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_05_SQL_Basics/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+<p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_05_SQL_Basics/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>

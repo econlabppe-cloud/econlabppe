@@ -183,3 +183,9 @@ cor(df$inflation[df$year > 2019], df$unemployment[df$year > 2019])
 ---
 
 **השבוע הבא:** R – אקונומטריקה → [משימה 7](../Week_07_Econometrics_R/README.md)
+
+### 💻 תרגול מעשי (Hands-on)
+
+<p>לחצו על המשולש (Play) כדי להפעיל את סביבת הפיתוח בתוך העמוד, או פתחו בלשונית חדשה לנוחות מירבית.</p>
+<iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_06_R_Basics/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+<p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_06_R_Basics/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>

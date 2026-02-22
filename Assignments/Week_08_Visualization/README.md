@@ -208,3 +208,9 @@ ggsave("macro_ggplot.png", combined, width = 10, height = 8, dpi = 150)
 ---
 
 **השבוע הבא:** Power BI / Tableau → [משימה 9](../Week_09_BI_Tools/README.md)
+
+### 💻 תרגול מעשי (Hands-on)
+
+<p>לחצו על המשולש (Play) כדי להפעיל את סביבת הפיתוח בתוך העמוד, או פתחו בלשונית חדשה לנוחות מירבית.</p>
+<iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_08_Visualization/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+<p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_08_Visualization/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>

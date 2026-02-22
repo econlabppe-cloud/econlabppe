@@ -545,3 +545,9 @@ Members/YourName/Week_17/
 ---
 
 **השבוע הבא:** ggplot2 מתקדם ו-R Markdown → [שבוע 18](../Week_18_Visualization_R/README.md)
+
+### 💻 תרגול מעשי (Hands-on)
+
+<p>לחצו על המשולש (Play) כדי להפעיל את סביבת הפיתוח בתוך העמוד, או פתחו בלשונית חדשה לנוחות מירבית.</p>
+<iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_17_Visualization_Python/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+<p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_17_Visualization_Python/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>

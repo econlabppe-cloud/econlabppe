@@ -134,3 +134,9 @@ df.columns = ["year"] + [c for c in df.columns[1:]]
 ---
 
 **השבוע הבא:** DSGE – המאתגר שבכולם → [משימה 10](../Week_10_DSGE/README.md)
+
+### 💻 תרגול מעשי (Hands-on)
+
+<p>לחצו על המשולש (Play) כדי להפעיל את סביבת הפיתוח בתוך העמוד, או פתחו בלשונית חדשה לנוחות מירבית.</p>
+<iframe src="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_09_BI_Tools/starter_notebook.ipynb" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+<p><br><em>* אם המסך לא נטען או מבקש הרשאות אבטחה, <a href="https://colab.research.google.com/github/econlabppe-cloud/econlabppe/blob/main/Assignments/Week_09_BI_Tools/starter_notebook.ipynb" target="_blank">לחצו כאן לפתיחת המחברת במסך מלא</a>.</em></p>
