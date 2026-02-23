@@ -28,7 +28,7 @@
 | **מומלץ לארגונים** | **מומלץ לפרסום ועיתונאות** |
 | Drag-and-drop טוב | **Drag-and-drop מעולה** |
 
----
+***
 
 ## חלק א – התקנה
 
@@ -57,7 +57,7 @@
                 [Dimensions | Measures]
 ```
 
----
+***
 
 ## חלק ב – חיבור נתונים
 
@@ -90,7 +90,7 @@ Data Source → שם טבלה → Union
 Tableau Prep Builder → Connect → Transform → Output
 ```
 
----
+***
 
 ## חלק ג – ויזואליזציות ב-Tableau
 
@@ -167,7 +167,7 @@ Columns: [GDP Growth (bin)]
 Marks:   Bar
 ```
 
----
+***
 
 ## חלק ד – Calculated Fields
 
@@ -209,7 +209,7 @@ Right-click Measure → Add Table Calculation:
 - Rank → Competition
 ```
 
----
+***
 
 ## חלק ה – Filters ו-Parameters
 
@@ -246,7 +246,7 @@ Data pane → Create Parameter
    (כדי שיופיע בדשבורד)
 ```
 
----
+***
 
 ## חלק ו – Dashboard: בניית הדשבורד
 
@@ -301,7 +301,7 @@ Dashboard → Actions → Add Action
    → hover על שנה אחת → מדגיש אותה בכל הגרפים
 ```
 
----
+***
 
 ## חלק ז – Story: הצגה נרטיבית
 
@@ -341,7 +341,7 @@ Story Navigator: Arrow Bar / Dots / Numbers
 Background: White
 ```
 
----
+***
 
 ## חלק ח – פרסום ב-Tableau Public
 
@@ -372,7 +372,7 @@ File → Save to Tableau Public → התחבר עם חשבון
 <script src='https://public.tableau.com/javascripts/api/viz_v1.js'></script>
 ```
 
----
+***
 
 ## חלק ט – השוואת Tableau ל-Python/R
 
@@ -407,7 +407,7 @@ Add Pages shelf: Era (ל-facet)
 - automation
 - נתונים גדולים מאוד
 
----
+***
 
 ## משימות השבוע
 
@@ -449,7 +449,7 @@ Add Pages shelf: Era (ל-facet)
 → שלח לינק
 ```
 
----
+***
 
 ## הגשה
 
@@ -461,7 +461,7 @@ Members/YourName/Week_20/
 └── story_summary.md            ← 5 ממצאים עיקריים
 ```
 
----
+***
 
 **המודול הבא:** DSGE – מודלים מאקרו-כלכליים דינמיים → [שבוע 21](../Week_21_DSGE_Intro/README.md)
 

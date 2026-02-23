@@ -30,7 +30,7 @@
 
 **כלכלן מקצועי יודע את שתי השפות.**
 
----
+***
 
 ## חלק א – הגדרת סביבה
 
@@ -63,7 +63,7 @@
 | **Tab** | השלמה אוטומטית |
 | **?function** | עזרה על פונקציה |
 
----
+***
 
 ## חלק ב – R Console: קלחת הכימאי
 
@@ -83,7 +83,7 @@ exp(1)              # e: 2.718
 # = גם עובד אבל <-  זה ה-style הנכון
 ```
 
----
+***
 
 ## חלק ג – משתנים ו-Vectors
 
@@ -169,7 +169,7 @@ sort(gdp_growth)       # מיון עולה
 rev(gdp_growth)        # היפוך
 ```
 
----
+***
 
 ## חלק ד – Factors, Matrices, ו-Lists
 
@@ -227,7 +227,7 @@ names(israel_2023)    # שמות האיברים
 length(israel_2023)   # 6
 ```
 
----
+***
 
 ## חלק ה – Data Frame: הטבלה של R
 
@@ -293,7 +293,7 @@ macro_df$era <- ifelse(
 print(macro_df)
 ```
 
----
+***
 
 ## חלק ו – קריאת נתונים מקבצים
 
@@ -330,7 +330,7 @@ library(writexl)
 write_xlsx(macro_df, "output.xlsx")
 ```
 
----
+***
 
 ## חלק ז – לולאות ופונקציות
 
@@ -398,7 +398,7 @@ cat("ממוצע:", result$mean, "\n")
 cat("סטיית תקן:", result$sd, "\n")
 ```
 
----
+***
 
 ## חלק ח – ויזואליזציה בסיסית: Base R
 
@@ -466,7 +466,7 @@ png("base_macro_plot.png", width = 800, height = 600, res = 120)
 dev.off()
 ```
 
----
+***
 
 ## חלק ט – ניקוי נתונים ב-Base R
 
@@ -505,7 +505,7 @@ outliers <- df$gdp_growth[abs(df$gdp_growth - mean(df$gdp_growth, na.rm=TRUE)) >
                            3 * sd(df$gdp_growth, na.rm=TRUE)]
 ```
 
----
+***
 
 ## חלק י – הסתברות וסטטיסטיקה בסיסית
 
@@ -536,7 +536,7 @@ cor(gdp_growth, inflation)       # מקדם קורלציה
 cor.test(gdp_growth, inflation)  # עם מובהקות סטטיסטית
 ```
 
----
+***
 
 ## משימות השבוע
 
@@ -575,7 +575,7 @@ cor.test(gdp_growth, inflation)  # עם מובהקות סטטיסטית
 
 שמור לקובץ PNG באיכות גבוהה.
 
----
+***
 
 ## הגשה
 
@@ -587,7 +587,7 @@ Members/YourName/Week_13/
 └── base_macro_plot.png
 ```
 
----
+***
 
 **השבוע הבא:** Tidyverse – `dplyr`, `tidyr`, `ggplot2` → [שבוע 14](../Week_14_R_Tidyverse/README.md)
 

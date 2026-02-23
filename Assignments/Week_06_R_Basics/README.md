@@ -40,7 +40,7 @@
 | Big Data | ויזואליזציה מקצועית |
 | אם בחרת אחד – Python | אם בחרת שניים – גם R |
 
----
+***
 
 ## חלק א – RStudio: הסביבה
 
@@ -50,7 +50,7 @@
 - **Environment** (ימין עליון): משתנים פעילים
 - **Plots/Files** (ימין תחתון): גרפים ותיקיות
 
----
+***
 
 ## חלק ב – יסודות R
 
@@ -85,7 +85,7 @@ str(df)
 summary(df)
 ```
 
----
+***
 
 ## חלק ג – tidyverse
 
@@ -113,7 +113,7 @@ df_analysis <- df |>
 print(df_analysis)
 ```
 
----
+***
 
 ## חלק ד – ggplot2: גרפים מקצועיים
 
@@ -151,7 +151,7 @@ ggplot(df, aes(x = unemployment, y = inflation, label = year)) +
 ggsave("phillips_r.png", width = 8, height = 6, dpi = 150)
 ```
 
----
+***
 
 ## המשימה שלך
 
@@ -170,7 +170,7 @@ cor(df$inflation[df$year <= 2019], df$unemployment[df$year <= 2019])
 cor(df$inflation[df$year > 2019], df$unemployment[df$year > 2019])
 ```
 
----
+***
 
 ## הגשה
 
@@ -180,7 +180,7 @@ cor(df$inflation[df$year > 2019], df$unemployment[df$year > 2019])
 - [ ] `phillips_r.png`
 - [ ] `summary.md` – תשובות לתרגיל 2 ו-3
 
----
+***
 
 **השבוע הבא:** R – אקונומטריקה → [משימה 7](../Week_07_Econometrics_R/README.md)
 
@@ -207,7 +207,7 @@ SQL עדיין יחזיר את השורה מהטבלה השמאלית, אבל י
 </details>
 
 
----
+***
 
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?

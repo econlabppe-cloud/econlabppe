@@ -41,7 +41,7 @@
 | פרויקט: השוואת ישראל ל-OECD | 120 דקות |
 | **סה"כ** | **~7 שעות** |
 
----
+***
 
 ## חלק א – World Bank API: `wbgapi`
 
@@ -172,7 +172,7 @@ plt.savefig("israel_vs_g7_gdp.png", dpi=150)
 plt.show()
 ```
 
----
+***
 
 ## חלק ב – OECD API: השוואת 38 מדינות
 
@@ -270,7 +270,7 @@ oecd_health = pdr.get_data_oecd(
 )
 ```
 
----
+***
 
 ## חלק ג – FRED API: נתוני ארה"ב ועולמיים
 
@@ -339,7 +339,7 @@ corr = global_df[["us_inflation", "brent_oil"]].corr()
 print(f"\nקורלציה נפט-אינפלציה: {corr.loc['us_inflation', 'brent_oil']:.3f}")
 ```
 
----
+***
 
 ## חלק ד – IMF World Economic Outlook
 
@@ -388,7 +388,7 @@ imf_israel.columns = ["gdp_growth", "inflation", "govt_debt_pct_gdp"]
 print(imf_israel)
 ```
 
----
+***
 
 ## חלק ה – פרויקט מסכם: Israel in the World
 
@@ -544,7 +544,7 @@ with pd.ExcelWriter("israel_global_data.xlsx", engine="openpyxl") as writer:
 print("\n✓ הכל נשמר!")
 ```
 
----
+***
 
 ## משימות השבוע
 
@@ -589,7 +589,7 @@ class GlobalEconomyHub:
 **שאלת מחקר לדוח:**
 "האם ישראל הצליחה לגבות ריבית גבוהה מבלי לגרום לנזק גדול יחסית לכלכלות ה-OECD האחרות?"
 
----
+***
 
 ## הגשה
 
@@ -616,7 +616,7 @@ Members/YourName/Week_12/
 ## 5. מגבלות המחקר
 ```
 
----
+***
 
 **המודול הבא:** R – אקונומטריקה ומודלים סטטיסטיים → [שבוע 13](../Week_13_R_Basics/README.md)
 
@@ -642,7 +642,7 @@ Members/YourName/Week_12/
 </details>
 
 
----
+***
 
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?

@@ -31,7 +31,7 @@
 - גרף לתזה/מאמר → **Matplotlib**
 - גרף לדשבורד/אתר/דוח HTML → **Plotly**
 
----
+***
 
 ## חלק א – Plotly Express: מהיר ופשוט
 
@@ -155,7 +155,7 @@ fig.show()
 fig.write_html("macro_dashboard.html")
 ```
 
----
+***
 
 ## חלק ב – Plotly Graph Objects: שליטה מלאה
 
@@ -256,7 +256,7 @@ fig.show()
 fig.write_html("animated_macro.html")
 ```
 
----
+***
 
 ## חלק ג – Choropleth Map: מפות כלכליות
 
@@ -293,7 +293,7 @@ fig.show()
 fig.write_html("world_gdp_map.html")
 ```
 
----
+***
 
 ## חלק ד – Heatmap ו-Correlation Matrix
 
@@ -339,7 +339,7 @@ fig = px.violin(
 fig.show()
 ```
 
----
+***
 
 ## חלק ה – Dash: דשבורד אינטראקטיבי מלא
 
@@ -491,7 +491,7 @@ if __name__ == "__main__":
     app.run(debug=True)
 ```
 
----
+***
 
 ## משימות השבוע
 
@@ -528,7 +528,7 @@ if __name__ == "__main__":
 # 5. Deploy: python macro_dashboard.py → שלח URL
 ```
 
----
+***
 
 ## הגשה
 
@@ -542,7 +542,7 @@ Members/YourName/Week_17/
 └── dashboard_screenshot.png
 ```
 
----
+***
 
 **השבוע הבא:** ggplot2 מתקדם ו-R Markdown → [שבוע 18](../Week_18_Visualization_R/README.md)
 

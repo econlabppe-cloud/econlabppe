@@ -48,7 +48,7 @@ df = fetch_boi_data("RER_USD_ILS")  # שורה אחת!
 
 נתונים מתעדכנים **אוטומטית** בכל פעם שמריצים.
 
----
+***
 
 ## חלק א – יסודות: מה זה HTTP request?
 
@@ -78,7 +78,7 @@ data = response.json()       # המרה ל-Python dict/list
 | 429 | יותר מדי בקשות (Rate Limit) |
 | 500 | שגיאה בשרת |
 
----
+***
 
 ## חלק ב – בנק ישראל (BOI): SDMX API
 
@@ -233,7 +233,7 @@ plt.savefig("boi_monetary_policy.png", dpi=150)
 plt.show()
 ```
 
----
+***
 
 ## חלק ג – ניהול מפתחות API ב-.env
 
@@ -283,7 +283,7 @@ print(cbs_key)  # None אם לא הוגדר, הערך אם הוגדר
 .env.*
 ```
 
----
+***
 
 ## חלק ד – הלמ"ס (CBS): נתוני אוכלוסייה ותעסוקה
 
@@ -356,7 +356,7 @@ df = df.set_index("date").sort_index()
 print(df.head())
 ```
 
----
+***
 
 ## חלק ה – שילוב BOI + הלמ"ס: ניתוח מלא
 
@@ -425,7 +425,7 @@ combined.to_csv("israel_economic_indicators.csv", encoding="utf-8-sig")
 print("\n✓ Pipeline הסתיים! קבצים נשמרו.")
 ```
 
----
+***
 
 ## חלק ו – Rate Limiting ו-Caching
 
@@ -459,7 +459,7 @@ def fetch_with_cache(series_id, start_date, end_date, cache_dir="cache"):
 interest = fetch_with_cache("INT_RATE", "2020-01", "2024-12")
 ```
 
----
+***
 
 ## משימות השבוע
 
@@ -518,7 +518,7 @@ print(df.describe())
 hub.plot_monetary_policy()
 ```
 
----
+***
 
 ## הגשה
 
@@ -530,7 +530,7 @@ Members/YourName/Week_11/
 └── week11_findings.md
 ```
 
----
+***
 
 **השבוע הבא:** APIs בין-לאומיים – בנק עולמי, OECD, FRED → [שבוע 12](../Week_12_APIs_International/README.md)
 
@@ -556,7 +556,7 @@ Members/YourName/Week_11/
 </details>
 
 
----
+***
 
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?

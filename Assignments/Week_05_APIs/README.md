@@ -36,7 +36,7 @@
 pip install requests pandas wbgapi python-dotenv
 ```
 
----
+***
 
 ## חלק א – API בנק ישראל
 
@@ -75,7 +75,7 @@ print(df_fx.head(10))
 
 ראה מדריך מלא: [`Cookbook/boi_api.md`](../../Cookbook/boi_api.md)
 
----
+***
 
 ## חלק ב – API הבנק העולמי
 
@@ -107,7 +107,7 @@ print(df_compare)
 
 ראה מדריך מלא: [`Cookbook/worldbank_api.md`](../../Cookbook/worldbank_api.md)
 
----
+***
 
 ## חלק ג – API ה-OECD
 
@@ -144,7 +144,7 @@ print(df_cpi.head())
 
 ראה מדריך מלא: [`Cookbook/oecd_api.md`](../../Cookbook/oecd_api.md)
 
----
+***
 
 ## חלק ד – ניהול מפתחות API (חשוב!)
 
@@ -173,7 +173,7 @@ cat .gitignore | grep .env
 # אמור לראות: .env
 ```
 
----
+***
 
 ## המשימה שלך
 
@@ -194,7 +194,7 @@ cat .gitignore | grep .env
 - שאל את הנתונים בפייתון
 - כתוב פסקה קצרה על מה שגילית
 
----
+***
 
 ## הגשה
 
@@ -202,7 +202,7 @@ cat .gitignore | grep .env
 - [ ] `api_data_fetch.ipynb`
 - [ ] `.env.example` (קובץ דוגמה עם מפתחות ריקים – **ללא** ערכים אמיתיים!)
 
----
+***
 
 **השבוע הבא:** R – יסודות → [משימה 6](../Week_06_R_Basics/README.md)
 
@@ -229,7 +229,7 @@ cat .gitignore | grep .env
 </details>
 
 
----
+***
 
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?

@@ -127,7 +127,7 @@ print(p1)
 ggsave("gdp_economist_style.png", p1, width = 10, height = 5.5, dpi = 300)
 ```
 
----
+***
 
 ## חלק ב – patchwork: כמה גרפים בדף אחד
 
@@ -184,7 +184,7 @@ combined <- (p1 | p2) / (p3 | p4) +
 ggsave("macro_4panel.png", combined, width = 14, height = 10, dpi = 300)
 ```
 
----
+***
 
 ## חלק ג – scales ו-coordinate systems מתקדמים
 
@@ -233,7 +233,7 @@ macro_df %>%
   theme_econlab()
 ```
 
----
+***
 
 ## חלק ד – R Markdown: דוח מחקר מלא
 
@@ -359,7 +359,7 @@ rmarkdown::render("housing_analysis.Rmd", output_format = "html_document")
 rmarkdown::render("housing_analysis.Rmd", output_format = "pdf_document")
 ```
 
----
+***
 
 ## חלק ה – plotly אינטראקטיבי ב-R Markdown
 
@@ -380,7 +380,7 @@ p <- ggplot(macro_df, aes(x = year, y = gdp_growth,
 ggplotly(p, tooltip = "text")
 ```
 
----
+***
 
 ## חלק ו – שפת gtsummary: טבלאות מחקר
 
@@ -417,7 +417,7 @@ lm(gdp_growth ~ interest + inflation + unemployment, data = macro_df) %>%
   modify_caption("**טבלה 2: רגרסיה – גורמי צמיחת תמ\"ג**")
 ```
 
----
+***
 
 ## משימות השבוע
 
@@ -454,7 +454,7 @@ lm(gdp_growth ~ interest + inflation + unemployment, data = macro_df) %>%
 htmlwidgets::saveWidget(ggplotly(p), "interactive_macro.html")
 ```
 
----
+***
 
 ## הגשה
 
@@ -468,7 +468,7 @@ Members/YourName/Week_18/
 └── interactive_macro.html
 ```
 
----
+***
 
 **המודול הבא:** Power BI ו-Tableau – דשבורדים לביזנס → [שבוע 19](../Week_19_BI_Tools/README.md)
 

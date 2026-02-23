@@ -38,7 +38,7 @@ Excel → SQL → Python → APIs → R → Econometrics → Visualization → B
 
 **השבוע הזה:** הכל יחד.
 
----
+***
 
 ## חלק א – אמידה בייזיאנית של DSGE
 
@@ -119,7 +119,7 @@ plot(irfs,
      ylab = "% Deviation from SS")
 ```
 
----
+***
 
 ## חלק ב – BVAR: Vector Autoregression בייזיאני
 
@@ -190,7 +190,7 @@ plot(fevd_result)
 # אחרי 4 רבעונים: GDP shock 60%, Interest 25%, Inflation 15%
 ```
 
----
+***
 
 ## חלק ג – Smets-Wouters Model (Abridged)
 
@@ -244,7 +244,7 @@ priors_sw %>%
   theme_minimal()
 ```
 
----
+***
 
 ## חלק ד – Pipeline: נתונים עד תחזית
 
@@ -366,7 +366,7 @@ write_csv(fc_df, "gdp_forecast_2025_2026.csv")
 cat("\n✓ Pipeline הסתיים! תחזית שמורה.\n")
 ```
 
----
+***
 
 ## חלק ה – פרויקט גמר: דוח מחקר מקיף
 
@@ -451,7 +451,7 @@ Members/YourName/Week_22_Final_Project/
 - טבלאות רגרסיה מלאות
 ```
 
----
+***
 
 ## ציר הזמן לפרויקט גמר
 
@@ -463,7 +463,7 @@ Members/YourName/Week_22_Final_Project/
 | **22 יום 6** | Dash Dashboard + R Markdown |
 | **22 יום 7** | כתיבת הדוח המסכם |
 
----
+***
 
 ## הגשה הסופית
 
@@ -485,7 +485,7 @@ Members/YourName/Final_Project/
 | **ויזואליזציה** (גרפים, דשבורד) | 15% |
 | **דוח ופרזנטציה** (בהירות, ממצאים) | 15% |
 
----
+***
 
 ## מה עכשיו? – Next Steps
 
@@ -504,7 +504,7 @@ Members/YourName/Final_Project/
 3. **מחקר:** קרא את ה-BOI Working Papers, NBER, IMF WP
 4. **קהילה:** EconLab PPE – הישאר פעיל, עזור לחברים חדשים
 
----
+***
 
 *"An economist who can program is an economist who can answer questions."*
 *― EconLab PPE*

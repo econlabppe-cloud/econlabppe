@@ -42,7 +42,7 @@
 | Pipeline נתונים שלם | 90 דקות |
 | **סה"כ** | **~8 שעות** |
 
----
+***
 
 ## חלק א – Time Series: עבודה עם תאריכים
 
@@ -102,7 +102,7 @@ df_range = df["2022-06":"2023-03"]
 df_jan = df[df.index.month == 1]
 ```
 
----
+***
 
 ## חלק ב – Resampling: שינוי תדירות
 
@@ -129,7 +129,7 @@ annual_avg_rate = interest_monthly.resample("A").mean()
 print(annual_avg_rate)
 ```
 
----
+***
 
 ## חלק ג – Rolling ו-Shift: ניתוח לאורך זמן
 
@@ -172,7 +172,7 @@ df["rate_change"] = df["interest_rate"].diff()
 df["cumulative_inflation"] = df["inflation"].cumsum()
 ```
 
----
+***
 
 ## חלק ד – Merge: מיזוג DataFrames
 
@@ -240,7 +240,7 @@ inflation_col = pd.DataFrame({"inflation": [0.8, -0.6, 1.5]})
 combined = pd.concat([gdp_col, inflation_col], axis=1)
 ```
 
----
+***
 
 ## חלק ה – pivot_table, melt, stack/unstack
 
@@ -305,7 +305,7 @@ stacked = pivot.stack()
 unstacked = stacked.unstack("district")
 ```
 
----
+***
 
 ## חלק ו – Matplotlib מלא לפרסום
 
@@ -377,7 +377,7 @@ plt.savefig("gdp_publication.png", dpi=300, bbox_inches="tight",
 plt.show()
 ```
 
----
+***
 
 ## חלק ז – Pipeline מלא: מנתונים גולמיים לניתוח
 
@@ -522,7 +522,7 @@ with pd.ExcelWriter("analysis_results.xlsx", engine="openpyxl") as writer:
 print("✓ הניתוח הסתיים! כל הקבצים נשמרו.")
 ```
 
----
+***
 
 ## משימות השבוע – פרויקט מסכם Python/Pandas
 
@@ -548,7 +548,7 @@ Members/YourName/Week_10/
 5. **גרפים:** לפחות 4 גרפים שמוכנים לפרסום (עיצוב מקצועי, כותרות, מקור)
 6. **דוח:** 5 תובנות כלכליות מבוססות-נתונים
 
----
+***
 
 **המודול הבא:** APIs – גישה אוטומטית לנתוני בנק ישראל, הלמ"ס, OECD → [שבוע 11](../Week_11_APIs_Israel/README.md)
 
@@ -575,7 +575,7 @@ Members/YourName/Week_10/
 </details>
 
 
----
+***
 
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?

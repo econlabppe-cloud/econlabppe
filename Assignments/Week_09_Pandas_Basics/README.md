@@ -39,7 +39,7 @@
 
 **הקונצפט המרכזי:** `DataFrame` = טבלה עם שמות לעמודות ולשורות.
 
----
+***
 
 ## חלק א – ייבוא ו-DataFrame ראשון
 
@@ -73,7 +73,7 @@ print(df.dtypes)    # טיפוס כל עמודה
 print(df.describe()) # סטטיסטיקה בסיסית לכל עמודה
 ```
 
----
+***
 
 ## חלק ב – קריאת נתונים מקבצים
 
@@ -116,7 +116,7 @@ print(df.describe())   # סטטיסטיקה בסיסית
 print(df.isnull().sum()) # כמה NaN בכל עמודה
 ```
 
----
+***
 
 ## חלק ג – בחירת נתונים
 
@@ -153,7 +153,7 @@ df.loc[2022]             # שורת 2022
 df.loc[2020:2023]        # שורות 2020-2023
 ```
 
----
+***
 
 ## חלק ד – סינון (Filtering)
 
@@ -192,7 +192,7 @@ recent = df.query("2020 <= year <= 2024")
 key_years = df[df.index.isin([2020, 2022, 2023])]
 ```
 
----
+***
 
 ## חלק ה – עמודות מחושבות
 
@@ -228,7 +228,7 @@ df["inflation_label"] = np.select(conditions, choices, default="אינפלציה
 print(df[["gdp_growth", "inflation", "real_interest", "economic_status", "inflation_label"]])
 ```
 
----
+***
 
 ## חלק ו – פעולות על עמודות
 
@@ -251,7 +251,7 @@ df["inflation_rank"] = df["inflation"].rank(ascending=False)
 print(df.head(10))
 ```
 
----
+***
 
 ## חלק ז – groupby: ניתוח לפי קטגוריות
 
@@ -280,7 +280,7 @@ df.groupby("economic_status")["gdp_growth"].count()
 df.groupby("era")["gdp_growth"].mean().reset_index()
 ```
 
----
+***
 
 ## חלק ח – מיון וסינון מתקדם
 
@@ -295,7 +295,7 @@ numeric_cols = df.select_dtypes(include=[np.number])
 text_cols = df.select_dtypes(include=["object"])
 ```
 
----
+***
 
 ## חלק ט – ניקוי נתונים
 
@@ -328,7 +328,7 @@ df_clean["year"] = df_clean["year"].astype(int)
 df_clean = df_clean[df_clean["gdp_growth"].between(-50, 50)]
 ```
 
----
+***
 
 ## חלק י – ייצוא נתונים
 
@@ -344,7 +344,7 @@ with pd.ExcelWriter("macro_analysis.xlsx", engine="openpyxl") as writer:
 print("קבצים נשמרו!")
 ```
 
----
+***
 
 ## חלק יא – ויזואליזציה ראשונה עם pandas
 
@@ -384,7 +384,7 @@ plt.savefig("macro_overview.png", dpi=150, bbox_inches="tight")
 plt.show()
 ```
 
----
+***
 
 ## משימות השבוע
 
@@ -418,7 +418,7 @@ plt.show()
 4. טבלת `groupby` "עידן ריבית נמוכה vs גבוהה"
 5. ייצוא ל-Excel עם 2 גיליונות
 
----
+***
 
 ## הגשה
 
@@ -430,7 +430,7 @@ Members/YourName/Week_09/
 └── processed_data.xlsx     ← נתונים מעובדים
 ```
 
----
+***
 
 **השבוע הבא:** Pandas מתקדם – Time Series, merge, pivot_table, ניתוח מלא → [שבוע 10](../Week_10_Pandas_Advanced/README.md)
 
@@ -458,7 +458,7 @@ Members/YourName/Week_09/
 </details>
 
 
----
+***
 
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?

@@ -30,7 +30,7 @@
 
 **DSGE = המודל שבנקים מרכזיים ו-IMF משתמשים בו לניתוח מדיניות.**
 
----
+***
 
 ## מה DSGE עושה שרגרסיה לא עושה?
 
@@ -43,7 +43,7 @@
 
 **Lucas Critique**: פרמטרים שנאמדים מנתונים עבר ישתנו לאחר שינוי מדיניות.
 
----
+***
 
 ## חלק א – בלוקי הבניין של DSGE
 
@@ -103,7 +103,7 @@ Hₜ = H̄ = 1             (שוק עבודה – נרמול)
 Kₜ₊₁ = (1-δ)·Kₜ + Iₜ  (צבירת הון)
 ```
 
----
+***
 
 ## חלק ב – RBC: Real Business Cycle Model
 
@@ -128,7 +128,7 @@ yₜ = (C*/Y*)·cₜ + (I*/Y*)·iₜ          [Resource constraint]
 aₜ = ρ·aₜ₋₁ + εₜ                       [Technology]
 ```
 
----
+***
 
 ## חלק ג – DSGE ב-R: חבילת `gEcon`
 
@@ -267,7 +267,7 @@ plot_irf(rbc,
          main      = "RBC: Technology Shock IRF")
 ```
 
----
+***
 
 ## חלק ד – New Keynesian Model: הוספת rigidities
 
@@ -308,7 +308,7 @@ params <- list(
 )
 ```
 
----
+***
 
 ## חלק ה – סימולציה ידנית: 3-Equation NK
 
@@ -408,7 +408,7 @@ ggplot(all_irfs, aes(x = period, y = value, color = shock_type)) +
 ggsave("nk_irf.png", width = 12, height = 8, dpi = 300)
 ```
 
----
+***
 
 ## חלק ו – קריאה: DSGE בפרקטיקה
 
@@ -435,7 +435,7 @@ ggsave("nk_irf.png", width = 12, height = 8, dpi = 300)
 2. **Kydland & Prescott (1982)**: "Time to Build and Aggregate Fluctuations" – המאמר המקורי של RBC
 3. **Smets & Wouters (2003)**: מודל SW – ה-DSGE הנפוץ ביותר בבנקים מרכזיים
 
----
+***
 
 ## משימות השבוע
 
@@ -484,7 +484,7 @@ ggsave("nk_irf.png", width = 12, height = 8, dpi = 300)
 ## 5. יישום: אילו שאלות כלכליות אפשר לענות עם DSGE שלא אפשר עם רגרסיה?
 ```
 
----
+***
 
 ## הגשה
 
@@ -496,7 +496,7 @@ Members/YourName/Week_21/
 └── dsge_reading_summary.md
 ```
 
----
+***
 
 **השבוע הבא:** DSGE מלא – gEcon/Dynare, אמידה בייזיאנית, תחזיות → [שבוע 22](../Week_22_DSGE_Advanced/README.md)
 

@@ -29,7 +29,7 @@
 
 **Power BI = הכלי שמנהלים רוצים לראות.**
 
----
+***
 
 ## חלק א – התקנה ומבנה
 
@@ -67,7 +67,7 @@
 | **Data** | צפייה ועריכת הנתונים |
 | **Model** | הגדרת קשרים בין טבלאות |
 
----
+***
 
 ## חלק ב – ייבוא נתונים
 
@@ -124,7 +124,7 @@ in
     AddMonthName
 ```
 
----
+***
 
 ## חלק ג – Data Model: קשרים בין טבלאות
 
@@ -151,7 +151,7 @@ Model View → גרור שדה Date מ-Date Table → שחרר על שדה Date 
 → Many to One → Cardinality: Many to one → Cross-filter: Single
 ```
 
----
+***
 
 ## חלק ד – DAX: שפת החישובים של Power BI
 
@@ -269,7 +269,7 @@ Status =
     )
 ```
 
----
+***
 
 ## חלק ה – ויזואליזציות: בניית הדשבורד
 
@@ -347,7 +347,7 @@ Insert → Slicer
 → הוסף slicer שני: MacroData[era]
 ```
 
----
+***
 
 ## חלק ו – עיצוב הדשבורד
 
@@ -405,7 +405,7 @@ Insert → Slicer
 
 שמור כ-`.json` → View → Themes → Browse for themes.
 
----
+***
 
 ## חלק ז – פרסום ושיתוף
 
@@ -435,7 +435,7 @@ File → Export to PowerPoint
 - **Embed in Website**: embed code ל-iframe
 - **Export PNG**: לצילום מסך של כל Visual
 
----
+***
 
 ## משימות השבוע
 
@@ -479,7 +479,7 @@ File → Export to PowerPoint
 - Slicer: מחוז, שנה, רמת מחיר
 ```
 
----
+***
 
 ## הגשה
 
@@ -492,7 +492,7 @@ Members/YourName/Week_19/
 └── findings.md
 ```
 
----
+***
 
 **השבוע הבא:** Tableau – גרפיקה מקצועית ודשבורדים לפרסום → [שבוע 20](../Week_20_BI_Tableau/README.md)
 
