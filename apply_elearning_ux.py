@@ -1,0 +1,111 @@
+import os
+scss_content = """/* E-Learning UX/UI Optimization */
+/* 1. Readability & Typography */
+body {
+  font-family: 'Assistant', 'Rubik', 'Segoe UI', sans-serif !important;
+  font-size: 18px !important; /* Larger base font */
+  line-height: 1.7 !important; /* Breathing room for text */
+  color: #2c3e50 !important; /* Dark gray, not pure black, to reduce eye strain */
+  background-color: #fafbfc !important; /* Off-white background */
+}
+/* 2. Cognitive Load & Focus Mode */
+main.content {
+  max-width: 850px !important; /* Optimal reading width */
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+/* 3. Intuitive Navigation (CTAs) */
+.nav-page {
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 2px solid #f1f3f5;
+}
+.nav-page .nav-page-previous, .nav-page .nav-page-next {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 15px 25px;
+  transition: all 0.2s ease;
+}
+.nav-page .nav-page-previous:hover, .nav-page .nav-page-next:hover {
+  background-color: #e2e6ea;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+/* 4. Microlearning & Gamification Elements (Interactive Accordions) */
+details {
+  background: #ffffff;
+  border: 1px solid #e1e4e8;
+  border-left: 4px solid #0056b3;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: box-shadow 0.2s ease;
+}
+details:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+summary {
+  font-weight: 600;
+  cursor: pointer;
+  color: #0056b3;
+  font-size: 1.05em;
+}
+details[open] summary {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e1e4e8;
+  padding-bottom: 10px;
+}
+/* Headings Hierarchy */
+h1, h2, h3 {
+  color: #1a202c;
+  font-weight: 700;
+  margin-top: 1.5em;
+}
+"""
+def apply_ux():
+    # 1. Create the custom SCSS file
+    with open("custom_elearning.scss", "w", encoding="utf-8") as f:
+        f.write(scss_content)
+    print("Created custom_elearning.scss")
+    # 2. Update _quarto.yml
+    if os.path.exists("_quarto.yml"):
+        with open("_quarto.yml", "r", encoding="utf-8") as f:
+            lines = f.readlines()
+
+        new_lines = []
+        in_html_section = False
+        css_added = False
+        nav_added = False
+
+        for line in lines:
+            new_lines.append(line)
+            if line.strip() == "html:":
+                in_html_section = True
+
+            if in_html_section:
+                # Add CSS reference if not exists
+                if line.strip().startswith("theme:") and not css_added:
+                    new_lines.append("    css: custom_elearning.scss\n")
+                    css_added = True
+
+                # Add page-navigation if not exists
+                if line.strip().startswith("toc:") and not nav_added:
+                    new_lines.append("    page-navigation: true\n")
+                    new_lines.append("    fontsize: 1.1em\n")
+                    new_lines.append("    linestretch: 1.7\n")
+                    nav_added = True
+                    in_html_section = False # Stop adding in this block
+        # Fallback if standard structure wasn't found perfectly
+        if not css_added or not nav_added:
+            print("Warning: Could not perfectly inject HTML settings. Please verify _quarto.yml manually.")
+
+        with open("_quarto.yml", "w", encoding="utf-8") as f:
+            f.writelines(new_lines)
+        print("Updated _quarto.yml with e-learning settings.")
+if __name__ == "__main__":
+    apply_ux()
