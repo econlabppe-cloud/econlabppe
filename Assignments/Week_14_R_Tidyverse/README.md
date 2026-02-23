@@ -38,7 +38,7 @@ library(tidyverse)
 # - purrr   → תכנות פונקציונלי
 ```
 
----
+***
 
 ## חלק א – dplyr: מניפולציה של נתונים
 
@@ -217,7 +217,7 @@ combined <- macro_df %>% left_join(exports_df, by = "year")
 df1 %>% left_join(df2, by = c("year", "district"))
 ```
 
----
+***
 
 ## חלק ב – tidyr: עיצוב נתונים
 
@@ -282,7 +282,7 @@ df %>% fill(gdp_growth, .direction = "down")   # מילוי מהשורה הקו�
 df %>% replace_na(list(gdp_growth = 0))         # מילוי בערך קבוע
 ```
 
----
+***
 
 ## חלק ג – lubridate: תאריכים
 
@@ -313,7 +313,7 @@ as.numeric(date1 - date2)  # הפרש בימים
 dates <- seq(ymd("2022-01-01"), ymd("2024-12-31"), by = "month")
 ```
 
----
+***
 
 ## חלק ד – ggplot2: ויזואליזציה מקצועית
 
@@ -463,7 +463,7 @@ ggplot(countries_data, aes(x = year, y = gdp, color = country,
 ggsave("international_comparison.png", width = 10, height = 6, dpi = 300)
 ```
 
----
+***
 
 ## חלק ה – Pipeline מלא: Tidyverse Style
 
@@ -556,7 +556,7 @@ write_csv(macro_features, "macro_processed.csv")
 cat("\n✓ Pipeline הסתיים!\n")
 ```
 
----
+***
 
 ## משימות השבוע
 
@@ -597,7 +597,7 @@ cat("\n✓ Pipeline הסתיים!\n")
 # 2. האם ירידת אבטלה אחרי 2021 הייתה אחידה בכל המחוזות?
 ```
 
----
+***
 
 ## הגשה
 
@@ -611,7 +611,7 @@ Members/YourName/Week_14/
 └── labor_market_report.md
 ```
 
----
+***
 
 **השבוע הבא:** אקונומטריקה – רגרסיה לינארית ב-R → [שבוע 15](../Week_15_Econometrics_Regression/README.md)
 

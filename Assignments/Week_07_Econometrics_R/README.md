@@ -65,7 +65,7 @@ summary(model2)
 AIC(model1, model2)  # מודל עם AIC נמוך יותר עדיף
 ```
 
----
+***
 
 ## חלק ב – Difference-in-Differences (DiD)
 
@@ -91,7 +91,7 @@ summary(did_model)
 # שתי הקבוצות היו "מתנהגות אותו דבר" ללא הטיפול
 ```
 
----
+***
 
 ## חלק ג – סדרות עתיות: ARIMA
 
@@ -116,7 +116,7 @@ plot(forecast_3y,
 print(forecast_3y)
 ```
 
----
+***
 
 ## חלק ד – בדיקות אבחון
 
@@ -142,7 +142,7 @@ library(lmtest)
 coeftest(model2, vcov = vcovHC(model2, type = "HC3"))
 ```
 
----
+***
 
 ## המשימה שלך
 
@@ -165,7 +165,7 @@ coeftest(model2, vcov = vcovHC(model2, type = "HC3"))
 הרץ רגרסיה בין הריבית לאינפלציה שם.
 השווה ל-ישראל: האם התוצאות דומות?
 
----
+***
 
 ## הגשה
 
@@ -173,7 +173,7 @@ coeftest(model2, vcov = vcovHC(model2, type = "HC3"))
 - [ ] `econometrics.R` – כל הקוד
 - [ ] `results.md` – פרשנות התוצאות (3-5 משפטים לכל מודל)
 
----
+***
 
 **השבוע הבא:** ויזואליזציה → [משימה 8](../Week_08_Visualization/README.md)
 
@@ -201,7 +201,7 @@ coeftest(model2, vcov = vcovHC(model2, type = "HC3"))
 </details>
 
 
----
+***
 
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?

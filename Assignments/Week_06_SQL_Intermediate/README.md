@@ -42,7 +42,7 @@
 | שאילתות כלכליות מורכבות | 90 דקות |
 | **סה"כ** | **~7 שעות** |
 
----
+***
 
 ## הכנה: הרחבת בסיס הנתונים
 
@@ -114,7 +114,7 @@ INSERT INTO housing_market VALUES
 (2023, 4, 'מרכז',      2940000, 2250);
 ```
 
----
+***
 
 ## חלק א – GROUP BY: ניתוח לפי קטגוריות
 
@@ -201,7 +201,7 @@ ORDER BY avg_price DESC;
 7. LIMIT      ← הגבל
 ```
 
----
+***
 
 ## חלק ב – JOIN: מיזוג טבלאות
 
@@ -317,7 +317,7 @@ WHERE m.year >= 2022
 ORDER BY m.year, p.district;
 ```
 
----
+***
 
 ## חלק ג – Subqueries
 
@@ -381,7 +381,7 @@ WHERE year IN (
 );
 ```
 
----
+***
 
 ## חלק ד – NULL Handling
 
@@ -415,7 +415,7 @@ LEFT JOIN exports AS e ON m.year = e.year;
 חשוב לדעת: `AVG()`, `SUM()`, `COUNT(column)` מתעלמים מ-NULL אוטומטית.
 `COUNT(*)` סופר **את כל השורות** כולל NULL.
 
----
+***
 
 ## חלק ה – שאילתות כלכליות מורכבות
 
@@ -498,7 +498,7 @@ ORDER BY ta.year, ta.quarter;
 
 *(Self-JOIN: אותה טבלה פעמיים!)*
 
----
+***
 
 ## חלק ו – CREATE TABLE AS SELECT
 
@@ -521,7 +521,7 @@ GROUP BY district;
 SELECT * FROM district_summary ORDER BY avg_price_all_time DESC;
 ```
 
----
+***
 
 ## משימות השבוע
 
@@ -551,7 +551,7 @@ SELECT * FROM district_summary ORDER BY avg_price_all_time DESC;
 **שאלת חקר:** האם ניתן לזהות את ההשפעה של העלאת הריבית על מחירי הדיור?
 כתוב תשובה של 5-8 משפטים בקובץ הסיכום.
 
----
+***
 
 ## הגשה
 
@@ -561,7 +561,7 @@ Members/YourName/Week_06/
 └── week06_housing_analysis.md ← ניתוח שוק הדיור
 ```
 
----
+***
 
 **השבוע הבא:** SQL מתקדם – Window Functions, CTEs, ושילוב Python+SQL → [שבוע 7](../Week_07_SQL_Advanced/README.md)
 
@@ -588,7 +588,7 @@ SQL עדיין יחזיר את השורה מהטבלה השמאלית, אבל י
 </details>
 
 
----
+***
 
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?

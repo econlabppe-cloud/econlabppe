@@ -26,7 +26,7 @@
 | **ARIMA** | מה יהיה Y בתקופה הבאה? | תחזית אינפלציה לשנה הבאה |
 | **Panel Data** | מה האפקט של X על Y בין ישויות? | מה השפעת ריבית על אבטלה ב-38 מדינות OECD? |
 
----
+***
 
 ## חלק א – Difference-in-Differences (DiD)
 
@@ -149,7 +149,7 @@ etable(m2, m3,
        headers = c("City FE", "City + Period FE"))
 ```
 
----
+***
 
 ## חלק ב – ARIMA: ניתוח וחיזוי סדרות עתיות
 
@@ -250,7 +250,7 @@ summary(arima_x)
 # בדוק אם הריבית כגורם חיצוני משפרת את המודל (AIC נמוך יותר?)
 ```
 
----
+***
 
 ## חלק ג – Panel Data: Fixed Effects
 
@@ -334,7 +334,7 @@ etable(
 )
 ```
 
----
+***
 
 ## חלק ד – Synthetic Control
 
@@ -371,7 +371,7 @@ synth_result %>% plot_differences() # Gap plot
 synth_result %>% plot_placebos()    # Placebo inference
 ```
 
----
+***
 
 ## משימות השבוע
 
@@ -418,7 +418,7 @@ synth_result %>% plot_placebos()    # Placebo inference
 # 6. מסקנה: האם שיעור צמיחה מסביר אבטלה גם בתוך-מדינות?
 ```
 
----
+***
 
 ## הגשה
 
@@ -434,7 +434,7 @@ Members/YourName/Week_16/
 └── advanced_econometrics_report.md
 ```
 
----
+***
 
 **השבוע הבא:** ויזואליזציה אינטראקטיבית עם Plotly (Python) → [שבוע 17](../Week_17_Visualization_Python/README.md)
 

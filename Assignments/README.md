@@ -9,7 +9,7 @@
 
 **הגשה:** העלה את הפתרון שלך לתיקייה האישית שלך ב-`Members/YourName/Week_XX/`
 
----
+***
 
 ## רשימת המשימות
 
@@ -26,7 +26,7 @@
 | 9 | Power BI / Tableau | Power BI, Tableau | [Week 9](Week_09_BI_Tools/README.md) |
 | 10 | DSGE – מודלים מאקרו | R / Python | [Week 10](Week_10_DSGE/README.md) |
 
----
+***
 
 ## הגשת משימה – איך?
 
@@ -46,6 +46,6 @@ git commit -m "feat: Week 1 setup - YourName"
 git push
 ```
 
----
+***
 
 *אין להסתכל על הפתרונות של אחרים לפני שמסיימים. אחרי ההגשה – כולם שיתופיים.*

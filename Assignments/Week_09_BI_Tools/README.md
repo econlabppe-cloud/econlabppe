@@ -43,7 +43,7 @@
 - [Power BI Desktop](https://powerbi.microsoft.com/desktop/)
 - [Tableau Public](https://public.tableau.com/en-us/s/download)
 
----
+***
 
 ## חלק א – ייבוא נתונים
 
@@ -57,7 +57,7 @@
 2. בחר את ה-CSV
 3. בדוק ב-Data Source tab שהעמודות נכונות
 
----
+***
 
 ## חלק ב – בנה דשבורד מאקרו-כלכלי
 
@@ -82,7 +82,7 @@
 - X: `unemployment`, Y: `inflation`
 - Play Axis: `year` (אנימציה!)
 
----
+***
 
 ## חלק ג – חיבור Python ל-Power BI (מתקדם)
 
@@ -104,7 +104,7 @@ df.columns = ["year"] + [c for c in df.columns[1:]]
 # Power BI יקרא את dataset (df) אוטומטית
 ```
 
----
+***
 
 ## המשימה שלך
 
@@ -116,7 +116,7 @@ df.columns = ["year"] + [c for c in df.columns[1:]]
 - [ ] כותרת ברורה + מקור נתונים
 - [ ] ניתן להבין בלי הסבר
 
----
+***
 
 ## הגשה
 
@@ -131,7 +131,7 @@ df.columns = ["year"] + [c for c in df.columns[1:]]
 - Publish ל-Tableau Public
 - צרף קישור ב-`dashboard_link.md`
 
----
+***
 
 **השבוע הבא:** DSGE – המאתגר שבכולם → [משימה 10](../Week_10_DSGE/README.md)
 
@@ -159,7 +159,7 @@ df.columns = ["year"] + [c for c in df.columns[1:]]
 </details>
 
 
----
+***
 
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?

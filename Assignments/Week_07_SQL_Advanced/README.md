@@ -43,7 +43,7 @@
 | פרויקט מסכם: ניתוח מאקרו-כלכלי מלא | 90 דקות |
 | **סה"כ** | **~8.5 שעות** |
 
----
+***
 
 ## חלק א – CTEs: Common Table Expressions
 
@@ -135,7 +135,7 @@ FROM period_averages AS pa
 JOIN housing_by_era AS hb ON pa.era = hb.era;
 ```
 
----
+***
 
 ## חלק ב – Window Functions: הכלי הכי עוצמתי ב-SQL
 
@@ -197,7 +197,7 @@ WHERE rn = 1
 ORDER BY avg_price DESC;
 ```
 
----
+***
 
 ## חלק ג – LAG ו-LEAD: שינויים לאורך זמן
 
@@ -259,7 +259,7 @@ FROM housing_market
 ORDER BY district, year, quarter;
 ```
 
----
+***
 
 ## חלק ד – Running Totals ו-Moving Averages
 
@@ -315,7 +315,7 @@ FROM macro_annual
 ORDER BY year;
 ```
 
----
+***
 
 ## חלק ה – String & Date Functions
 
@@ -361,7 +361,7 @@ SELECT
 FROM some_table;
 ```
 
----
+***
 
 ## חלק ו – Python + SQL: שילוב עוצמתי
 
@@ -508,7 +508,7 @@ conn.close()
 print("ניתוח הסתיים!")
 ```
 
----
+***
 
 ## חלק ז – ניתוח מלא: תגובת שוק הדיור להעלאות הריבית
 
@@ -614,7 +614,7 @@ plt.show()
 conn.close()
 ```
 
----
+***
 
 ## משימות השבוע – פרויקט מסכם SQL
 
@@ -656,7 +656,7 @@ conn.close()
    - בדיקה: האם ירידת מחירים אחרי 2022-Q3 מובהקת?
 4. שומר גרפים כ-PNG ומסכם ממצאים ב-Markdown
 
----
+***
 
 ## הגשה
 
@@ -705,7 +705,7 @@ Members/YourName/Week_07/
 ...
 ```
 
----
+***
 
 ## טיפים מקצועיים
 
@@ -715,13 +715,13 @@ Members/YourName/Week_07/
 4. **נקה ל-NULL:** תמיד בדוק `WHERE column IS NOT NULL` לפני Window Functions
 5. **אל תאמין לתוצאות בלי בדיקה:** השווה ל-Excel אם יש ספק
 
----
+***
 
 ## מה הלאה?
 
 סיימת את מודול ה-SQL! בשלב הבא נעבור ל-**Python ו-Pandas** – שם נממש את הניתוחים של SQL אבל עם ספריית pandas מלאה, גרפים מתקדמים, ו-APIs של נתונים כלכליים.
 
----
+***
 
 **המודול הבא:** Python ו-Pandas – ניתוח נתונים מלא → [שבוע 8](../Week_08_Python_Basics/README.md)
 
@@ -749,7 +749,7 @@ Members/YourName/Week_07/
 </details>
 
 
----
+***
 
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?

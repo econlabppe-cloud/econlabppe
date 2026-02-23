@@ -38,7 +38,7 @@
 4. **פשטות** – פחות זה יותר (הסר gridlines מיותרים, צבעים מיותרים)
 5. **הדגשה** – צבע שונה לנקודה החשובה
 
----
+***
 
 ## חלק א – Plotly: גרפים אינטראקטיביים (Python)
 
@@ -90,7 +90,7 @@ fig.write_html("macro_dashboard.html")
 fig.show()
 ```
 
----
+***
 
 ## חלק ב – Matplotlib: גרף לפרסום
 
@@ -146,7 +146,7 @@ plt.savefig("macro_report.png", dpi=200, bbox_inches="tight")
 plt.show()
 ```
 
----
+***
 
 ## חלק ג – ggplot2 (R): גרף לדוח אקדמי
 
@@ -183,7 +183,7 @@ combined <- p1 / p2 +
 ggsave("macro_ggplot.png", combined, width = 10, height = 8, dpi = 150)
 ```
 
----
+***
 
 ## המשימה שלך
 
@@ -195,7 +195,7 @@ ggsave("macro_ggplot.png", combined, width = 10, height = 8, dpi = 150)
 
 כל גרף: כותרת, תוויות צירים, מקור נתונים, ניתן להבין בלי הסבר נוסף.
 
----
+***
 
 ## הגשה
 
@@ -205,7 +205,7 @@ ggsave("macro_ggplot.png", combined, width = 10, height = 8, dpi = 150)
 - [ ] `graph1.png` + `graph2.png`
 - [ ] `macro_dashboard.html` (אינטראקטיבי!)
 
----
+***
 
 **השבוע הבא:** Power BI / Tableau → [משימה 9](../Week_09_BI_Tools/README.md)
 
@@ -231,7 +231,7 @@ ggsave("macro_ggplot.png", combined, width = 10, height = 8, dpi = 150)
 </details>
 
 
----
+***
 
 ### 💬 הערות, שאלות ודיונים
 יש לכם שאלה על החומר של פרק זה? משהו לא עבד במחברת התרגול? מצאתם דרך יעילה יותר לכתוב את הקוד?
