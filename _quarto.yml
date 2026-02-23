@@ -118,11 +118,15 @@ execute:
 format:
   html:
     theme:
+    css: custom_elearning.scss
       - cosmo
       - custom.scss
     css: custom.css
     include-after-body: custom.html
     toc: true
+    page-navigation: true
+    fontsize: 1.1em
+    linestretch: 1.7
     toc-depth: 3
     toc-title: "בדף זה"
     number-sections: false
